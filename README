@@ -1,4 +1,4 @@
-libpinyin
-Library to deal with pinyin.
+libzhuyin
+Library to deal with zhuyin.
 
-The libpinyin project aims to provide the algorithms core for intelligent sentence-based Chinese pinyin input methods.
+The libzhuyin project aims to provide the algorithms core for intelligent sentence-based Chinese zhuyin input methods.
