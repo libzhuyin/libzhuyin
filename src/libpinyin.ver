@@ -2,7 +2,6 @@ LIBPINYIN {
     global:
         pinyin_init;
         pinyin_save;
-        pinyin_set_double_pinyin_scheme;
         pinyin_set_chewing_scheme;
         pinyin_load_phrase_library;
         pinyin_unload_phrase_library;
@@ -20,8 +19,6 @@ LIBPINYIN {
         pinyin_get_sentence;
         pinyin_parse_full_pinyin;
         pinyin_parse_more_full_pinyins;
-        pinyin_parse_double_pinyin;
-        pinyin_parse_more_double_pinyins;
         pinyin_parse_chewing;
         pinyin_parse_more_chewings;
         pinyin_in_chewing_keyboard;

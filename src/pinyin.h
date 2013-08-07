@@ -130,18 +130,6 @@ void pinyin_end_add_phrases(import_iterator_t * iter);
 bool pinyin_save(pinyin_context_t * context);
 
 /**
- * pinyin_set_double_pinyin_scheme:
- * @context: the pinyin context.
- * @scheme: the double pinyin scheme.
- * @returns: whether the set double pinyin scheme succeeded.
- *
- * Change the double pinyin scheme of the pinyin context.
- *
- */
-bool pinyin_set_double_pinyin_scheme(pinyin_context_t * context,
-                                     DoublePinyinScheme scheme);
-
-/**
  * pinyin_set_chewing_scheme:
  * @context: the pinyin context.
  * @scheme: the chewing scheme.
@@ -283,32 +271,6 @@ bool pinyin_parse_full_pinyin(pinyin_instance_t * instance,
  */
 size_t pinyin_parse_more_full_pinyins(pinyin_instance_t * instance,
                                       const char * pinyins);
-
-/**
- * pinyin_parse_double_pinyin:
- * @instance: the pinyin instance.
- * @onepinyin: the single double pinyin to be parsed.
- * @onekey: the parsed key.
- * @returns: whether the parse is successfully.
- *
- * Parse a single double pinyin.
- *
- */
-bool pinyin_parse_double_pinyin(pinyin_instance_t * instance,
-                                const char * onepinyin,
-                                ChewingKey * onekey);
-
-/**
- * pinyin_parse_more_double_pinyins:
- * @instance: the pinyin instance.
- * @pinyins: the double pinyins to be parsed.
- * @returns: the parsed length of the double pinyins.
- *
- * Parse multiple double pinyins and save it in the instance.
- *
- */
-size_t pinyin_parse_more_double_pinyins(pinyin_instance_t * instance,
-                                        const char * pinyins);
 
 /**
  * pinyin_parse_chewing:

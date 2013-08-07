@@ -37,7 +37,6 @@ struct _pinyin_context_t{
     pinyin_option_t m_options;
 
     FullPinyinParser2 * m_full_pinyin_parser;
-    DoublePinyinParser2 * m_double_pinyin_parser;
     ChewingParser2 * m_chewing_parser;
 
     FacadeChewingTable * m_pinyin_table;
@@ -179,7 +178,6 @@ pinyin_context_t * pinyin_init(const char * systemdir, const char * userdir){
     check_format(context);
 
     context->m_full_pinyin_parser = new FullPinyinParser2;
-    context->m_double_pinyin_parser = new DoublePinyinParser2;
     context->m_chewing_parser = new ChewingParser2;
 
     /* load chewing table. */
@@ -636,12 +634,6 @@ bool pinyin_save(pinyin_context_t * context){
     return true;
 }
 
-bool pinyin_set_double_pinyin_scheme(pinyin_context_t * context,
-                                     DoublePinyinScheme scheme){
-    context->m_double_pinyin_parser->set_scheme(scheme);
-    return true;
-}
-
 bool pinyin_set_chewing_scheme(pinyin_context_t * context,
                                ChewingScheme scheme){
     context->m_chewing_parser->set_scheme(scheme);
@@ -650,7 +642,6 @@ bool pinyin_set_chewing_scheme(pinyin_context_t * context,
 
 void pinyin_fini(pinyin_context_t * context){
     delete context->m_full_pinyin_parser;
-    delete context->m_double_pinyin_parser;
     delete context->m_chewing_parser;
     delete context->m_pinyin_table;
     delete context->m_phrase_table;
@@ -907,29 +898,6 @@ size_t pinyin_parse_more_full_pinyins(pinyin_instance_t * instance,
     int pinyin_len = strlen(pinyins);
 
     int parse_len = context->m_full_pinyin_parser->parse
-        ( context->m_options, instance->m_pinyin_keys,
-          instance->m_pinyin_key_rests, pinyins, pinyin_len);
-
-    return parse_len;
-}
-
-bool pinyin_parse_double_pinyin(pinyin_instance_t * instance,
-                                const char * onepinyin,
-                                ChewingKey * onekey){
-    pinyin_context_t * & context = instance->m_context;
-
-    int pinyin_len = strlen(onepinyin);
-    bool retval = context->m_double_pinyin_parser->parse_one_key
-        ( context->m_options, *onekey, onepinyin, pinyin_len);
-    return retval;
-}
-
-size_t pinyin_parse_more_double_pinyins(pinyin_instance_t * instance,
-                                        const char * pinyins){
-    pinyin_context_t * & context = instance->m_context;
-    int pinyin_len = strlen(pinyins);
-
-    int parse_len = context->m_double_pinyin_parser->parse
         ( context->m_options, instance->m_pinyin_keys,
           instance->m_pinyin_key_rests, pinyins, pinyin_len);
 
