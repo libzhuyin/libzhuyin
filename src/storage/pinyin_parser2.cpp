@@ -94,20 +94,6 @@ gchar * _ChewingKey::get_pinyin_string() {
     }
 }
 
-gchar * _ChewingKey::get_shengmu_string() {
-    gint index = get_table_index();
-    assert(index < G_N_ELEMENTS(content_table));
-    const content_table_item_t & item = content_table[index];
-    return g_strdup(item.m_shengmu_str);
-}
-
-gchar * _ChewingKey::get_yunmu_string() {
-    gint index = get_table_index();
-    assert(index < G_N_ELEMENTS(content_table));
-    const content_table_item_t & item = content_table[index];
-    return g_strdup(item.m_yunmu_str);
-}
-
 gchar * _ChewingKey::get_chewing_string() {
     assert(m_tone < CHEWING_NUMBER_OF_TONES);
     gint index = get_table_index();
