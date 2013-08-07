@@ -179,39 +179,6 @@ public:
     virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
 };
 
-
-/**
- * DoublePinyinParser2:
- *
- * Parse the double pinyin string into an array of struct ChewingKeys.
- *
- */
-/* The valid input chars of ShuangPin is a-z and ';'
- */
-class DoublePinyinParser2 : public PinyinParser2
-{
-    /* Note: two internal pointers to double pinyin scheme table. */
-protected:
-    const double_pinyin_scheme_shengmu_item_t * m_shengmu_table;
-    const double_pinyin_scheme_yunmu_item_t   * m_yunmu_table;
-
-public:
-    DoublePinyinParser2() {
-        m_shengmu_table = NULL; m_yunmu_table = NULL;
-        set_scheme(DOUBLE_PINYIN_DEFAULT);
-    }
-
-    virtual ~DoublePinyinParser2() {}
-
-    virtual bool parse_one_key(pinyin_option_t options, ChewingKey & key, const char *str, int len) const;
-
-    virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
-
-public:
-    bool set_scheme(DoublePinyinScheme scheme);
-};
-
-
 /**
  * ChewingParser2:
  *
