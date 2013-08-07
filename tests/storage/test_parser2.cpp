@@ -34,7 +34,7 @@ static gboolean incomplete = FALSE;
 
 static GOptionEntry entries[] =
 {
-    {"parser", 'p', 0, G_OPTION_ARG_STRING, &parsername, "parser", "fullpinyin doublepinyin chewing"},
+    {"parser", 'p', 0, G_OPTION_ARG_STRING, &parsername, "parser", "fullpinyin chewing"},
     {"incomplete", 'i', 0, G_OPTION_ARG_NONE, &incomplete, "incomplete pinyin", NULL},
     {NULL}
 };
@@ -74,8 +74,6 @@ int main(int argc, char * argv[]) {
     /* create the parser */
     if (strcmp("fullpinyin", parsername) == 0) {
         parser = new FullPinyinParser2();
-    } else if (strcmp("doublepinyin", parsername) == 0) {
-        parser = new DoublePinyinParser2();
     } else if (strcmp("chewing", parsername) == 0) {
         parser = new ChewingParser2();
     }
