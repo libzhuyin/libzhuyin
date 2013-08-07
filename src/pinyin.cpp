@@ -1873,20 +1873,6 @@ bool pinyin_get_pinyin_string(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_get_pinyin_strings(pinyin_instance_t * instance,
-                               ChewingKey * key,
-                               gchar ** shengmu,
-                               gchar ** yunmu) {
-    if (0 == key->get_table_index())
-        return false;
-
-    if (shengmu)
-        *shengmu = key->get_shengmu_string();
-    if (yunmu)
-        *yunmu = key->get_yunmu_string();
-    return true;
-}
-
 bool pinyin_token_get_phrase(pinyin_instance_t * instance,
                              phrase_token_t token,
                              guint * len,
