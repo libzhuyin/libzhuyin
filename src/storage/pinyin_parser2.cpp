@@ -341,45 +341,6 @@ int FullPinyinParser2::parse (pinyin_option_t options, ChewingKeyVector & keys,
                     value.m_num_keys < nextstep->m_num_keys)
                     *nextstep = value;
 
-                /* handle with the same pinyin length and the number of keys */
-                if (value.m_parsed_len == nextstep->m_parsed_len &&
-                    value.m_num_keys == nextstep->m_num_keys) {
-
-#if 0
-                    /* prefer the complete pinyin with shengmu
-                     * over without shengmu,
-                     * ex: "kaneiji" -> "ka'nei'ji".
-                     */
-                    if ((value.m_key.m_initial != CHEWING_ZERO_INITIAL &&
-                         !(value.m_key.m_middle == CHEWING_ZERO_MIDDLE &&
-                           value.m_key.m_final == CHEWING_ZERO_FINAL)) &&
-                        nextstep->m_key.m_initial == CHEWING_ZERO_INITIAL)
-                        *nextstep = value;
-
-                    /* prefer the complete pinyin 'er'
-                     * over the in-complete pinyin 'r',
-                     * ex: "xierqi" -> "xi'er'qi."
-                     */
-                    if ((value.m_key.m_initial == CHEWING_ZERO_INITIAL &&
-                        value.m_key.m_middle == CHEWING_ZERO_MIDDLE &&
-                        value.m_key.m_final == CHEWING_ER) &&
-                        (nextstep->m_key.m_initial == CHEWING_R &&
-                         nextstep->m_key.m_middle == CHEWING_ZERO_MIDDLE &&
-                         nextstep->m_key.m_final == CHEWING_ZERO_FINAL))
-                        *nextstep = value;
-#endif
-
-                    /* prefer the 'a' at the end of clause,
-                     * ex: "zheyanga$" -> "zhe'yang'a$".
-                     */
-                    if (value.m_parsed_len == len &&
-                        (nextstep->m_key.m_initial != CHEWING_ZERO_INITIAL &&
-                         nextstep->m_key.m_final == CHEWING_A) &&
-                        (value.m_key.m_initial == CHEWING_ZERO_INITIAL &&
-                         value.m_key.m_middle == CHEWING_ZERO_MIDDLE &&
-                         value.m_key.m_final == CHEWING_A))
-                        *nextstep = value;
-                }
             }
         }
     }
