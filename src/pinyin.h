@@ -42,8 +42,6 @@ typedef struct _import_iterator_t import_iterator_t;
 typedef enum _lookup_candidate_type_t{
     BEST_MATCH_CANDIDATE = 1,
     NORMAL_CANDIDATE,
-    DIVIDED_CANDIDATE,
-    RESPLIT_CANDIDATE,
     ZOMBIE_CANDIDATE
 } lookup_candidate_type_t;
 
@@ -321,18 +319,6 @@ bool pinyin_in_chewing_keyboard(pinyin_instance_t * instance,
  */
 bool pinyin_guess_candidates(pinyin_instance_t * instance,
                              size_t offset);
-
-/**
- * pinyin_guess_full_pinyin_candidates:
- * @instance: the pinyin instance.
- * @offset: the offset in the pinyin keys.
- * @returns: whether a list of lookup_candidate_t candidates are gotten.
- *
- * Guess the full pinyin candidates at the offset.
- *
- */
-bool pinyin_guess_full_pinyin_candidates(pinyin_instance_t * instance,
-                                       size_t offset);
 
 /**
  * pinyin_choose_candidate:
