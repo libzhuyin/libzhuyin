@@ -15,6 +15,7 @@ const content_table_item_t content_table[] = {
 @CONTENT_TABLE@
 };
 
+#if 0
 const divided_table_item_t divided_table[] = {
 @DIVIDED_TABLE@
 };
@@ -22,6 +23,7 @@ const divided_table_item_t divided_table[] = {
 const resplit_table_item_t resplit_table[] = {
 @RESPLIT_TABLE@
 };
+#endif
 
 const gint chewing_key_table[CHEWING_NUMBER_OF_INITIALS *
                              CHEWING_NUMBER_OF_MIDDLES *
