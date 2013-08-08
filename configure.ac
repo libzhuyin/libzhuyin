@@ -2,32 +2,32 @@
 # Process this file with autoconf to produce a configure script.
 
 
-m4_define([libpinyin_major_version], [0])
-m4_define([libpinyin_minor_version], [9])
-m4_define([libpinyin_micro_version], [93])
-m4_define([libpinyin_abi_current], [4])
-m4_define([libpinyin_abi_revision], [0])
+m4_define([libzhuyin_major_version], [0])
+m4_define([libzhuyin_minor_version], [9])
+m4_define([libzhuyin_micro_version], [93])
+m4_define([libzhuyin_abi_current], [4])
+m4_define([libzhuyin_abi_revision], [0])
 
-m4_define([libpinyin_version],
-          [libpinyin_major_version.libpinyin_minor_version.libpinyin_micro_version])
-m4_define([libpinyin_binary_version],
-          [libpinyin_abi_current.libpinyin_abi_revision])
+m4_define([libzhuyin_version],
+          [libzhuyin_major_version.libzhuyin_minor_version.libzhuyin_micro_version])
+m4_define([libzhuyin_binary_version],
+          [libzhuyin_abi_current.libzhuyin_abi_revision])
 
 AC_PREREQ(2.60)
-AC_INIT([libpinyin], [libpinyin_version], [https://github.com/libpinyin/libpinyin/issues/new])
+AC_INIT([libzhuyin], [libzhuyin_version], [https://github.com/libzhuyin/libzhuyin/issues/new])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 # Define a string for binary compatibility
-m4_define([lt_current], [libpinyin_abi_current])
-m4_define([lt_revision], [libpinyin_abi_revision])
+m4_define([lt_current], [libzhuyin_abi_current])
+m4_define([lt_revision], [libzhuyin_abi_revision])
 LT_VERSION_INFO="lt_current:lt_revision"
 AC_SUBST(LT_VERSION_INFO)
 
-LIBPINYIN_BINARY_VERSION="libpinyin_binary_version"
-AC_SUBST(LIBPINYIN_BINARY_VERSION)
+LIBZHUYIN_BINARY_VERSION="libzhuyin_binary_version"
+AC_SUBST(LIBZHUYIN_BINARY_VERSION)
 
 # Checks for programs.
 AC_PROG_CXX
@@ -77,8 +77,8 @@ AC_CHECK_HEADER([db.h], [], AC_MSG_ERROR([Cannot find Berkeley DB library versio
 AC_SEARCH_LIBS([db_create], [db], [], AC_MSG_ERROR([Cannot find Berkeley DB library version 4]))
 
 
-AC_CONFIG_FILES([libpinyin.pc
-                 libpinyin.spec
+AC_CONFIG_FILES([libzhuyin.pc
+                 libzhuyin.spec
 		 Makefile
                  doc/Makefile
 		 data/Makefile

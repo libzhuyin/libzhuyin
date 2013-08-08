@@ -4,7 +4,7 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME="libpinyin"
+PKG_NAME="libzhuyin"
 
 (test -f $srcdir/configure.ac \
   && test -f $srcdir/README ) || {

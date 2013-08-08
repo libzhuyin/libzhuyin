@@ -27,9 +27,9 @@ tags
 TAGS
 cscope.*
 *.la
-libpinyin.pc
-libpinyin.spec
-libpinyin.so*
+libzhuyin.pc
+libzhuyin.spec
+libzhuyin.so*
 src/lookup/liblookup.a
 src/storage/libstorage.a
 tests/include/test_memory_chunk

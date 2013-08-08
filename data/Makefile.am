@@ -40,10 +40,10 @@ MAINTAINERCLEANFILES	= Makefile.in
 EXTRA_DIST		= $(textual_model_data) \
                           table.conf
 
-libpinyin_db_DATA 	= $(binary_model_data) \
+libzhuyin_db_DATA 	= $(binary_model_data) \
                           table.conf
 
-libpinyin_dbdir		= $(libdir)/libpinyin/data
+libzhuyin_dbdir		= $(libdir)/libzhuyin/data
 
 CLEANFILES		= $(binary_model_data)
 

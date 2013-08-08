@@ -1,18 +1,18 @@
-Name:           libpinyin
+Name:           libzhuyin
 Version:        @VERSION@
 Release:        1%{?dist}
-Summary:        Library to deal with pinyin
+Summary:        Library to deal with zhuyin
 
 License:        GPLv2+
-URL:            https://github.com/libpinyin/libpinyin
-Source0:        http://downloads.sourceforge.net/libpinyin/libpinyin/%{name}-%{version}.tar.gz
+URL:            https://github.com/libzhuyin/libzhuyin
+Source0:        http://downloads.sourceforge.net/libzhuyin/libzhuyin/%{name}-%{version}.tar.gz
 
 BuildRequires:  db4-devel, glib2-devel
 Requires:       %{name}-data%{?_isa} = %{version}-%{release}
 
 %description
-The libpinyin project aims to provide the algorithms core
-for intelligent sentence-based Chinese pinyin input methods.
+The libzhuyin project aims to provide the algorithms core
+for intelligent sentence-based Chinese zhuyin input methods.
 
 
 %package        devel
@@ -61,18 +61,18 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %files
 %doc AUTHORS COPYING README
 %{_libdir}/*.so.*
-%dir %{_datadir}/libpinyin
+%dir %{_datadir}/libzhuyin
 
 %files devel
 %doc
-%dir %{_includedir}/libpinyin-@VERSION@
-%{_includedir}/libpinyin-@VERSION@/*
+%dir %{_includedir}/libzhuyin-@VERSION@
+%{_includedir}/libzhuyin-@VERSION@/*
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/libpinyin.pc
+%{_libdir}/pkgconfig/libzhuyin.pc
 
 %files data
 %doc
-%{_datadir}/libpinyin/data
+%{_datadir}/libzhuyin/data
 
 %files tools
 %{_bindir}/gen_binary_files
