@@ -61,25 +61,6 @@ enum PinyinAmbiguity2{
 };
 
 /**
- * PinyinCorrection2:
- *
- * The enums of pinyin corrections.
- *
- */
-
-enum PinyinCorrection2{
-    PINYIN_CORRECT_GN_NG = 1U << 21,
-    PINYIN_CORRECT_MG_NG = 1U << 22,
-    PINYIN_CORRECT_IOU_IU = 1U << 23,
-    PINYIN_CORRECT_UEI_UI = 1U << 24,
-    PINYIN_CORRECT_UEN_UN = 1U << 25,
-    PINYIN_CORRECT_UE_VE = 1U << 26,
-    PINYIN_CORRECT_V_U = 1U << 27,
-    PINYIN_CORRECT_ON_ONG = 1U << 28,
-    PINYIN_CORRECT_ALL = 0xFFU << 21
-};
-
-/**
  * @brief enums of Chewing Schemes.
  */
 enum ChewingScheme

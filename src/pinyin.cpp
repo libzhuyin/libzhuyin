@@ -374,7 +374,8 @@ bool pinyin_iterator_add_phrase(import_iterator_t * iter,
     glong len_phrase = 0;
     ucs4_t * ucs4_phrase = g_utf8_to_ucs4(phrase, -1, NULL, &len_phrase, NULL);
 
-    pinyin_option_t options = PINYIN_CORRECT_ALL | USE_TONE;
+    /* pinyin_option_t options = PINYIN_CORRECT_ALL | USE_TONE; */
+    pinyin_option_t options = USE_TONE;
     FullPinyinParser2 parser;
     ChewingKeyVector keys =
         g_array_new(FALSE, FALSE, sizeof(ChewingKey));

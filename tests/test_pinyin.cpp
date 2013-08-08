@@ -30,7 +30,7 @@ int main(int argc, char * argv[]){
         pinyin_init("../data", "../data");
 
     pinyin_option_t options =
-        PINYIN_CORRECT_ALL | USE_DIVIDED_TABLE | USE_RESPLIT_TABLE |
+        USE_DIVIDED_TABLE | USE_RESPLIT_TABLE |
         DYNAMIC_ADJUST;
     pinyin_set_options(context, options);
 

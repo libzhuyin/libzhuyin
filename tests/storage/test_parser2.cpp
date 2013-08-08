@@ -62,7 +62,7 @@ int main(int argc, char * argv[]) {
         exit(EINVAL);
     }
 
-    pinyin_option_t options = PINYIN_CORRECT_ALL | USE_TONE | USE_RESPLIT_TABLE;
+    pinyin_option_t options = USE_TONE | USE_RESPLIT_TABLE;
     if (incomplete)
         options |= PINYIN_INCOMPLETE | CHEWING_INCOMPLETE;
 

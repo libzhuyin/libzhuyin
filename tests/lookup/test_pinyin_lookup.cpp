@@ -37,7 +37,7 @@ int main( int argc, char * argv[]){
     }
 
     pinyin_option_t options =
-        USE_TONE | USE_RESPLIT_TABLE | PINYIN_CORRECT_ALL | PINYIN_AMB_ALL;
+        USE_TONE | USE_RESPLIT_TABLE | PINYIN_AMB_ALL;
     FacadeChewingTable largetable;
 
     MemoryChunk * chunk = new MemoryChunk;

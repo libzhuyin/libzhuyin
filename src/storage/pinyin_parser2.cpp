@@ -45,6 +45,7 @@ static bool check_pinyin_options(pinyin_option_t options, const pinyin_index_ite
             return false;
     }
 
+#if 0
     /* handle correct pinyin, currently only one flag per item. */
     flags &= PINYIN_CORRECT_ALL;
     options &= PINYIN_CORRECT_ALL;
@@ -53,6 +54,7 @@ static bool check_pinyin_options(pinyin_option_t options, const pinyin_index_ite
         if ((flags & options) != flags)
             return false;
     }
+#endif
 
     return true;
 }
@@ -650,7 +652,8 @@ static bool search_chewing_tones(const chewing_tone_item_t * tone_table,
 bool ChewingParser2::parse_one_key(pinyin_option_t options,
                                    ChewingKey & key,
                                    const char *str, int len) const {
-    options &= ~(PINYIN_CORRECT_ALL|PINYIN_AMB_ALL);
+    /* options &= ~(PINYIN_CORRECT_ALL|PINYIN_AMB_ALL); */
+    options &= ~PINYIN_AMB_ALL;
     char tone = CHEWING_ZERO_TONE;
 
     int symbols_len = len;
