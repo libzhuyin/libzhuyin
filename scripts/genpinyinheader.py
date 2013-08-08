@@ -24,7 +24,6 @@ from utils import expand_file
 from genpinyintable import gen_content_table, \
     gen_pinyin_index, gen_bopomofo_index, \
     gen_chewing_key_table
-from genspecialtable import gen_divided_table, gen_resplit_table
 
 def get_table_content(tablename):
     if tablename == 'CONTENT_TABLE':
@@ -34,9 +33,9 @@ def get_table_content(tablename):
     if tablename == 'BOPOMOFO_INDEX':
         return gen_bopomofo_index()
     if tablename == 'DIVIDED_TABLE':
-        return gen_divided_table()
+        return ''
     if tablename == 'RESPLIT_TABLE':
-        return gen_resplit_table()
+        return ''
     if tablename == 'TABLE_INDEX':
         return gen_chewing_key_table()
 
