@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim:set et sts=4 sw=4:
 #
-# libpinyin - Library to deal with pinyin.
+# libzhuyin - Library to deal with zhuyin.
 #
 # Copyright (c) 2007-2008 Peng Huang <shawn.p.huang@gmail.com>
 # Copyright (C) 2011 Peng Wu <alexepico@gmail.com>
