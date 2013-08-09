@@ -19,9 +19,9 @@ INCLUDES                = -I$(top_srcdir)/src/include \
 			  -I$(top_srcdir)/src/storage \
 			  @GLIB2_CFLAGS@
 
-libpinyinincludedir	= $(includedir)/libpinyin-@VERSION@
+libzhuyinincludedir	= $(includedir)/libzhuyin-@VERSION@
 
-libpinyininclude_HEADERS= pinyin_custom2.h
+libzhuyininclude_HEADERS= pinyin_custom2.h
 
 
 noinst_HEADERS		= chewing_enum.h \

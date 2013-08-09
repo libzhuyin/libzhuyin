@@ -32,28 +32,28 @@ INCLUDES                = -I$(top_srcdir)/src \
 			  -I$(top_srcdir)/src/lookup \
                           @GLIB2_CFLAGS@
 
-libpinyinincludedir	= $(includedir)/libpinyin-@VERSION@
+libzhuyinincludedir	= $(includedir)/libzhuyin-@VERSION@
 
-libpinyininclude_HEADERS= pinyin.h
+libzhuyininclude_HEADERS= pinyin.h
 
 noinst_HEADERS		= pinyin_internal.h
 
-lib_LTLIBRARIES		= libpinyin.la
+lib_LTLIBRARIES		= libzhuyin.la
 
-noinst_LTLIBRARIES	= libpinyin_internal.la
+noinst_LTLIBRARIES	= libzhuyin_internal.la
 
-libpinyin_la_SOURCES	= pinyin.cpp
+libzhuyin_la_SOURCES	= pinyin.cpp
 
-libpinyin_la_LIBADD	= storage/libstorage.la lookup/liblookup.la @GLIB2_LIBS@
+libzhuyin_la_LIBADD	= storage/libstorage.la lookup/liblookup.la @GLIB2_LIBS@
 
-libpinyin_la_LDFLAGS	= -Wl,--version-script=$(srcdir)/libpinyin.ver \
+libzhuyin_la_LDFLAGS	= -Wl,--version-script=$(srcdir)/libpinyin.ver \
 			  -version-info @LT_VERSION_INFO@
 
-libpinyin_internal_la_SOURCES	= pinyin_internal.cpp
+libzhuyin_internal_la_SOURCES	= pinyin_internal.cpp
 
-libpinyin_internal_la_LIBADD	= storage/libstorage.la lookup/liblookup.la
+libzhuyin_internal_la_LIBADD	= storage/libstorage.la lookup/liblookup.la
 
 
 ## Note:
-## As libpinyin internal interface will change, only provides static library
+## As libzhuyin internal interface will change, only provides static library
 ##   to catch errors when compiling instead of running.

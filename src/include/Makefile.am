@@ -17,9 +17,9 @@
 
 MAINTAINERCLEANFILES    = Makefile.in
 
-libpinyinincludedir	= $(includedir)/libpinyin-@VERSION@
+libzhuyinincludedir	= $(includedir)/libzhuyin-@VERSION@
 
-libpinyininclude_HEADERS= novel_types.h
+libzhuyininclude_HEADERS= novel_types.h
 
 noinst_HEADERS		= memory_chunk.h \
 			  stl_lite.h

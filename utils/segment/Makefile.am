@@ -28,12 +28,12 @@ noinst_PROGRAMS		= spseg ngseg mergeseq
 
 spseg_SOURCES		= spseg.cpp
 
-spseg_LDADD		= ../../src/libpinyin_internal.la @GLIB2_LIBS@
+spseg_LDADD		= ../../src/libzhuyin_internal.la @GLIB2_LIBS@
 
 ngseg_SOURCES		= ngseg.cpp
 
-ngseg_LDADD		= ../../src/libpinyin_internal.la @GLIB2_LIBS@
+ngseg_LDADD		= ../../src/libzhuyin_internal.la @GLIB2_LIBS@
 
 mergeseq_SOURCES	= mergeseq.cpp
 
-mergeseq_LDADD		= ../../src/libpinyin_internal.la @GLIB2_LIBS@
+mergeseq_LDADD		= ../../src/libzhuyin_internal.la @GLIB2_LIBS@

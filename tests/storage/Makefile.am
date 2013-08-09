@@ -38,34 +38,34 @@ noinst_PROGRAMS          = test_phrase_index \
 
 test_phrase_index_SOURCES = test_phrase_index.cpp
 
-test_phrase_index_LDADD = ../../src/libpinyin_internal.la @GLIB2_LIBS@
+test_phrase_index_LDADD = ../../src/libzhuyin_internal.la @GLIB2_LIBS@
 
 test_phrase_index_logger_SOURCES = test_phrase_index_logger.cpp
 
-test_phrase_index_logger_LDADD = ../../src/libpinyin_internal.la \
+test_phrase_index_logger_LDADD = ../../src/libzhuyin_internal.la \
 					@GLIB2_LIBS@
 
 test_phrase_table_SOURCES = test_phrase_table.cpp
 
-test_phrase_table_LDADD = ../../src/libpinyin_internal.la @GLIB2_LIBS@
+test_phrase_table_LDADD = ../../src/libzhuyin_internal.la @GLIB2_LIBS@
 
 test_ngram_SOURCES	= test_ngram.cpp
 
-test_ngram_LDADD	= ../../src/libpinyin_internal.la @GLIB2_LIBS@
+test_ngram_LDADD	= ../../src/libzhuyin_internal.la @GLIB2_LIBS@
 
 test_flexible_ngram_SOURCES	= test_flexible_ngram.cpp
 
-test_flexible_ngram_LDADD	= ../../src/libpinyin_internal.la \
+test_flexible_ngram_LDADD	= ../../src/libzhuyin_internal.la \
 					@GLIB2_LIBS@
 
 test_parser2_SOURCES    = test_parser2.cpp
 
-test_parser2_LDADD      = ../../src/libpinyin_internal.la @GLIB2_LIBS@
+test_parser2_LDADD      = ../../src/libzhuyin_internal.la @GLIB2_LIBS@
 
 test_chewing_table_SOURCES    = test_chewing_table.cpp
 
-test_chewing_table_LDADD      = ../../src/libpinyin_internal.la @GLIB2_LIBS@
+test_chewing_table_LDADD      = ../../src/libzhuyin_internal.la @GLIB2_LIBS@
 
 test_table_info_SOURCES    = test_table_info.cpp
 
-test_table_info_LDADD      = ../../src/libpinyin_internal.la @GLIB2_LIBS@
+test_table_info_LDADD      = ../../src/libzhuyin_internal.la @GLIB2_LIBS@
