@@ -1,6 +1,6 @@
 /* 
- *  libpinyin
- *  Library to deal with pinyin.
+ *  libzhuyin
+ *  Library to deal with zhuyin.
  *  
  *  Copyright (C) 2012 Peng Wu <alexepico@gmail.com>
  *  
