@@ -9,19 +9,19 @@ set(
 )
 
 add_library(
-    libpinyin
+    libzhuyin
     SHARED
     ${LIBPINYIN_SOURCES}
 )
 
 target_link_libraries(
-    libpinyin
+    libzhuyin
     storage
     lookup
 )
 
 set_target_properties(
-    libpinyin
+    libzhuyin
     PROPERTIES
         OUTPUT_NAME
             pinyin
@@ -33,7 +33,7 @@ set_target_properties(
 
 install(
     TARGETS
-        libpinyin
+        libzhuyin
     LIBRARY DESTINATION
         ${DIR_LIBRARY}
 )

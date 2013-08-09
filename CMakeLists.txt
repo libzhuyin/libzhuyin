@@ -16,13 +16,13 @@
 
 ######## Project settings
 cmake_minimum_required(VERSION 2.8)
-set (PACKAGE_NAME libpinyin)
+set (PACKAGE_NAME libzhuyin)
 project (${PACKAGE_NAME} CXX C)
 enable_testing()
 
 ######## Package information
-set (PACKAGE_URL https://github.com/libpinyin/libpinyin)
-set (PACKAGE_BUGREPORT https://github.com/libpinyin/libpinyin/issues)
+set (PACKAGE_URL https://github.com/libzhuyin/libzhuyin)
+set (PACKAGE_BUGREPORT https://github.com/libzhuyin/libzhuyin/issues)
 set (LIBPINYIN_VERSION_MAJOR 0)
 set (LIBPINYIN_VERSION_MINOR 7)
 set (LIBPINYIN_VERSION_REVISION 0)
@@ -100,8 +100,8 @@ if (DEFINED SYSCONF_INSTALL_DIR)
     set (DIR_ETC ${SYSCONF_INSTALL_DIR})
 endif (DEFINED SYSCONF_INSTALL_DIR)
 
-set (DIR_SHARE_LIBPINYIN ${DIR_SHARE}/libpinyin)
-set (DIR_INCLUDE_LIBPINYIN ${DIR_INCLUDE}/libpinyin-${LIBPINYIN_BINARY_VERSION})
+set (DIR_SHARE_LIBPINYIN ${DIR_SHARE}/libzhuyin)
+set (DIR_INCLUDE_LIBPINYIN ${DIR_INCLUDE}/libzhuyin-${LIBPINYIN_BINARY_VERSION})
 
 ######## Configuration
 
@@ -112,14 +112,14 @@ set (includedir ${DIR_INCLUDE})
 set (datadir ${DIR_SHARE})
 
 configure_file(
-    libpinyin.pc.in
-    libpinyin.pc
+    libzhuyin.pc.in
+    libzhuyin.pc
     @ONLY
 )
 
 install(
     FILES
-        ${CMAKE_BINARY_DIR}/libpinyin.pc
+        ${CMAKE_BINARY_DIR}/libzhuyin.pc
     DESTINATION
         ${DIR_LIBRARY}/pkgconfig
 )

@@ -9,7 +9,7 @@ add_executable(
 
 target_link_libraries(
     test_pinyin
-    libpinyin
+    libzhuyin
 )
 
 add_executable(
@@ -19,7 +19,7 @@ add_executable(
 
 target_link_libraries(
     test_phrase
-    libpinyin
+    libzhuyin
 )
 
 add_executable(
@@ -29,5 +29,5 @@ add_executable(
 
 target_link_libraries(
     test_chewing
-    libpinyin
+    libzhuyin
 )
