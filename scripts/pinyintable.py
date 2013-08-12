@@ -105,7 +105,7 @@ def gen_pinyins():
         if chewing_key in chewing.CHEWING_ASCII_INITIAL_MAP and \
                 pinyin_key not in bopomofo.SPECIAL_INITIAL_SET:
             flags.append("CHEWING_INCOMPLETE")
-        yield pinyin_key, pinyin_key, chewing_key, \
+        yield pinyin_key, chewing_key, \
             flags, get_chewing(pinyin_key)
 
 
@@ -128,7 +128,7 @@ def gen_shengmu():
         chewing_initial = chewing_key[0]
         if chewing_initial in chewing.ASCII_CHEWING_INITIAL_MAP:
             chewing_initial = chewing.ASCII_CHEWING_INITIAL_MAP[chewing_initial]
-        yield shengmu, shengmu, chewing_initial, \
+        yield shengmu, chewing_initial, \
             flags, chewing_key
 
 

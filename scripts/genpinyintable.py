@@ -31,13 +31,13 @@ bopomofo_index = []
 
 #pinyin table
 def filter_pinyin_list():
-    for (correct, wrong, bopomofo, flags, chewing) in gen_pinyin_list():
+    for (pinyin, bopomofo, flags, chewing) in gen_pinyin_list():
         flags = '|'.join(flags)
         chewing = "ChewingKey({0})".format(', '.join(chewing))
         #correct = correct.replace("v", "ü")
-        content_table.append((correct, bopomofo, chewing))
+        content_table.append((pinyin, bopomofo, chewing))
         if "IS_PINYIN" in flags:
-            pinyin_index.append((wrong, flags, correct))
+            pinyin_index.append((pinyin, flags))
         if "IS_CHEWING" in flags:
             bopomofo_index.append((bopomofo, flags))
 
@@ -75,17 +75,17 @@ def get_sheng_yun(pinyin):
 
 def gen_content_table():
     entries = []
-    for ((correct, bopomofo, chewing)) in content_table:
-        entry = '{{"{0}", "{1}", {2}}}'.format(correct, bopomofo, chewing)
+    for ((pinyin, bopomofo, chewing)) in content_table:
+        entry = '{{"{0}", "{1}", {2}}}'.format(pinyin, bopomofo, chewing)
         entries.append(entry)
     return ',\n'.join(entries)
 
 
 def gen_pinyin_index():
     entries = []
-    for (wrong, flags, correct) in pinyin_index:
-        index = [x[0] for x in content_table].index(correct)
-        entry = '{{"{0}", {1}, {2}}}'.format(wrong, flags, index)
+    for (pinyin, flags) in pinyin_index:
+        index = [x[0] for x in content_table].index(pinyin)
+        entry = '{{"{0}", {1}, {2}}}'.format(pinyin, flags, index)
         entries.append(entry)
     return ',\n'.join(entries)
 
