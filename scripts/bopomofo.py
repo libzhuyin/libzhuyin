@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
-BOPOMOFO_PINYIN_MAP = {
+BOPOMOFO_HANYU_PINYIN_MAP = {
     "ㄅ" : "b",
     "ㄅㄚ" : "ba",
     "ㄅㄛ" : "bo",
@@ -455,7 +455,7 @@ BOPOMOFO_PINYIN_MAP = {
     "ㄫ" : "ng",
 }
 
-PINYIN_BOPOMOFO_MAP = dict([(v, k) for k, v in BOPOMOFO_PINYIN_MAP.items()])
+HANYU_PINYIN_BOPOMOFO_MAP = dict([(v, k) for k, v in BOPOMOFO_HANYU_PINYIN_MAP.items()])
 
 SPECIAL_INITIAL_SET = {'ci', 'chi', 'si', 'shi', 'zi', 'zhi', 'ri'}
 

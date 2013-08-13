@@ -25,12 +25,12 @@ import chewing
 import itertools
 
 
-pinyin_list = sorted(bopomofo.PINYIN_BOPOMOFO_MAP.keys())
+pinyin_list = sorted(bopomofo.HANYU_PINYIN_BOPOMOFO_MAP.keys())
 shengmu_list = sorted(pinyin.SHENGMU_LIST)
 
 
 def check_pinyin_chewing_map():
-    for pinyin_key in pinyin.PINYIN_DICT.keys():
+    for pinyin_key in pinyin.HANYU_PINYIN_DICT.keys():
         if pinyin_key in pinyin_list:
             pass
         else:
@@ -41,7 +41,7 @@ def get_chewing(pinyin_key):
     initial, middle, final = \
         'CHEWING_ZERO_INITIAL', 'CHEWING_ZERO_MIDDLE', 'CHEWING_ZERO_FINAL'
     assert pinyin_key != None
-    assert pinyin_key in bopomofo.PINYIN_BOPOMOFO_MAP
+    assert pinyin_key in bopomofo.HANYU_PINYIN_BOPOMOFO_MAP
 
     #handle 'w' and 'y'
     if pinyin_key[0] == 'w':
@@ -50,7 +50,7 @@ def get_chewing(pinyin_key):
         initial = 'PINYIN_Y'
 
     #get chewing string
-    bopomofo_str = bopomofo.PINYIN_BOPOMOFO_MAP[pinyin_key]
+    bopomofo_str = bopomofo.HANYU_PINYIN_BOPOMOFO_MAP[pinyin_key]
 
     #handle bopomofo SPECIAL_INITIAL_SET
     if pinyin_key in bopomofo.SPECIAL_INITIAL_SET:
@@ -94,14 +94,14 @@ def gen_pinyins():
     #generate all pinyins in bopomofo
     for pinyin_key in pinyin_list:
         flags = []
-        if pinyin_key in bopomofo.PINYIN_BOPOMOFO_MAP.keys():
+        if pinyin_key in bopomofo.HANYU_PINYIN_BOPOMOFO_MAP.keys():
             flags.append("IS_CHEWING")
-        if pinyin_key in pinyin.PINYIN_LIST or \
+        if pinyin_key in pinyin.HANYU_PINYIN_LIST or \
                 pinyin_key in pinyin.SHENGMU_LIST:
             flags.append("IS_PINYIN")
         if pinyin_key in shengmu_list:
             flags.append("PINYIN_INCOMPLETE")
-        chewing_key = bopomofo.PINYIN_BOPOMOFO_MAP[pinyin_key]
+        chewing_key = bopomofo.HANYU_PINYIN_BOPOMOFO_MAP[pinyin_key]
         if chewing_key in chewing.CHEWING_ASCII_INITIAL_MAP and \
                 pinyin_key not in bopomofo.SPECIAL_INITIAL_SET:
             flags.append("CHEWING_INCOMPLETE")

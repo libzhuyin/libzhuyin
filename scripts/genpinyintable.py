@@ -93,7 +93,7 @@ def gen_pinyin_index():
 def gen_bopomofo_index():
     entries = []
     for (bopomofo_str, flags) in bopomofo_index:
-        pinyin_str = bopomofo.BOPOMOFO_PINYIN_MAP[bopomofo_str]
+        pinyin_str = bopomofo.BOPOMOFO_HANYU_PINYIN_MAP[bopomofo_str]
         index = [x[0] for x in content_table].index(pinyin_str)
         entry = '{{"{0}", {1}, {2}}}'.format(bopomofo_str, flags, index)
         entries.append(entry)

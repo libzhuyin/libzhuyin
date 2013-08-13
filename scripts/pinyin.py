@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 N_ = lambda x : x
-PINYIN_DICT = {
+HANYU_PINYIN_DICT = {
     "a" : 1, "ai" : 2, "an" : 3, "ang" : 4, "ao" : 5,
     "ba" : 6, "bai" : 7, "ban" : 8, "bang" : 9, "bao" : 10,
     "bei" : 11, "ben" : 12, "beng" : 13, "bi" : 14, "bian" : 15,
@@ -119,7 +119,7 @@ PINYIN_DICT = {
     #~ "eng" : 411, "chua" : 412, "fe" : 413, "fiao" : 414, "liong" : 415
 }
 
-PINYIN_LIST = PINYIN_DICT.keys ()
+HANYU_PINYIN_LIST = HANYU_PINYIN_DICT.keys ()
 
 
 SHENGMU_DICT = {
