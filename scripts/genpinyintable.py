@@ -27,46 +27,62 @@ from chewingkey import gen_table_index
 
 content_table = []
 hanyu_pinyin_index = []
+luoma_pinyin_index = []
 bopomofo_index = []
+second_bopomofo_index = []
+
 
 #pinyin table
 def filter_pinyin_list():
     for (pinyin, bopomofo, flags, chewing) in gen_pinyin_list():
-        flags = '|'.join(flags)
-        chewing = "ChewingKey({0})".format(', '.join(chewing))
-        #correct = correct.replace("v", "ü")
-
         (luoma, second) = ("" , "")
 
         if bopomofo in BOPOMOFO_LUOMA_PINYIN_MAP:
             luoma = BOPOMOFO_LUOMA_PINYIN_MAP[bopomofo]
+            flags.append("IS_LUOMA_PINYIN")
 
         if bopomofo in BOPOMOFO_SECOND_BOPOMOFO_MAP:
             second = BOPOMOFO_SECOND_BOPOMOFO_MAP[bopomofo]
+            flags.append("IS_SECOND_BOPOMOFO")
 
-        content_table.append((pinyin, bopomofo, chewing))
+        flags = '|'.join(flags)
+        chewing = "ChewingKey({0})".format(', '.join(chewing))
+        #correct = correct.replace("v", "ü")
 
-        if "IS_PINYIN" in flags:
+        content_table.append((pinyin, bopomofo, luoma, second, chewing))
+
+        if "IS_HANYU_PINYIN" in flags:
             hanyu_pinyin_index.append((pinyin, flags))
-        if "IS_CHEWING" in flags:
+        if "IS_LUOMA_PINYIN" in flags:
+            luoma_pinyin_index.append((luoma, flags))
+        if "IS_BOPOMOFO" in flags:
             bopomofo_index.append((bopomofo, flags))
+        if "IS_SECOND_BOPOMOFO" in flags:
+            second_bopomofo_index.append((second, flags))
 
 
 def sort_all():
-    global content_table, hanyu_pinyin_index, bopomofo_index
+    global content_table, hanyu_pinyin_index, luoma_pinyin_index
+    global bopomofo_index, second_bopomofo_index
+
     #remove duplicates
     content_table = list(set(content_table))
     hanyu_pinyin_index = list(set(hanyu_pinyin_index))
+    luoma_pinyin_index = list(set(luoma_pinyin_index))
     bopomofo_index = list(set(bopomofo_index))
+    second_bopomofo_index = list(set(second_bopomofo_index))
+
     #define sort function
     sortfunc = operator.itemgetter(0)
     #begin sort
     content_table = sorted(content_table, key=sortfunc)
     #prepend zero item to reserve the invalid item
-    content_table.insert(0, ("", "", "ChewingKey()"))
+    content_table.insert(0, ("", "", "", "", "ChewingKey()"))
     #sort index
     hanyu_pinyin_index = sorted(hanyu_pinyin_index, key=sortfunc)
+    luoma_pinyin_index = sorted(luoma_pinyin_index, key=sortfunc)
     bopomofo_index = sorted(bopomofo_index, key=sortfunc)
+    second_bopomofo_index = sorted(second_bopomofo_index, key=sortfunc)
 
 '''
 def get_sheng_yun(pinyin):
@@ -85,8 +101,8 @@ def get_sheng_yun(pinyin):
 
 def gen_content_table():
     entries = []
-    for ((pinyin, bopomofo, chewing)) in content_table:
-        entry = '{{"{0}", "{1}", {2}}}'.format(pinyin, bopomofo, chewing)
+    for ((pinyin, bopomofo, luoma, second, chewing)) in content_table:
+        entry = '{{"{0}", "{1}", "{2}", "{3}" ,{4}}}'.format(pinyin, bopomofo, luoma, second, chewing)
         entries.append(entry)
     return ',\n'.join(entries)
 
@@ -99,6 +115,13 @@ def gen_hanyu_pinyin_index():
         entries.append(entry)
     return ',\n'.join(entries)
 
+def gen_luoma_pinyin_index():
+    entries = []
+    for (pinyin, flags) in luoma_pinyin_index:
+        index = [x[2] for x in content_table].index(pinyin)
+        entry = '{{"{0}", {1}, {2}}}'.format(pinyin, flags, index)
+        entries.append(entry)
+    return ',\n'.join(entries)
 
 def gen_bopomofo_index():
     entries = []
@@ -109,6 +132,13 @@ def gen_bopomofo_index():
         entries.append(entry)
     return ',\n'.join(entries)
 
+def gen_second_bopomofo_index():
+    entries = []
+    for (bopomofo, flags) in second_bopomofo_index:
+        index = [x[3] for x in content_table].index(bopomofo)
+        entry = '{{"{0}", {1}, {2}}}'.format(bopomofo, flags, index)
+        entries.append(entry)
+    return ',\n'.join(entries)
 
 def gen_chewing_key_table():
     return gen_table_index(content_table)
@@ -122,5 +152,6 @@ sort_all()
 ### main function ###
 if __name__ == "__main__":
     #s = gen_content_table() + gen_hanyu_pinyin_index() + gen_bopomofo_index()
-    s = gen_chewing_key_table()
+    s = gen_content_table() + gen_luoma_pinyin_index() + gen_second_bopomofo_index()
+    #s = gen_chewing_key_table()
     print(s)

@@ -95,10 +95,10 @@ def gen_pinyins():
     for pinyin_key in pinyin_list:
         flags = []
         if pinyin_key in bopomofo.HANYU_PINYIN_BOPOMOFO_MAP.keys():
-            flags.append("IS_CHEWING")
+            flags.append("IS_BOPOMOFO")
         if pinyin_key in pinyin.HANYU_PINYIN_LIST or \
                 pinyin_key in pinyin.SHENGMU_LIST:
-            flags.append("IS_PINYIN")
+            flags.append("IS_HANYU_PINYIN")
         if pinyin_key in shengmu_list:
             flags.append("PINYIN_INCOMPLETE")
         chewing_key = bopomofo.HANYU_PINYIN_BOPOMOFO_MAP[pinyin_key]
@@ -123,7 +123,7 @@ def gen_shengmu():
     for shengmu in shengmu_list:
         if shengmu in pinyin_list:
             continue
-        flags = ["IS_PINYIN", "PINYIN_INCOMPLETE"]
+        flags = ["IS_HANYU_PINYIN", "PINYIN_INCOMPLETE"]
         chewing_key = get_shengmu_chewing(shengmu)
         chewing_initial = chewing_key[0]
         if chewing_initial in chewing.ASCII_CHEWING_INITIAL_MAP:
