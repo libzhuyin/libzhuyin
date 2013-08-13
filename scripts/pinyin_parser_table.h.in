@@ -3,12 +3,20 @@
 
 namespace pinyin{
 
-const pinyin_index_item_t pinyin_index[] = {
-@PINYIN_INDEX@
+const pinyin_index_item_t hanyu_pinyin_index[] = {
+@HANYU_PINYIN_INDEX@
 };
 
-const chewing_index_item_t chewing_index[] = {
+const pinyin_index_item_t luoma_pinyin_index[] = {
+@LUOMA_PINYIN_INDEX@
+};
+
+const chewing_index_item_t bopomofo_index[] = {
 @BOPOMOFO_INDEX@
+};
+
+const pinyin_index_item_t second_bopomofo_index[] = {
+@SECOND_BOPOMOFO_INDEX@
 };
 
 const content_table_item_t content_table[] = {

@@ -22,16 +22,21 @@
 
 from utils import expand_file
 from genpinyintable import gen_content_table, \
-    gen_hanyu_pinyin_index, gen_bopomofo_index, \
+    gen_hanyu_pinyin_index, gen_luoma_pinyin_index, \
+    gen_bopomofo_index, gen_second_bopomofo_index, \
     gen_chewing_key_table
 
 def get_table_content(tablename):
     if tablename == 'CONTENT_TABLE':
         return gen_content_table()
-    if tablename == 'PINYIN_INDEX':
+    if tablename == 'HANYU_PINYIN_INDEX':
         return gen_hanyu_pinyin_index()
+    if tablename == 'LUOMA_PINYIN_INDEX':
+        return gen_luoma_pinyin_index()
     if tablename == 'BOPOMOFO_INDEX':
         return gen_bopomofo_index()
+    if tablename == 'SECOND_BOPOMOFO_INDEX':
+        return gen_second_bopomofo_index()
     if tablename == 'DIVIDED_TABLE':
         return ''
     if tablename == 'RESPLIT_TABLE':
