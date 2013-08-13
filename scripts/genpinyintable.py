@@ -20,13 +20,13 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import operator
-import bopomofo
+from bopomofo import BOPOMOFO_HANYU_PINYIN_MAP, BOPOMOFO_LUOMA_PINYIN_MAP, BOPOMOFO_SECOND_BOPOMOFO_MAP
 from pinyintable import *
 from chewingkey import gen_table_index
 
 
 content_table = []
-pinyin_index = []
+hanyu_pinyin_index = []
 bopomofo_index = []
 
 #pinyin table
@@ -35,18 +35,28 @@ def filter_pinyin_list():
         flags = '|'.join(flags)
         chewing = "ChewingKey({0})".format(', '.join(chewing))
         #correct = correct.replace("v", "ü")
+
+        (luoma, second) = ("" , "")
+
+        if bopomofo in BOPOMOFO_LUOMA_PINYIN_MAP:
+            luoma = BOPOMOFO_LUOMA_PINYIN_MAP[bopomofo]
+
+        if bopomofo in BOPOMOFO_SECOND_BOPOMOFO_MAP:
+            second = BOPOMOFO_SECOND_BOPOMOFO_MAP[bopomofo]
+
         content_table.append((pinyin, bopomofo, chewing))
+
         if "IS_PINYIN" in flags:
-            pinyin_index.append((pinyin, flags))
+            hanyu_pinyin_index.append((pinyin, flags))
         if "IS_CHEWING" in flags:
             bopomofo_index.append((bopomofo, flags))
 
 
 def sort_all():
-    global content_table, pinyin_index, bopomofo_index
+    global content_table, hanyu_pinyin_index, bopomofo_index
     #remove duplicates
     content_table = list(set(content_table))
-    pinyin_index = list(set(pinyin_index))
+    hanyu_pinyin_index = list(set(hanyu_pinyin_index))
     bopomofo_index = list(set(bopomofo_index))
     #define sort function
     sortfunc = operator.itemgetter(0)
@@ -55,7 +65,7 @@ def sort_all():
     #prepend zero item to reserve the invalid item
     content_table.insert(0, ("", "", "ChewingKey()"))
     #sort index
-    pinyin_index = sorted(pinyin_index, key=sortfunc)
+    hanyu_pinyin_index = sorted(hanyu_pinyin_index, key=sortfunc)
     bopomofo_index = sorted(bopomofo_index, key=sortfunc)
 
 '''
@@ -81,9 +91,9 @@ def gen_content_table():
     return ',\n'.join(entries)
 
 
-def gen_pinyin_index():
+def gen_hanyu_pinyin_index():
     entries = []
-    for (pinyin, flags) in pinyin_index:
+    for (pinyin, flags) in hanyu_pinyin_index:
         index = [x[0] for x in content_table].index(pinyin)
         entry = '{{"{0}", {1}, {2}}}'.format(pinyin, flags, index)
         entries.append(entry)
@@ -92,10 +102,10 @@ def gen_pinyin_index():
 
 def gen_bopomofo_index():
     entries = []
-    for (bopomofo_str, flags) in bopomofo_index:
-        pinyin_str = bopomofo.BOPOMOFO_HANYU_PINYIN_MAP[bopomofo_str]
-        index = [x[0] for x in content_table].index(pinyin_str)
-        entry = '{{"{0}", {1}, {2}}}'.format(bopomofo_str, flags, index)
+    for (bopomofo, flags) in bopomofo_index:
+        pinyin = BOPOMOFO_HANYU_PINYIN_MAP[bopomofo]
+        index = [x[0] for x in content_table].index(pinyin)
+        entry = '{{"{0}", {1}, {2}}}'.format(bopomofo, flags, index)
         entries.append(entry)
     return ',\n'.join(entries)
 
@@ -111,6 +121,6 @@ sort_all()
 
 ### main function ###
 if __name__ == "__main__":
-    #s = gen_content_table() + gen_pinyin_index() + gen_bopomofo_index()
+    #s = gen_content_table() + gen_hanyu_pinyin_index() + gen_bopomofo_index()
     s = gen_chewing_key_table()
     print(s)
