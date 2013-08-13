@@ -35,15 +35,13 @@ second_bopomofo_index = []
 #pinyin table
 def filter_pinyin_list():
     for (pinyin, bopomofo, flags, chewing) in gen_pinyin_list():
-        (luoma, second) = ("" , "")
+        (luoma, second) = (None, None)
 
         if bopomofo in BOPOMOFO_LUOMA_PINYIN_MAP:
             luoma = BOPOMOFO_LUOMA_PINYIN_MAP[bopomofo]
-            flags.append("IS_LUOMA_PINYIN")
 
         if bopomofo in BOPOMOFO_SECOND_BOPOMOFO_MAP:
             second = BOPOMOFO_SECOND_BOPOMOFO_MAP[bopomofo]
-            flags.append("IS_SECOND_BOPOMOFO")
 
         flags = '|'.join(flags)
         chewing = "ChewingKey({0})".format(', '.join(chewing))
@@ -51,14 +49,14 @@ def filter_pinyin_list():
 
         content_table.append((pinyin, bopomofo, luoma, second, chewing))
 
-        if "IS_HANYU_PINYIN" in flags:
+        if "IS_PINYIN" in flags:
             hanyu_pinyin_index.append((pinyin, flags))
-        if "IS_LUOMA_PINYIN" in flags:
-            luoma_pinyin_index.append((luoma, flags))
+        if luoma:
+            luoma_pinyin_index.append((luoma, "IS_PINYIN"))
         if "IS_BOPOMOFO" in flags:
             bopomofo_index.append((bopomofo, flags))
-        if "IS_SECOND_BOPOMOFO" in flags:
-            second_bopomofo_index.append((second, flags))
+        if second:
+            second_bopomofo_index.append((second, "IS_PINYIN"))
 
 
 def sort_all():
