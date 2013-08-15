@@ -30,8 +30,10 @@
 namespace pinyin{
 
 typedef struct {
-    const char * m_pinyin_str;
-    const char * m_chewing_str;
+    const char * m_hanyu_pinyin;
+    const char * m_bopomofo;
+    const char * m_luoma_pinyin;
+    const char * m_secondary_bopomofo;
     ChewingKey   m_chewing_key;
 } content_table_item_t;
 
@@ -46,20 +48,6 @@ typedef struct {
     guint32      m_flags;
     guint16      m_table_index;
 } chewing_index_item_t;
-
-typedef struct {
-    const char * m_orig_key;
-    guint32      m_orig_freq;
-    const char * m_new_keys[2];
-    guint32      m_new_freq;
-} divided_table_item_t;
-
-typedef struct {
-    const char * m_orig_keys[2];
-    guint32      m_orig_freq;
-    const char * m_new_keys[2];
-    guint32      m_new_freq;
-} resplit_table_item_t;
 
 typedef struct {
     const char * m_shengmu;
@@ -90,6 +78,10 @@ typedef GArray * ParseValueVector;
  */
 class PinyinParser2
 {
+protected:
+    const pinyin_index_item_t * m_pinyin_index;
+    size_t m_pinyin_index_len;
+
 public:
     /**
      * PinyinParser2::~PinyinParser2:
@@ -161,6 +153,9 @@ public:
      *   the parse method will use dynamic programming to drive parse_one_key.
      */
     virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
+
+public:
+    bool set_scheme(PinyinScheme scheme);
 };
 
 /**

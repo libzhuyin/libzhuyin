@@ -30,7 +30,7 @@ G_BEGIN_DECLS
  * PinyinTableFlag:
  */
 enum PinyinTableFlag{
-    IS_CHEWING = 1U << 1,
+    IS_BOPOMOFO = 1U << 1,
     IS_PINYIN = 1U << 2,
     PINYIN_INCOMPLETE = 1U << 3,
     CHEWING_INCOMPLETE = 1U << 4,
@@ -58,6 +58,18 @@ enum PinyinAmbiguity2{
     PINYIN_AMB_EN_ENG = 1U << 17,
     PINYIN_AMB_IN_ING = 1U << 18,
     PINYIN_AMB_ALL = 0x3FFU << 9
+};
+
+/**
+ * @brief enums of Pinyin Schemes.
+ */
+
+enum PinyinScheme
+{
+    PINYIN_HANYU = 1,
+    PINYIN_LUOMA = 2,
+    PINYIN_SECONDARY_BOPOMOFO = 3,
+    PINYIN_DEFAULT = PINYIN_HANYU
 };
 
 /**

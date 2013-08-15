@@ -24,6 +24,7 @@
 
 #include <glib.h>
 #include "chewing_enum.h"
+#include "pinyin_custom2.h"
 
 using namespace pinyin;
 
@@ -65,8 +66,8 @@ public:
     gint get_table_index();
 
     /* Note: the return value should be freed by g_free. */
-    gchar * get_pinyin_string();
-    gchar * get_chewing_string();
+    gchar * get_pinyin_string(PinyinScheme scheme = PINYIN_DEFAULT);
+    gchar * get_bopomofo_string();
 };
 
 typedef struct _ChewingKey ChewingKey;

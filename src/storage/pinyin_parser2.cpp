@@ -61,7 +61,7 @@ static bool check_pinyin_options(pinyin_option_t options, const pinyin_index_ite
 
 static bool check_chewing_options(pinyin_option_t options, const chewing_index_item_t * item) {
     guint32 flags = item->m_flags;
-    assert (flags & IS_CHEWING);
+    assert (flags & IS_BOPOMOFO);
 
     /* handle incomplete chewing. */
     if (flags & CHEWING_INCOMPLETE) {
@@ -82,33 +82,48 @@ gint _ChewingKey::get_table_index() {
     return index == -1 ? 0 : index;
 }
 
-gchar * _ChewingKey::get_pinyin_string() {
+gchar * _ChewingKey::get_pinyin_string(PinyinScheme scheme) {
     assert(m_tone < CHEWING_NUMBER_OF_TONES);
     gint index = get_table_index();
     assert(index < G_N_ELEMENTS(content_table));
     const content_table_item_t & item = content_table[index];
 
+    const char * pinyin_str = NULL;
+
+    switch(scheme) {
+    case PINYIN_HANYU:
+        pinyin_str = item.m_hanyu_pinyin;
+        break;
+    case PINYIN_LUOMA:
+        pinyin_str = item.m_luoma_pinyin;
+        break;
+    case PINYIN_SECONDARY_BOPOMOFO:
+        pinyin_str = item.m_secondary_bopomofo;
+        break;
+    default:
+        assert(false);
+    }
+
     if (CHEWING_ZERO_TONE == m_tone) {
-        return g_strdup(item.m_pinyin_str);
+        return g_strdup(pinyin_str);
     } else {
-        return g_strdup_printf("%s%d", item.m_pinyin_str, m_tone);
+        return g_strdup_printf("%s%d", pinyin_str, m_tone);
     }
 }
 
-gchar * _ChewingKey::get_chewing_string() {
+gchar * _ChewingKey::get_bopomofo_string() {
     assert(m_tone < CHEWING_NUMBER_OF_TONES);
     gint index = get_table_index();
     assert(index < G_N_ELEMENTS(content_table));
     const content_table_item_t & item = content_table[index];
 
     if (CHEWING_ZERO_TONE == m_tone) {
-        return g_strdup(item.m_chewing_str);
+        return g_strdup(item.m_bopomofo);
     } else {
-        return g_strdup_printf("%s%s", item.m_chewing_str,
+        return g_strdup_printf("%s%s", item.m_bopomofo,
                                chewing_tone_table[m_tone]);
     }
 }
-
 
 /* Pinyin Parsers */
 
@@ -141,6 +156,8 @@ static bool compare_pinyin_less_than(const pinyin_index_item_t & lhs,
 }
 
 static inline bool search_pinyin_index(pinyin_option_t options,
+                                       const pinyin_index_item_t * pinyin_index,
+                                       size_t len,
                                        const char * pinyin,
                                        ChewingKey & key){
     pinyin_index_item_t item;
@@ -150,7 +167,7 @@ static inline bool search_pinyin_index(pinyin_option_t options,
     std_lite::pair<const pinyin_index_item_t *,
                    const pinyin_index_item_t *> range;
     range = std_lite::equal_range
-        (pinyin_index, pinyin_index + G_N_ELEMENTS(pinyin_index),
+        (pinyin_index, pinyin_index + len,
          item, compare_pinyin_less_than);
 
     guint16 range_len = range.second - range.first;
@@ -175,6 +192,8 @@ static bool compare_chewing_less_than(const chewing_index_item_t & lhs,
 }
 
 static inline bool search_chewing_index(pinyin_option_t options,
+                                        const chewing_index_item_t * chewing_index,
+                                        size_t len,
                                         const char * chewing,
                                         ChewingKey & key){
     chewing_index_item_t item;
@@ -184,7 +203,7 @@ static inline bool search_chewing_index(pinyin_option_t options,
     std_lite::pair<const chewing_index_item_t *,
                    const chewing_index_item_t *> range;
     range = std_lite::equal_range
-        (chewing_index, chewing_index + G_N_ELEMENTS(chewing_index),
+        (chewing_index, chewing_index + len,
          item, compare_chewing_less_than);
 
     guint16 range_len = range.second - range.first;
@@ -207,8 +226,9 @@ static inline bool search_chewing_index(pinyin_option_t options,
 /* Full Pinyin Parser */
 FullPinyinParser2::FullPinyinParser2 (){
     m_parse_steps = g_array_new(TRUE, FALSE, sizeof(parse_value_t));
-}
 
+    set_scheme(PINYIN_DEFAULT);
+}
 
 bool FullPinyinParser2::parse_one_key (pinyin_option_t options,
                                        ChewingKey & key,
@@ -235,7 +255,8 @@ bool FullPinyinParser2::parse_one_key (pinyin_option_t options,
 
     /* Note: optimize here? */
     input[parsed_len] = '\0';
-    if (!search_pinyin_index(options, input, key)) {
+    if (!search_pinyin_index(options, m_pinyin_index, m_pinyin_index_len,
+                             input, key)) {
         g_free(input);
         return false;
     }
@@ -389,6 +410,27 @@ int FullPinyinParser2::final_step(size_t step_len, ChewingKeyVector & keys,
     return parsed_len;
 }
 
+bool FullPinyinParser2::set_scheme(PinyinScheme scheme){
+    switch(scheme){
+    case PINYIN_HANYU:
+        m_pinyin_index = hanyu_pinyin_index;
+        m_pinyin_index_len = G_N_ELEMENTS(hanyu_pinyin_index);
+        break;
+    case PINYIN_LUOMA:
+        m_pinyin_index = luoma_pinyin_index;
+        m_pinyin_index_len = G_N_ELEMENTS(luoma_pinyin_index);
+        break;
+    case PINYIN_SECONDARY_BOPOMOFO:
+        m_pinyin_index = second_bopomofo_index;
+        m_pinyin_index_len = G_N_ELEMENTS(second_bopomofo_index);
+        break;
+    default:
+        assert(false);
+    }
+    return true;
+}
+
+
 /* the chewing string must be freed with g_free. */
 static bool search_chewing_symbols(const chewing_symbol_item_t * symbol_table,
                                    const char key, const char ** chewing) {
@@ -455,7 +497,9 @@ bool ChewingParser2::parse_one_key(pinyin_option_t options,
     }
 
     /* search the chewing in the chewing index table. */
-    if (chewing && search_chewing_index(options, chewing, key)) {
+    if (chewing && search_chewing_index(options, bopomofo_index,
+                                        G_N_ELEMENTS(bopomofo_index),
+                                        chewing, key)) {
         /* save back tone if available. */
         key.m_tone = tone;
         g_free(chewing);

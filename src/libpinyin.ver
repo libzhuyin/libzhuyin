@@ -28,7 +28,7 @@ LIBPINYIN {
         pinyin_lookup_tokens;
         pinyin_train;
         pinyin_reset;
-        pinyin_get_chewing_string;
+        pinyin_get_bopomofo_string;
         pinyin_get_pinyin_string;
         pinyin_token_get_phrase;
         pinyin_token_get_n_pronunciation;
