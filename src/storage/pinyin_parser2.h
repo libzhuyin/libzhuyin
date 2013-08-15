@@ -78,10 +78,6 @@ typedef GArray * ParseValueVector;
  */
 class PinyinParser2
 {
-protected:
-    const pinyin_index_item_t * m_pinyin_index;
-    size_t m_pinyin_index_len;
-
 public:
     /**
      * PinyinParser2::~PinyinParser2:
@@ -129,17 +125,16 @@ public:
  */
 class FullPinyinParser2 : public PinyinParser2
 {
+protected:
     /* Note: some internal pointers to full pinyin table. */
+    const pinyin_index_item_t * m_pinyin_index;
+    size_t m_pinyin_index_len;
 
 protected:
     ParseValueVector m_parse_steps;
 
     int final_step(size_t step_len, ChewingKeyVector & keys,
                    ChewingKeyRestVector & key_rests) const;
-
-    bool post_process2(pinyin_option_t options, ChewingKeyVector & keys,
-                       ChewingKeyRestVector & key_rests,
-                       const char * str, int len) const;
 
 public:
     FullPinyinParser2();
