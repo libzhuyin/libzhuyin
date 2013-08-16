@@ -50,14 +50,6 @@ typedef struct {
 } chewing_index_item_t;
 
 typedef struct {
-    const char * m_shengmu;
-} double_pinyin_scheme_shengmu_item_t;
-
-typedef struct {
-    const char * m_yunmus[2];
-} double_pinyin_scheme_yunmu_item_t;
-
-typedef struct {
     const char m_input;
     const char * m_chewing;
 } chewing_symbol_item_t;
