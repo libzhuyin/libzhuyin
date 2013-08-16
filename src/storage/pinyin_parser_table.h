@@ -1280,7 +1280,7 @@ const chewing_index_item_t bopomofo_index[] = {
 {"ㄫ", IS_BOPOMOFO|IS_PINYIN, 234}
 };
 
-const pinyin_index_item_t second_bopomofo_index[] = {
+const pinyin_index_item_t secondary_bopomofo_index[] = {
 {"a", IS_PINYIN, 1},
 {"ai", IS_PINYIN, 2},
 {"an", IS_PINYIN, 3},
