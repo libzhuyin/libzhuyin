@@ -941,7 +941,7 @@ BOPOMOFO_LUOMA_PINYIN_MAP = {
 }
 
 
-BOPOMOFO_SECOND_BOPOMOFO_MAP = {
+BOPOMOFO_SECONDARY_BOPOMOFO_MAP = {
 	"ㄅㄚ" : "ba",
 	"ㄅㄛ" : "bo",
 	"ㄅㄞ" : "bai",

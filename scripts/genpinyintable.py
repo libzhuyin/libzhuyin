@@ -20,7 +20,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import operator
-from bopomofo import BOPOMOFO_HANYU_PINYIN_MAP, BOPOMOFO_LUOMA_PINYIN_MAP, BOPOMOFO_SECOND_BOPOMOFO_MAP
+from bopomofo import BOPOMOFO_HANYU_PINYIN_MAP, BOPOMOFO_LUOMA_PINYIN_MAP, BOPOMOFO_SECONDARY_BOPOMOFO_MAP
 from pinyintable import *
 from chewingkey import gen_table_index
 
@@ -29,7 +29,7 @@ content_table = []
 hanyu_pinyin_index = []
 luoma_pinyin_index = []
 bopomofo_index = []
-second_bopomofo_index = []
+secondary_bopomofo_index = []
 
 
 #pinyin table
@@ -40,8 +40,8 @@ def filter_pinyin_list():
         if bopomofo in BOPOMOFO_LUOMA_PINYIN_MAP:
             luoma = BOPOMOFO_LUOMA_PINYIN_MAP[bopomofo]
 
-        if bopomofo in BOPOMOFO_SECOND_BOPOMOFO_MAP:
-            second = BOPOMOFO_SECOND_BOPOMOFO_MAP[bopomofo]
+        if bopomofo in BOPOMOFO_SECONDARY_BOPOMOFO_MAP:
+            second = BOPOMOFO_SECONDARY_BOPOMOFO_MAP[bopomofo]
 
         flags = '|'.join(flags)
         chewing = "ChewingKey({0})".format(', '.join(chewing))
@@ -56,19 +56,19 @@ def filter_pinyin_list():
         if "IS_BOPOMOFO" in flags:
             bopomofo_index.append((bopomofo, flags))
         if second:
-            second_bopomofo_index.append((second, "IS_PINYIN"))
+            secondary_bopomofo_index.append((second, "IS_PINYIN"))
 
 
 def sort_all():
     global content_table, hanyu_pinyin_index, luoma_pinyin_index
-    global bopomofo_index, second_bopomofo_index
+    global bopomofo_index, secondary_bopomofo_index
 
     #remove duplicates
     content_table = list(set(content_table))
     hanyu_pinyin_index = list(set(hanyu_pinyin_index))
     luoma_pinyin_index = list(set(luoma_pinyin_index))
     bopomofo_index = list(set(bopomofo_index))
-    second_bopomofo_index = list(set(second_bopomofo_index))
+    secondary_bopomofo_index = list(set(secondary_bopomofo_index))
 
     #define sort function
     sortfunc = operator.itemgetter(0)
@@ -80,7 +80,7 @@ def sort_all():
     hanyu_pinyin_index = sorted(hanyu_pinyin_index, key=sortfunc)
     luoma_pinyin_index = sorted(luoma_pinyin_index, key=sortfunc)
     bopomofo_index = sorted(bopomofo_index, key=sortfunc)
-    second_bopomofo_index = sorted(second_bopomofo_index, key=sortfunc)
+    secondary_bopomofo_index = sorted(secondary_bopomofo_index, key=sortfunc)
 
 '''
 def get_sheng_yun(pinyin):
@@ -130,9 +130,9 @@ def gen_bopomofo_index():
         entries.append(entry)
     return ',\n'.join(entries)
 
-def gen_second_bopomofo_index():
+def gen_secondary_bopomofo_index():
     entries = []
-    for (bopomofo, flags) in second_bopomofo_index:
+    for (bopomofo, flags) in secondary_bopomofo_index:
         index = [x[3] for x in content_table].index(bopomofo)
         entry = '{{"{0}", {1}, {2}}}'.format(bopomofo, flags, index)
         entries.append(entry)
@@ -150,6 +150,6 @@ sort_all()
 ### main function ###
 if __name__ == "__main__":
     #s = gen_content_table() + gen_hanyu_pinyin_index() + gen_bopomofo_index()
-    s = gen_content_table() + gen_luoma_pinyin_index() + gen_second_bopomofo_index()
+    s = gen_content_table() + gen_luoma_pinyin_index() + gen_secondary_bopomofo_index()
     #s = gen_chewing_key_table()
     print(s)

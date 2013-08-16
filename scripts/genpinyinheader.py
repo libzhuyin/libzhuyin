@@ -23,7 +23,7 @@
 from utils import expand_file
 from genpinyintable import gen_content_table, \
     gen_hanyu_pinyin_index, gen_luoma_pinyin_index, \
-    gen_bopomofo_index, gen_second_bopomofo_index, \
+    gen_bopomofo_index, gen_secondary_bopomofo_index, \
     gen_chewing_key_table
 
 def get_table_content(tablename):
@@ -35,8 +35,8 @@ def get_table_content(tablename):
         return gen_luoma_pinyin_index()
     if tablename == 'BOPOMOFO_INDEX':
         return gen_bopomofo_index()
-    if tablename == 'SECOND_BOPOMOFO_INDEX':
-        return gen_second_bopomofo_index()
+    if tablename == 'SECONDARY_BOPOMOFO_INDEX':
+        return gen_secondary_bopomofo_index()
     if tablename == 'DIVIDED_TABLE':
         return ''
     if tablename == 'RESPLIT_TABLE':

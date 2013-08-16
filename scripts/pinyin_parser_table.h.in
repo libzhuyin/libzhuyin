@@ -15,8 +15,8 @@ const chewing_index_item_t bopomofo_index[] = {
 @BOPOMOFO_INDEX@
 };
 
-const pinyin_index_item_t second_bopomofo_index[] = {
-@SECOND_BOPOMOFO_INDEX@
+const pinyin_index_item_t secondary_bopomofo_index[] = {
+@SECONDARY_BOPOMOFO_INDEX@
 };
 
 const content_table_item_t content_table[] = {
