@@ -76,3 +76,54 @@ et26_correct_special = [
     ("ㄓ*" , "ㄐ*"),
     ("ㄕ*" , "ㄒ*"),
 ]
+
+
+dachen_cp26_switch = [
+# switch key, from, to
+    ('q', "ㄅ", "ㄆ"),
+    ('q', "ㄆ", "ㄅ"),
+
+    ('w', "ㄉ", "ㄊ"),
+    ('w', "ㄊ", "ㄉ"),
+
+    ('t', "ㄓ", "ㄔ"),
+    ('t', "ㄔ", "ㄓ"),
+
+    ('i', "ㄛ", "ㄞ"),
+    ('i', "ㄞ", "ㄛ"),
+
+    ('o', "ㄟ", "ㄢ"),
+    ('o', "ㄢ", "ㄟ"),
+
+    ('l', "ㄠ", "ㄤ"),
+    ('l', "ㄤ", "ㄠ"),
+
+    ('p', "ㄣ", "ㄦ"),
+    ('p', "ㄦ", "ㄣ"),
+]
+
+dachen_cp26_switch_special = [
+# m_initial != zero || m_middle != zero
+
+    ('b', "ㄖ", "ㄝ"),
+
+    ('n', "ㄙ", "ㄣ"),
+
+# switching between "ㄧ", "ㄚ", and "ㄧㄚ"
+# m_middle == 'ㄧ' and m_final != 'ㄚ'
+    ('u', "ㄧ", "ㄚ"),
+# m_middle != 'ㄧ' and m_final == 'ㄚ'
+    ('u', "ㄚ", "ㄧㄚ"),
+# m_middle == 'ㄧ' and m_final == "ㄚ"
+    ('u', "ㄧㄚ", ""),
+# m_middle != zero
+    ('u', "*?", "*ㄚ"),
+
+# switching between "ㄩ" and "ㄡ"
+# m_final != 'ㄡ'
+    ('m', "ㄩ", "ㄡ"),
+# m_middle != 'ㄩ'
+    ('m', "ㄡ", "ㄩ"),
+# m_middle != zero
+    ('m', "*?", "*ㄡ"),
+]
