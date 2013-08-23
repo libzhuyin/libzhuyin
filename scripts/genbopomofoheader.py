@@ -46,11 +46,30 @@ def gen_chewing_symbols(keys, symbols):
     return ",\n".join(entries)
 
 
-#generate shengmu and yunmu here
-def gen_chewing_shengyun(scheme):
+#generate initials here
+def gen_chewing_initials(scheme):
+    (begin, end) = bopomofo_initial_range
     keys = bopomofo_keyboards[scheme]
-    keys = keys[:-5]
-    symbols = bopomofo_symbols[:-5]
+    keys = keys[begin:end]
+    symbols = bopomofo_symbols[begin:end]
+    return gen_chewing_symbols(keys, symbols)
+
+
+#generate middles here
+def gen_chewing_middles(scheme):
+    (begin, end) = bopomofo_middle_range
+    keys = bopomofo_keyboards[scheme]
+    keys = keys[begin:end]
+    symbols = bopomofo_symbols[begin:end]
+    return gen_chewing_symbols(keys, symbols)
+
+
+#generate finals here
+def gen_chewing_finals(scheme):
+    (begin, end) = bopomofo_final_range
+    keys = bopomofo_keyboards[scheme]
+    keys = keys[begin:end]
+    symbols = bopomofo_symbols[begin:end]
     return gen_chewing_symbols(keys, symbols)
 
 
@@ -74,8 +93,12 @@ def gen_chewing_tones(scheme):
 
 def get_table_content(tablename):
     (scheme, part) = tablename.split('_', 1)
-    if part == "SYMBOLS":
-        return gen_chewing_shengyun(scheme)
+    if part == "INITIALS":
+        return gen_chewing_initials(scheme)
+    if part == "MIDDLES":
+        return gen_chewing_middles(scheme)
+    if part == "FINALS":
+        return gen_chewing_finals(scheme)
     if part == "TONES":
         return gen_chewing_tones(scheme)
 
