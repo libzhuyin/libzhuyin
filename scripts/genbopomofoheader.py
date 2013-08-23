@@ -23,8 +23,7 @@
 
 from operator import itemgetter
 from utils import expand_file
-from bopomofokeyboard import bopomofo_symbols, \
-    bopomofo_num_tones, bopomofo_keyboards
+from bopomofokeyboard import *
 
 def escape_char(ch):
     if ch == "'" or ch == "\\":
@@ -32,13 +31,10 @@ def escape_char(ch):
     return "'{0}'".format(ch)
 
 
-#generate shengmu and yunmu here
-def gen_chewing_symbols(scheme):
-    keyboard = bopomofo_keyboards[scheme]
-    keyboard = keyboard[: bopomofo_num_tones]
+def gen_chewing_symbols(keys, symbols):
     items = []
-    for (i, key) in enumerate(keyboard):
-        items.append((key, bopomofo_symbols[i]))
+    for (i, key) in enumerate(keys):
+        items.append((key, symbols[i]))
     items = sorted(items, key=itemgetter(0))
     entries = []
     for (key, string) in items:
@@ -50,12 +46,21 @@ def gen_chewing_symbols(scheme):
     return ",\n".join(entries)
 
 
+#generate shengmu and yunmu here
+def gen_chewing_shengyun(scheme):
+    keys = bopomofo_keyboards[scheme]
+    keys = keys[:-5]
+    symbols = bopomofo_symbols[:-5]
+    return gen_chewing_symbols(keys, symbols)
+
+
 #generate tones here
 def gen_chewing_tones(scheme):
-    keyboard = bopomofo_keyboards[scheme]
-    keyboard = keyboard[bopomofo_num_tones:]
+    (begin, end) = bopomofo_tone_range
+    keys = bopomofo_keyboards[scheme]
+    keys = keys[begin:end]
     items = []
-    for (i, key) in enumerate(keyboard, start=1):
+    for (i, key) in enumerate(keys, start=1):
         items.append((key, i));
     items = sorted(items, key=itemgetter(0))
     entries = []
@@ -70,9 +75,9 @@ def gen_chewing_tones(scheme):
 def get_table_content(tablename):
     (scheme, part) = tablename.split('_', 1)
     if part == "SYMBOLS":
-        return gen_chewing_symbols(scheme);
+        return gen_chewing_shengyun(scheme)
     if part == "TONES":
-        return gen_chewing_tones(scheme);
+        return gen_chewing_tones(scheme)
 
 
 ### main function ###
