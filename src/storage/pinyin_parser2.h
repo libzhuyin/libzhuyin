@@ -63,25 +63,25 @@ typedef GArray * ParseValueVector;
 
 
 /**
- * PinyinParser2:
+ * PhoneticParser2:
  *
  * Parse the ascii string into an array of the struct ChewingKeys.
  *
  */
-class PinyinParser2
+class PhoneticParser2
 {
 public:
     /**
-     * PinyinParser2::~PinyinParser2:
+     * PhoneticParser2::~PhoneticParser2:
      *
-     * The destructor of the PinyinParser2.
+     * The destructor of the PhoneticParser2.
      *
      */
-    virtual ~PinyinParser2() {}
+    virtual ~PhoneticParser2() {}
 
 public:
     /**
-     * PinyinParser2::parse_one_key:
+     * PhoneticParser2::parse_one_key:
      * @options: the pinyin options from pinyin_custom2.h.
      * @key: the parsed result of struct ChewingKey.
      * @str: the input of the ascii string.
@@ -94,7 +94,7 @@ public:
     virtual bool parse_one_key(pinyin_option_t options, ChewingKey & key, const char *str, int len) const = 0;
 
     /**
-     * PinyinParser2::parse:
+     * PhoneticParser2::parse:
      * @options: the pinyin options from pinyin_custom2.h.
      * @keys: the parsed result of struct ChewingKeys.
      * @str: the input of the ascii string.
@@ -115,7 +115,7 @@ public:
  * Parses the full pinyin string into an array of struct ChewingKeys.
  *
  */
-class FullPinyinParser2 : public PinyinParser2
+class FullPinyinParser2 : public PhoneticParser2
 {
 protected:
     /* Note: some internal pointers to full pinyin table. */
@@ -161,7 +161,7 @@ public:
 /* Note: maybe yunmus shuffle will be supported later.
  *         currently this feature is postponed.
  */
-class ChewingParser2 : public PinyinParser2
+class ChewingParser2 : public PhoneticParser2
 {
     /* Note: some internal pointers to chewing scheme table. */
 protected:
