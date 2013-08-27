@@ -30,6 +30,8 @@ bopomofo_symbols = [
 ]
 
 #陰平聲不標號, use space key
+
+bopomofo_symbol_range  = (0, -5)
 bopomofo_initial_range = (0, 21)
 bopomofo_middle_range  = (21, 24)
 bopomofo_final_range   = (24, -5)

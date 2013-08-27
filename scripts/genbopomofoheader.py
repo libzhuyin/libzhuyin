@@ -31,7 +31,7 @@ def escape_char(ch):
     return "'{0}'".format(ch)
 
 
-def gen_chewing_symbols(keys, symbols):
+def gen_symbols(keys, symbols):
     items = []
     for (i, key) in enumerate(keys):
         items.append((key, symbols[i]))
@@ -46,13 +46,22 @@ def gen_chewing_symbols(keys, symbols):
     return ",\n".join(entries)
 
 
+#generate symbols here
+def gen_chewing_symbols(scheme):
+    (begin, end) = bopomofo_symbol_range
+    keys = bopomofo_keyboards[scheme]
+    keys = keys[begin:end]
+    symbols = bopomofo_symbols[begin:end]
+    return gen_symbols(keys, symbols)
+
+
 #generate initials here
 def gen_chewing_initials(scheme):
     (begin, end) = bopomofo_initial_range
     keys = bopomofo_keyboards[scheme]
     keys = keys[begin:end]
     symbols = bopomofo_symbols[begin:end]
-    return gen_chewing_symbols(keys, symbols)
+    return gen_symbols(keys, symbols)
 
 
 #generate middles here
@@ -61,7 +70,7 @@ def gen_chewing_middles(scheme):
     keys = bopomofo_keyboards[scheme]
     keys = keys[begin:end]
     symbols = bopomofo_symbols[begin:end]
-    return gen_chewing_symbols(keys, symbols)
+    return gen_symbols(keys, symbols)
 
 
 #generate finals here
@@ -70,7 +79,7 @@ def gen_chewing_finals(scheme):
     keys = bopomofo_keyboards[scheme]
     keys = keys[begin:end]
     symbols = bopomofo_symbols[begin:end]
-    return gen_chewing_symbols(keys, symbols)
+    return gen_symbols(keys, symbols)
 
 
 #generate tones here
@@ -93,6 +102,8 @@ def gen_chewing_tones(scheme):
 
 def get_table_content(tablename):
     (scheme, part) = tablename.split('_', 1)
+    if part == "SYMBOLS":
+        return gen_chewing_symbols(scheme)
     if part == "INITIALS":
         return gen_chewing_initials(scheme)
     if part == "MIDDLES":
