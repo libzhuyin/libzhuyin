@@ -22,6 +22,7 @@
 import operator
 from bopomofo import BOPOMOFO_HANYU_PINYIN_MAP, BOPOMOFO_LUOMA_PINYIN_MAP, BOPOMOFO_SECONDARY_BOPOMOFO_MAP
 from pinyintable import *
+from correct import *
 from chewingkey import gen_table_index
 
 
@@ -137,6 +138,13 @@ def gen_secondary_bopomofo_index():
         entry = '{{"{0}", {1}, {2}}}'.format(bopomofo, flags, index)
         entries.append(entry)
     return ',\n'.join(entries)
+
+def check_rule(correct, wrong):
+    if '*' not in correct:
+        assert '*' not in wrong
+    elif correct.endswith('*'):
+        assert wrong.endswith('*')
+    return True
 
 def gen_chewing_key_table():
     return gen_table_index(content_table)
