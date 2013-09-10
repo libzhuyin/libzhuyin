@@ -144,7 +144,35 @@ def check_rule(correct, wrong):
         assert '*' not in wrong
     elif correct.endswith('*'):
         assert wrong.endswith('*')
+    else:
+        assert False, "unknown rule format"
     return True
+
+def handle_rules(bopomofo, corrects):
+    matches = []
+    for (correct, wrong) in corrects:
+        if '*' not in correct:
+            if correct == bopomofo:
+                matches.append(wrong)
+        elif correct.endswith('*'):
+            starts = correct[0:-1]
+            if bopomofo.startswith(starts):
+                remained = bopomofo[len(starts):]
+                newstr = wrong[0:-1] + remained
+                matches.append(newstr)
+    return matches
+
+def handle_special_rules(bopomofo, corrects):
+# special rules require additional check m_middle == zero
+    matches = []
+    if 'ㄧ' in bopomofo:
+        return matches
+    if 'ㄨ' in bopomofo:
+        return matches
+    if 'ㄩ' in bopomofo:
+        return matches
+# Note: special rules always contains '*'
+    return handle_rules(bopomofo, corrects)
 
 def gen_chewing_key_table():
     return gen_table_index(content_table)
