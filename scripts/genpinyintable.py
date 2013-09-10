@@ -196,6 +196,13 @@ def check_rule(correct, wrong):
         assert False, "unknown rule format"
     return True
 
+def check_rules(rules, specials):
+    for (correct, wrong) in rules:
+        check_rule(correct, wrong)
+    for (correct, wrong) in specials:
+        assert '*' in correct
+        check_rule(correct, wrong)
+
 def handle_rules(bopomofo, corrects):
     matches = []
     for (correct, wrong) in corrects:
@@ -228,6 +235,8 @@ def gen_chewing_key_table():
 
 #init code
 filter_pinyin_list()
+check_rules(hsu_correct, hsu_correct_special)
+check_rules(eten26_correct, eten26_correct_special)
 populate_more_bopomofo_index()
 sort_all()
 
