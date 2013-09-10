@@ -19,6 +19,14 @@ const pinyin_index_item_t secondary_bopomofo_index[] = {
 @SECONDARY_BOPOMOFO_INDEX@
 };
 
+const chewing_index_item_t hsu_bopomofo_index[] = {
+@HSU_BOPOMOFO_INDEX@
+};
+
+const chewing_index_item_t eten26_bopomofo_index[] = {
+@ETEN26_BOPOMOFO_INDEX@
+};
+
 const content_table_item_t content_table[] = {
 @CONTENT_TABLE@
 };
