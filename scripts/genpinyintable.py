@@ -20,6 +20,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import operator
+import itertools
 from bopomofo import BOPOMOFO_HANYU_PINYIN_MAP, BOPOMOFO_LUOMA_PINYIN_MAP, BOPOMOFO_SECONDARY_BOPOMOFO_MAP
 from pinyintable import *
 from correct import *
@@ -31,6 +32,8 @@ hanyu_pinyin_index = []
 luoma_pinyin_index = []
 bopomofo_index = []
 secondary_bopomofo_index = []
+hsu_bopomofo_index = []
+eten26_bopomofo_index = []
 
 
 #pinyin table
@@ -60,9 +63,30 @@ def filter_pinyin_list():
             secondary_bopomofo_index.append((second, "IS_PINYIN"))
 
 
+def populate_more_bopomofo_index():
+    for (bopomofo, flags) in bopomofo_index:
+        # populate hsu bopomofo index
+        correct = bopomofo
+        hsu_bopomofo_index.append((bopomofo, flags, correct))
+        matches = itertools.chain(handle_rules(bopomofo, hsu_correct),
+                                  handle_special_rules(bopomofo, hsu_correct_special))
+        for wrong in matches:
+            newflags = '|'.join((flags, 'HSU_CORRECT'))
+            hsu_bopomofo_index.append((wrong, newflags, correct))
+
+        # populate eten26 bopomofo index
+        eten26_bopomofo_index.append((bopomofo, flags, correct))
+        matches = itertools.chain(handle_rules(bopomofo, eten26_correct),
+                                  handle_special_rules(bopomofo, eten26_correct_special))
+        for wrong in matches:
+            newflags = '|'.join((flags, 'ETEN26_CORRECT'))
+            eten26_bopomofo_index.append((wrong, newflags, correct))
+
+
 def sort_all():
     global content_table, hanyu_pinyin_index, luoma_pinyin_index
     global bopomofo_index, secondary_bopomofo_index
+    global hsu_bopomofo_index, eten26_bopomofo_index
 
     #remove duplicates
     content_table = list(set(content_table))
@@ -70,6 +94,8 @@ def sort_all():
     luoma_pinyin_index = list(set(luoma_pinyin_index))
     bopomofo_index = list(set(bopomofo_index))
     secondary_bopomofo_index = list(set(secondary_bopomofo_index))
+    hsu_bopomofo_index = list(set(hsu_bopomofo_index))
+    eten26_bopomofo_index = list(set(eten26_bopomofo_index))
 
     #define sort function
     sortfunc = operator.itemgetter(0)
@@ -82,6 +108,8 @@ def sort_all():
     luoma_pinyin_index = sorted(luoma_pinyin_index, key=sortfunc)
     bopomofo_index = sorted(bopomofo_index, key=sortfunc)
     secondary_bopomofo_index = sorted(secondary_bopomofo_index, key=sortfunc)
+    hsu_bopomofo_index = sorted(hsu_bopomofo_index, key=sortfunc)
+    eten26_bopomofo_index = sorted(eten26_bopomofo_index, key=sortfunc)
 
 '''
 def get_sheng_yun(pinyin):
@@ -139,6 +167,26 @@ def gen_secondary_bopomofo_index():
         entries.append(entry)
     return ',\n'.join(entries)
 
+def gen_hsu_bopomofo_index():
+    entries = []
+    for (wrong, flags, correct) in hsu_bopomofo_index:
+        pinyin = BOPOMOFO_HANYU_PINYIN_MAP[correct]
+        index = [x[0] for x in content_table].index(pinyin)
+        entry = '{{"{0}" /* "{1}" */, {2}, {3}}}'.format \
+                (wrong, pinyin, flags, index)
+        entries.append(entry)
+    return ',\n'.join(entries)
+
+def gen_eten26_bopomofo_index():
+    entries = []
+    for (wrong, flags, correct) in eten26_bopomofo_index:
+        pinyin = BOPOMOFO_HANYU_PINYIN_MAP[correct]
+        index = [x[0] for x in content_table].index(pinyin)
+        entry = '{{"{0}" /* "{1}" */, {2}, {3}}}'.format \
+                (wrong, pinyin, flags, index)
+        entries.append(entry)
+    return ',\n'.join(entries)
+
 def check_rule(correct, wrong):
     if '*' not in correct:
         assert '*' not in wrong
@@ -180,12 +228,14 @@ def gen_chewing_key_table():
 
 #init code
 filter_pinyin_list()
+populate_more_bopomofo_index()
 sort_all()
 
 
 ### main function ###
 if __name__ == "__main__":
     #s = gen_content_table() + gen_hanyu_pinyin_index() + gen_bopomofo_index()
-    s = gen_content_table() + gen_luoma_pinyin_index() + gen_secondary_bopomofo_index()
+    #s = gen_content_table() + gen_luoma_pinyin_index() + gen_secondary_bopomofo_index()
+    s = gen_hsu_bopomofo_index() + gen_eten26_bopomofo_index()
     #s = gen_chewing_key_table()
     print(s)

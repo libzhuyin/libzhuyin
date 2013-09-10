@@ -19,7 +19,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# for Hsu and ET26
+# for HSU and ETEN26
 
 hsu_correct = [
     # "correct", "wrong"
@@ -52,7 +52,7 @@ hsu_correct_special = [
 ]
 
 
-et26_correct = [
+eten26_correct = [
     # "correct", "wrong"
     ("ㄓ" , "ㄐ"),
     ("ㄕ" , "ㄒ"),
@@ -69,7 +69,7 @@ et26_correct = [
 ]
 
 
-et26_correct_special = [
+eten26_correct_special = [
 # "correct", "wrong"
 # ㄐㄒ must follow ㄧㄩ
 # m_middle == zero from libchewing code
