@@ -146,7 +146,7 @@ public:
 };
 
 /**
- * ChewingParser2:
+ * ChewingSimpleParser2:
  *
  * Parse the chewing string into an array of struct ChewingKeys.
  *
@@ -161,7 +161,7 @@ public:
 /* Note: maybe yunmus shuffle will be supported later.
  *         currently this feature is postponed.
  */
-class ChewingParser2 : public PhoneticParser2
+class ChewingSimpleParser2 : public PhoneticParser2
 {
     /* Note: some internal pointers to chewing scheme table. */
 protected:
@@ -169,12 +169,12 @@ protected:
     const chewing_tone_item_t   * m_tone_table;
 
 public:
-    ChewingParser2() {
+    ChewingSimpleParser2() {
         m_symbol_table = NULL; m_tone_table = NULL;
         set_scheme(CHEWING_DEFAULT);
     }
 
-    virtual ~ChewingParser2() {}
+    virtual ~ChewingSimpleParser2() {}
 
     virtual bool parse_one_key(pinyin_option_t options, ChewingKey & key, const char *str, int len) const;
 

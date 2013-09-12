@@ -461,9 +461,9 @@ static bool search_chewing_tones(const chewing_tone_item_t * tone_table,
 }
 
 
-bool ChewingParser2::parse_one_key(pinyin_option_t options,
-                                   ChewingKey & key,
-                                   const char *str, int len) const {
+bool ChewingSimpleParser2::parse_one_key(pinyin_option_t options,
+                                         ChewingKey & key,
+                                         const char *str, int len) const {
     /* options &= ~(PINYIN_CORRECT_ALL|PINYIN_AMB_ALL); */
     options &= ~PINYIN_AMB_ALL;
     char tone = CHEWING_ZERO_TONE;
@@ -512,9 +512,10 @@ bool ChewingParser2::parse_one_key(pinyin_option_t options,
 
 
 /* only characters in chewing keyboard scheme are accepted here. */
-int ChewingParser2::parse(pinyin_option_t options, ChewingKeyVector & keys,
-                          ChewingKeyRestVector & key_rests,
-                          const char *str, int len) const {
+int ChewingSimpleParser2::parse(pinyin_option_t options,
+                                ChewingKeyVector & keys,
+                                ChewingKeyRestVector & key_rests,
+                                const char *str, int len) const {
     g_array_set_size(keys, 0);
     g_array_set_size(key_rests, 0);
 
@@ -555,7 +556,7 @@ int ChewingParser2::parse(pinyin_option_t options, ChewingKeyVector & keys,
 }
 
 
-bool ChewingParser2::set_scheme(ChewingScheme scheme) {
+bool ChewingSimpleParser2::set_scheme(ChewingScheme scheme) {
     switch(scheme) {
     case CHEWING_STANDARD:
         m_symbol_table = chewing_standard_symbols;
@@ -579,8 +580,9 @@ bool ChewingParser2::set_scheme(ChewingScheme scheme) {
 }
 
 
-bool ChewingParser2::in_chewing_scheme(pinyin_option_t options,
-                                       const char key, const char ** symbol)
+bool ChewingSimpleParser2::in_chewing_scheme(pinyin_option_t options,
+                                             const char key,
+                                             const char ** symbol)
  const {
     const gchar * chewing = NULL;
     char tone = CHEWING_ZERO_TONE;
