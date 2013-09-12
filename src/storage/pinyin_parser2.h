@@ -201,6 +201,9 @@ class ChewingDiscreteParser2 : public PhoneticParser2
 {
     /* Note: some internal pointers to chewing scheme table. */
 protected:
+    /* internal options for chewing parsing. */
+    pinyin_option_t m_options;
+
     const chewing_index_item_t * m_chewing_index;
     size_t m_chewing_index_len;
     const chewing_symbol_item_t * m_initial_table;
