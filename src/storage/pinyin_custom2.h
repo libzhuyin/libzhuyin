@@ -78,9 +78,14 @@ enum PinyinScheme
 enum ChewingScheme
 {
     CHEWING_STANDARD = 1,
-    CHEWING_IBM      = 2,
-    CHEWING_GINYIEH  = 3,
-    CHEWING_ETEN     = 4,
+    CHEWING_HSU      = 2,
+    CHEWING_IBM      = 3,
+    CHEWING_GINYIEH  = 4,
+    CHEWING_ETEN     = 5,
+    CHEWING_ETEN26   = 6,
+    CHEWING_STANDARD_DVORAK = 7,
+    CHEWING_HSU_DVORAK = 8,
+    CHEWING_DACHEN_CP26 = 9,
     CHEWING_DEFAULT  = CHEWING_STANDARD
 };
 
