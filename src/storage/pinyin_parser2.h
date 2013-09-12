@@ -186,6 +186,47 @@ public:
 };
 
 
+/**
+ * ChewingDiscreteParser2:
+ *
+ * Parse the chewing string into an array of struct ChewingKeys.
+ *
+ * Initially will support HSU, HSU Dvorak and ETEN26.
+ *
+ * Plan to replace ChewingSimpleParser2 in future,
+ *   as this class is more powerful.
+ */
+
+class ChewingDiscreteParser2 : public PhoneticParser2
+{
+    /* Note: some internal pointers to chewing scheme table. */
+protected:
+    const chewing_index_item_t * m_chewing_index;
+    size_t m_chewing_index_len;
+    const chewing_symbol_item_t * m_initial_table;
+    const chewing_symbol_item_t * m_middle_table;
+    const chewing_symbol_item_t * m_final_table;
+    const chewing_tone_item_t   * m_tone_table;
+
+public:
+    ChewingDiscreteParser2() {
+        m_chewing_index = NULL; m_chewing_index_len = 0;
+        m_initial_table = NULL; m_middle_table = NULL;
+        m_final_table   = NULL; m_tone_table = NULL;
+        set_scheme(CHEWING_DEFAULT);
+    }
+
+    virtual ~ChewingDiscreteParser2() {}
+
+    virtual bool parse_one_key(pinyin_option_t options, ChewingKey & key, const char *str, int len) const;
+
+    virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
+
+public:
+    bool set_scheme(ChewingScheme scheme);
+    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
+};
+
 /* compare pinyins with chewing internal representations. */
 inline int pinyin_compare_initial2(pinyin_option_t options,
                                    ChewingInitial lhs,

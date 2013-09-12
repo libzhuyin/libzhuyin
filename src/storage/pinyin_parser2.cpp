@@ -225,6 +225,7 @@ static inline bool search_chewing_index(pinyin_option_t options,
 
 /* Full Pinyin Parser */
 FullPinyinParser2::FullPinyinParser2 (){
+    m_pinyin_index = NULL; m_pinyin_index_len = 0;
     m_parse_steps = g_array_new(TRUE, FALSE, sizeof(parse_value_t));
 
     set_scheme(PINYIN_DEFAULT);
