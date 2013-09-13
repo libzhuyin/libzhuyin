@@ -37,7 +37,8 @@ enum PinyinTableFlag{
     USE_TONE = 1U << 5,
     HSU_CORRECT = 1U << 6,
     ETEN26_CORRECT = 1U << 7,
-    DYNAMIC_ADJUST = 1U << 8
+    DYNAMIC_ADJUST = 1U << 8,
+    CHEWING_CORRECT_ALL = HSU_CORRECT|ETEN26_CORRECT
 };
 
 /**

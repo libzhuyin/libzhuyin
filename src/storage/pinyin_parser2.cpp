@@ -69,6 +69,15 @@ static bool check_chewing_options(pinyin_option_t options, const chewing_index_i
             return false;
     }
 
+    /* handle correct chewing, currently only one flag per item. */
+    flags &= CHEWING_CORRECT_ALL;
+    options &= CHEWING_CORRECT_ALL;
+
+    if (flags) {
+        if ((flags & options) != flags)
+            return false;
+    }
+
     return true;
 }
 
@@ -464,8 +473,7 @@ static bool search_chewing_tones(const chewing_tone_item_t * tone_table,
 
 bool ChewingSimpleParser2::parse_one_key(pinyin_option_t options,
                                          ChewingKey & key,
-                                         const char *str, int len) const {
-    /* options &= ~(PINYIN_CORRECT_ALL|PINYIN_AMB_ALL); */
+                                         const char * str, int len) const {
     options &= ~PINYIN_AMB_ALL;
     char tone = CHEWING_ZERO_TONE;
 
@@ -583,12 +591,56 @@ bool ChewingSimpleParser2::set_scheme(ChewingScheme scheme) {
 
 bool ChewingSimpleParser2::in_chewing_scheme(pinyin_option_t options,
                                              const char key,
-                                             const char ** symbol)
- const {
+                                             const char ** symbol) const {
     const gchar * chewing = NULL;
     char tone = CHEWING_ZERO_TONE;
 
     if (search_chewing_symbols(m_symbol_table, key, &chewing)) {
+        if (symbol)
+            *symbol = chewing;
+        return true;
+    }
+
+    if (!(options & USE_TONE))
+        return false;
+
+    if (search_chewing_tones(m_tone_table, key, &tone)) {
+        if (symbol)
+            *symbol = chewing_tone_table[tone];
+        return true;
+    }
+
+    return false;
+}
+
+bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
+                                           ChewingKey & key,
+                                           const char * str, int len) const {
+    int index = 0;
+    options &= ~PINYIN_AMB_ALL;
+    char tone = CHEWING_ZERO_TONE;
+
+}
+
+bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
+                                               const char key,
+                                               const char ** symbol) const {
+    const gchar * chewing = NULL;
+    char tone = CHEWING_ZERO_TONE;
+
+    if (search_chewing_symbols(m_initial_table, key, &chewing)) {
+        if (symbol)
+            *symbol = chewing;
+        return true;
+    }
+
+    if (search_chewing_symbols(m_middle_table, key, &chewing)) {
+        if (symbol)
+            *symbol = chewing;
+        return true;
+    }
+
+    if (search_chewing_symbols(m_final_table, key, &chewing)) {
         if (symbol)
             *symbol = chewing;
         return true;
