@@ -444,7 +444,7 @@ bool FullPinyinParser2::set_scheme(PinyinScheme scheme){
 /* the chewing string must be freed with g_free. */
 static bool search_chewing_symbols(const chewing_symbol_item_t * symbol_table,
                                    const char key, const char ** chewing) {
-    *chewing = NULL;
+    *chewing = "";
     /* just iterate the table, as we only have < 50 items. */
     while (symbol_table->m_input != '\0') {
         if (symbol_table->m_input == key) {
@@ -616,11 +616,59 @@ bool ChewingSimpleParser2::in_chewing_scheme(pinyin_option_t options,
 bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
                                            ChewingKey & key,
                                            const char * str, int len) const {
-    int index = 0;
     options &= ~PINYIN_AMB_ALL;
+
+    int index = 0;
+    const char * initial = "";
+    const char * middle = "";
+    const char * final = "";
     char tone = CHEWING_ZERO_TONE;
 
+    /* probe initial */
+    if (search_chewing_symbols(m_initial_table, str[index], &initial)) {
+        index++;
+    }
+
+    /* probe middle */
+    if (search_chewing_symbols(m_middle_table, str[index], &middle)) {
+        index++;
+    }
+
+    /* probe final */
+    if (search_chewing_symbols(m_final_table, str[index], &final)) {
+        index++;
+    }
+
+    /* probe tone */
+    if (options & USE_TONE) {
+        if (search_chewing_tones(m_tone_table, str[index], &tone)) {
+            index ++;
+        }
+    }
+
+    gchar * chewing = g_strconcat(initial, middle, final, NULL);
+
+    /* search the chewing in the chewing index table. */
+    if (index == len && search_chewing_index(options, bopomofo_index,
+                                             G_N_ELEMENTS(bopomofo_index),
+                                             chewing, key)) {
+        /* save back tone if available. */
+        key.m_tone = tone;
+        g_free(chewing);
+        return true;
+    }
+
+    g_free(chewing);
+    return false;
 }
+
+int ChewingDiscreteParser2::parse(pinyin_option_t options,
+                                  ChewingKeyVector & keys,
+                                  ChewingKeyRestVector & key_rests,
+                                  const char *str, int len) const {
+    assert(FALSE);
+}
+
 
 bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
                                                const char key,
