@@ -94,7 +94,7 @@ gint _ChewingKey::get_table_index() {
 gchar * _ChewingKey::get_pinyin_string(PinyinScheme scheme) {
     assert(m_tone < CHEWING_NUMBER_OF_TONES);
     gint index = get_table_index();
-    assert(index < G_N_ELEMENTS(content_table));
+    assert(index < (int) G_N_ELEMENTS(content_table));
     const content_table_item_t & item = content_table[index];
 
     const char * pinyin_str = NULL;
@@ -123,7 +123,7 @@ gchar * _ChewingKey::get_pinyin_string(PinyinScheme scheme) {
 gchar * _ChewingKey::get_bopomofo_string() {
     assert(m_tone < CHEWING_NUMBER_OF_TONES);
     gint index = get_table_index();
-    assert(index < G_N_ELEMENTS(content_table));
+    assert(index < (int) G_N_ELEMENTS(content_table));
     const content_table_item_t & item = content_table[index];
 
     if (CHEWING_ZERO_TONE == m_tone) {
@@ -457,7 +457,7 @@ static bool search_chewing_symbols(const chewing_symbol_item_t * symbol_table,
 }
 
 static bool search_chewing_tones(const chewing_tone_item_t * tone_table,
-                                 const char key, char * tone) {
+                                 const char key, unsigned char * tone) {
     *tone = CHEWING_ZERO_TONE;
     /* just iterate the table, as we only have < 10 items. */
     while (tone_table->m_input != '\0') {
@@ -475,7 +475,7 @@ bool ChewingSimpleParser2::parse_one_key(pinyin_option_t options,
                                          ChewingKey & key,
                                          const char * str, int len) const {
     options &= ~PINYIN_AMB_ALL;
-    char tone = CHEWING_ZERO_TONE;
+    unsigned char tone = CHEWING_ZERO_TONE;
 
     int symbols_len = len;
     /* probe whether the last key is tone key in str. */
@@ -583,6 +583,11 @@ bool ChewingSimpleParser2::set_scheme(ChewingScheme scheme) {
         m_symbol_table = chewing_eten_symbols;
         m_tone_table   = chewing_eten_tones;
         return true;
+    case CHEWING_STANDARD_DVORAK:
+        m_symbol_table = chewing_standard_dvorak_symbols;
+        m_tone_table   = chewing_standard_dvorak_tones;
+    default:
+        assert(FALSE);
     }
 
     return false;
@@ -593,7 +598,7 @@ bool ChewingSimpleParser2::in_chewing_scheme(pinyin_option_t options,
                                              const char key,
                                              const char ** symbol) const {
     const gchar * chewing = NULL;
-    char tone = CHEWING_ZERO_TONE;
+    unsigned char tone = CHEWING_ZERO_TONE;
 
     if (search_chewing_symbols(m_symbol_table, key, &chewing)) {
         if (symbol)
@@ -625,7 +630,7 @@ bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
     const char * initial = "";
     const char * middle = "";
     const char * final = "";
-    char tone = CHEWING_ZERO_TONE;
+    unsigned char tone = CHEWING_ZERO_TONE;
 
     /* probe initial */
     if (search_chewing_symbols(m_initial_table, str[index], &initial)) {
@@ -727,7 +732,7 @@ bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
                                                const char key,
                                                const char ** symbol) const {
     const gchar * chewing = NULL;
-    char tone = CHEWING_ZERO_TONE;
+    unsigned char tone = CHEWING_ZERO_TONE;
 
     if (search_chewing_symbols(m_initial_table, key, &chewing)) {
         if (symbol)
