@@ -667,8 +667,8 @@ probe:
     gchar * chewing = g_strconcat(initial, middle, final, NULL);
 
     /* search the chewing in the chewing index table. */
-    if (index == len && search_chewing_index(options, bopomofo_index,
-                                             G_N_ELEMENTS(bopomofo_index),
+    if (index == len && search_chewing_index(options, m_chewing_index,
+                                             m_chewing_index_len,
                                              chewing, key)) {
         /* save back tone if available. */
         key.m_tone = tone;
@@ -727,6 +727,41 @@ int ChewingDiscreteParser2::parse(pinyin_option_t options,
     return parsed_len;
 }
 
+bool ChewingDiscreteParser2::set_scheme(ChewingScheme scheme) {
+    switch(scheme) {
+    case CHEWING_HSU:
+        m_options = HSU_CORRECT;
+        m_chewing_index = hsu_bopomofo_index;
+        m_chewing_index_len = G_N_ELEMENTS(hsu_bopomofo_index);
+        m_initial_table = chewing_hsu_initials;
+        m_middle_table  = chewing_hsu_middles;
+        m_final_table   = chewing_hsu_finals;
+        m_tone_table    = chewing_hsu_tones;
+        break;
+    case CHEWING_HSU_DVORAK:
+        m_options = HSU_CORRECT;
+        m_chewing_index = hsu_bopomofo_index;
+        m_chewing_index_len = G_N_ELEMENTS(hsu_bopomofo_index);
+        m_initial_table = chewing_hsu_dvorak_initials;
+        m_middle_table  = chewing_hsu_dvorak_middles;
+        m_final_table   = chewing_hsu_dvorak_finals;
+        m_tone_table    = chewing_hsu_dvorak_tones;
+        break;
+    case CHEWING_ETEN26:
+        m_options = ETEN26_CORRECT;
+        m_chewing_index = eten26_bopomofo_index;
+        m_chewing_index_len = G_N_ELEMENTS(eten26_bopomofo_index);
+        m_initial_table = chewing_eten26_initials;
+        m_middle_table  = chewing_eten26_middles;
+        m_final_table   = chewing_eten26_finals;
+        m_tone_table    = chewing_eten26_tones;
+        break;
+    default:
+        assert(FALSE);
+    }
+
+    return false;
+}
 
 bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
                                                const char key,
