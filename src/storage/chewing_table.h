@@ -56,7 +56,6 @@ const chewing_tone_item_t chewing_standard_tones[] = {
 {'\0', 0}
 };
 
-
 const chewing_symbol_item_t chewing_ginyieh_symbols[] = {
 {'\'' , "ㄥ"},
 {','  , "ㄚ"},
@@ -207,44 +206,52 @@ const chewing_tone_item_t chewing_ibm_tones[] = {
 {'\0', 0}
 };
 
-const chewing_symbol_item_t chewing_hsu_symbols[] = {
+const chewing_symbol_item_t chewing_hsu_initials[] = {
 {'a'  , "ㄘ"},
-{'a'  , "ㄟ"},
 {'b'  , "ㄅ"},
 {'c'  , "ㄒ"},
 {'c'  , "ㄕ"},
 {'d'  , "ㄉ"},
-{'e'  , "ㄧ"},
-{'e'  , "ㄝ"},
 {'f'  , "ㄈ"},
 {'g'  , "ㄍ"},
-{'g'  , "ㄜ"},
 {'h'  , "ㄏ"},
-{'h'  , "ㄛ"},
-{'i'  , "ㄞ"},
 {'j'  , "ㄐ"},
 {'j'  , "ㄓ"},
 {'k'  , "ㄎ"},
-{'k'  , "ㄤ"},
 {'l'  , "ㄌ"},
-{'l'  , "ㄥ"},
-{'l'  , "ㄦ"},
 {'m'  , "ㄇ"},
-{'m'  , "ㄢ"},
 {'n'  , "ㄋ"},
-{'n'  , "ㄣ"},
-{'o'  , "ㄡ"},
 {'p'  , "ㄆ"},
 {'r'  , "ㄖ"},
 {'s'  , "ㄙ"},
 {'t'  , "ㄊ"},
-{'u'  , "ㄩ"},
 {'v'  , "ㄑ"},
 {'v'  , "ㄔ"},
-{'w'  , "ㄠ"},
-{'x'  , "ㄨ"},
-{'y'  , "ㄚ"},
 {'z'  , "ㄗ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_hsu_middles[] = {
+{'e'  , "ㄧ"},
+{'u'  , "ㄩ"},
+{'x'  , "ㄨ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_hsu_finals[] = {
+{'a'  , "ㄟ"},
+{'e'  , "ㄝ"},
+{'g'  , "ㄜ"},
+{'h'  , "ㄛ"},
+{'i'  , "ㄞ"},
+{'k'  , "ㄤ"},
+{'l'  , "ㄥ"},
+{'l'  , "ㄦ"},
+{'m'  , "ㄢ"},
+{'n'  , "ㄣ"},
+{'o'  , "ㄡ"},
+{'w'  , "ㄠ"},
+{'y'  , "ㄚ"},
 {'\0', NULL}
 };
 
@@ -257,43 +264,51 @@ const chewing_tone_item_t chewing_hsu_tones[] = {
 {'\0', 0}
 };
 
-const chewing_symbol_item_t chewing_eten26_symbols[] = {
-{'a'  , "ㄚ"},
+const chewing_symbol_item_t chewing_eten26_initials[] = {
 {'b'  , "ㄅ"},
 {'c'  , "ㄒ"},
 {'c'  , "ㄕ"},
 {'d'  , "ㄉ"},
-{'e'  , "ㄧ"},
 {'f'  , "ㄈ"},
 {'g'  , "ㄐ"},
 {'g'  , "ㄓ"},
 {'h'  , "ㄏ"},
-{'h'  , "ㄦ"},
-{'i'  , "ㄞ"},
 {'j'  , "ㄖ"},
 {'k'  , "ㄎ"},
 {'l'  , "ㄌ"},
-{'l'  , "ㄥ"},
 {'m'  , "ㄇ"},
-{'m'  , "ㄢ"},
 {'n'  , "ㄋ"},
-{'n'  , "ㄣ"},
-{'o'  , "ㄛ"},
 {'p'  , "ㄆ"},
-{'p'  , "ㄡ"},
 {'q'  , "ㄗ"},
-{'q'  , "ㄟ"},
-{'r'  , "ㄜ"},
 {'s'  , "ㄙ"},
 {'t'  , "ㄊ"},
-{'t'  , "ㄤ"},
-{'u'  , "ㄩ"},
 {'v'  , "ㄍ"},
 {'v'  , "ㄑ"},
 {'w'  , "ㄘ"},
-{'w'  , "ㄝ"},
-{'x'  , "ㄨ"},
 {'y'  , "ㄔ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_eten26_middles[] = {
+{'e'  , "ㄧ"},
+{'u'  , "ㄩ"},
+{'x'  , "ㄨ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_eten26_finals[] = {
+{'a'  , "ㄚ"},
+{'h'  , "ㄦ"},
+{'i'  , "ㄞ"},
+{'l'  , "ㄥ"},
+{'m'  , "ㄢ"},
+{'n'  , "ㄣ"},
+{'o'  , "ㄛ"},
+{'p'  , "ㄡ"},
+{'q'  , "ㄟ"},
+{'r'  , "ㄜ"},
+{'t'  , "ㄤ"},
+{'w'  , "ㄝ"},
 {'z'  , "ㄠ"},
 {'\0', NULL}
 };
@@ -357,44 +372,52 @@ const chewing_tone_item_t chewing_standard_dvorak_tones[] = {
 {'\0', 0}
 };
 
-const chewing_symbol_item_t chewing_hsu_dvorak_symbols[] = {
+const chewing_symbol_item_t chewing_hsu_dvorak_initials[] = {
 {'a'  , "ㄘ"},
-{'a'  , "ㄟ"},
 {'b'  , "ㄅ"},
 {'c'  , "ㄒ"},
 {'c'  , "ㄕ"},
 {'d'  , "ㄉ"},
-{'e'  , "ㄧ"},
-{'e'  , "ㄝ"},
 {'f'  , "ㄈ"},
 {'g'  , "ㄍ"},
-{'g'  , "ㄜ"},
 {'h'  , "ㄏ"},
-{'h'  , "ㄛ"},
-{'i'  , "ㄞ"},
 {'j'  , "ㄐ"},
 {'j'  , "ㄓ"},
 {'k'  , "ㄎ"},
-{'k'  , "ㄤ"},
 {'l'  , "ㄌ"},
-{'l'  , "ㄥ"},
-{'l'  , "ㄦ"},
 {'m'  , "ㄇ"},
-{'m'  , "ㄢ"},
 {'n'  , "ㄋ"},
-{'n'  , "ㄣ"},
-{'o'  , "ㄡ"},
 {'p'  , "ㄆ"},
 {'r'  , "ㄖ"},
 {'s'  , "ㄙ"},
 {'t'  , "ㄊ"},
-{'u'  , "ㄩ"},
 {'v'  , "ㄑ"},
 {'v'  , "ㄔ"},
-{'w'  , "ㄠ"},
-{'x'  , "ㄨ"},
-{'y'  , "ㄚ"},
 {'z'  , "ㄗ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_hsu_dvorak_middles[] = {
+{'e'  , "ㄧ"},
+{'u'  , "ㄩ"},
+{'x'  , "ㄨ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_hsu_dvorak_finals[] = {
+{'a'  , "ㄟ"},
+{'e'  , "ㄝ"},
+{'g'  , "ㄜ"},
+{'h'  , "ㄛ"},
+{'i'  , "ㄞ"},
+{'k'  , "ㄤ"},
+{'l'  , "ㄥ"},
+{'l'  , "ㄦ"},
+{'m'  , "ㄢ"},
+{'n'  , "ㄣ"},
+{'o'  , "ㄡ"},
+{'w'  , "ㄠ"},
+{'y'  , "ㄚ"},
 {'\0', NULL}
 };
 
@@ -407,44 +430,52 @@ const chewing_tone_item_t chewing_hsu_dvorak_tones[] = {
 {'\0', 0}
 };
 
-const chewing_symbol_item_t chewing_dachen_cp26_symbols[] = {
+const chewing_symbol_item_t chewing_dachen_cp26_initials[] = {
 {'a'  , "ㄇ"},
 {'b'  , "ㄖ"},
-{'b'  , "ㄝ"},
 {'c'  , "ㄏ"},
 {'d'  , "ㄎ"},
 {'e'  , "ㄍ"},
 {'f'  , "ㄑ"},
 {'g'  , "ㄕ"},
 {'h'  , "ㄘ"},
-{'i'  , "ㄛ"},
-{'i'  , "ㄞ"},
-{'j'  , "ㄨ"},
-{'k'  , "ㄜ"},
-{'l'  , "ㄠ"},
-{'l'  , "ㄤ"},
-{'m'  , "ㄩ"},
-{'m'  , "ㄡ"},
 {'n'  , "ㄙ"},
-{'n'  , "ㄥ"},
-{'o'  , "ㄟ"},
-{'o'  , "ㄢ"},
-{'p'  , "ㄣ"},
-{'p'  , "ㄦ"},
 {'q'  , "ㄅ"},
 {'q'  , "ㄆ"},
 {'r'  , "ㄐ"},
 {'s'  , "ㄋ"},
 {'t'  , "ㄓ"},
 {'t'  , "ㄔ"},
-{'u'  , "ㄧ"},
-{'u'  , "ㄚ"},
 {'v'  , "ㄒ"},
 {'w'  , "ㄉ"},
 {'w'  , "ㄊ"},
 {'x'  , "ㄌ"},
 {'y'  , "ㄗ"},
 {'z'  , "ㄈ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_dachen_cp26_middles[] = {
+{'j'  , "ㄨ"},
+{'m'  , "ㄩ"},
+{'u'  , "ㄧ"},
+{'\0', NULL}
+};
+
+const chewing_symbol_item_t chewing_dachen_cp26_finals[] = {
+{'b'  , "ㄝ"},
+{'i'  , "ㄛ"},
+{'i'  , "ㄞ"},
+{'k'  , "ㄜ"},
+{'l'  , "ㄠ"},
+{'l'  , "ㄤ"},
+{'m'  , "ㄡ"},
+{'n'  , "ㄥ"},
+{'o'  , "ㄟ"},
+{'o'  , "ㄢ"},
+{'p'  , "ㄣ"},
+{'p'  , "ㄦ"},
+{'u'  , "ㄚ"},
 {'\0', NULL}
 };
 
