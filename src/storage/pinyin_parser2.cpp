@@ -675,11 +675,51 @@ probe:
     return false;
 }
 
+/* only characters in chewing keyboard scheme are accepted here. */
 int ChewingDiscreteParser2::parse(pinyin_option_t options,
                                   ChewingKeyVector & keys,
                                   ChewingKeyRestVector & key_rests,
                                   const char *str, int len) const {
-    assert(FALSE);
+    /* add keyboard mapping specific options. */
+    options |= m_options;
+
+    g_array_set_size(keys, 0);
+    g_array_set_size(key_rests, 0);
+
+    int maximum_len = 0; int i;
+    /* probe the longest possible chewing string. */
+    for (i = 0; i < len; ++i) {
+        if (!in_chewing_scheme(options, str[i], NULL))
+            break;
+    }
+    maximum_len = i;
+
+    /* maximum forward match for chewing. */
+    int parsed_len = 0;
+    while (parsed_len < maximum_len) {
+        const char * cur_str = str + parsed_len;
+        i = std_lite::min(maximum_len - parsed_len,
+                          (int)max_chewing_length);
+
+        ChewingKey key; ChewingKeyRest key_rest;
+        for (; i > 0; --i) {
+            bool success = parse_one_key(options, key, cur_str, i);
+            if (success)
+                break;
+        }
+
+        if (0 == i)        /* no more possible chewings. */
+            break;
+
+        key_rest.m_raw_begin = parsed_len; key_rest.m_raw_end = parsed_len + i;
+        parsed_len += i;
+
+        /* save the pinyin. */
+        g_array_append_val(keys, key);
+        g_array_append_val(key_rests, key_rest);
+    }
+
+    return parsed_len;
 }
 
 

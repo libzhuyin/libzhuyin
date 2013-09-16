@@ -213,6 +213,7 @@ protected:
 
 public:
     ChewingDiscreteParser2() {
+        m_options = 0;
         m_chewing_index = NULL; m_chewing_index_len = 0;
         m_initial_table = NULL; m_middle_table = NULL;
         m_final_table   = NULL; m_tone_table = NULL;
