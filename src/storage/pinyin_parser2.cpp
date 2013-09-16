@@ -616,6 +616,9 @@ bool ChewingSimpleParser2::in_chewing_scheme(pinyin_option_t options,
 bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
                                            ChewingKey & key,
                                            const char * str, int len) const {
+    if (0 == len)
+        return false;
+
     options &= ~PINYIN_AMB_ALL;
 
     int index = 0;
@@ -629,15 +632,24 @@ bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
         index++;
     }
 
+    if (index == len)
+        goto probe;
+
     /* probe middle */
     if (search_chewing_symbols(m_middle_table, str[index], &middle)) {
         index++;
     }
 
+    if (index == len)
+        goto probe;
+
     /* probe final */
     if (search_chewing_symbols(m_final_table, str[index], &final)) {
         index++;
     }
+
+    if (index == len)
+        goto probe;
 
     /* probe tone */
     if (options & USE_TONE) {
@@ -646,6 +658,7 @@ bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
         }
     }
 
+probe:
     gchar * chewing = g_strconcat(initial, middle, final, NULL);
 
     /* search the chewing in the chewing index table. */
