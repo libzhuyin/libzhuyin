@@ -728,37 +728,35 @@ int ChewingDiscreteParser2::parse(pinyin_option_t options,
 }
 
 bool ChewingDiscreteParser2::set_scheme(ChewingScheme scheme) {
+    m_options = 0;
+
+#define INIT_PARSER(index, table) {                     \
+        m_chewing_index = index;                        \
+        m_chewing_index_len = G_N_ELEMENTS(index);      \
+        m_initial_table = chewing_##table##_initials;   \
+        m_middle_table  = chewing_##table##_middles;    \
+        m_final_table   = chewing_##table##_finals;     \
+        m_tone_table    = chewing_##table##_tones;      \
+    }
+
     switch(scheme) {
     case CHEWING_HSU:
         m_options = HSU_CORRECT;
-        m_chewing_index = hsu_bopomofo_index;
-        m_chewing_index_len = G_N_ELEMENTS(hsu_bopomofo_index);
-        m_initial_table = chewing_hsu_initials;
-        m_middle_table  = chewing_hsu_middles;
-        m_final_table   = chewing_hsu_finals;
-        m_tone_table    = chewing_hsu_tones;
+        INIT_PARSER(hsu_bopomofo_index, hsu);
         break;
     case CHEWING_HSU_DVORAK:
         m_options = HSU_CORRECT;
-        m_chewing_index = hsu_bopomofo_index;
-        m_chewing_index_len = G_N_ELEMENTS(hsu_bopomofo_index);
-        m_initial_table = chewing_hsu_dvorak_initials;
-        m_middle_table  = chewing_hsu_dvorak_middles;
-        m_final_table   = chewing_hsu_dvorak_finals;
-        m_tone_table    = chewing_hsu_dvorak_tones;
+        INIT_PARSER(hsu_bopomofo_index, hsu_dvorak);
         break;
     case CHEWING_ETEN26:
         m_options = ETEN26_CORRECT;
-        m_chewing_index = eten26_bopomofo_index;
-        m_chewing_index_len = G_N_ELEMENTS(eten26_bopomofo_index);
-        m_initial_table = chewing_eten26_initials;
-        m_middle_table  = chewing_eten26_middles;
-        m_final_table   = chewing_eten26_finals;
-        m_tone_table    = chewing_eten26_tones;
+        INIT_PARSER(eten26_bopomofo_index, eten26)
         break;
     default:
         assert(FALSE);
     }
+
+#undef INIT_PARSER
 
     return false;
 }
