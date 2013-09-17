@@ -67,7 +67,6 @@ def populate_more_bopomofo_index():
     for (bopomofo, flags) in bopomofo_index:
         # populate hsu bopomofo index
         correct = bopomofo
-        hsu_bopomofo_index.append((bopomofo, flags, correct))
         matches = itertools.chain(handle_rules(bopomofo, hsu_correct),
                                   handle_special_rules(bopomofo, hsu_correct_special))
         for wrong in matches:
@@ -75,13 +74,20 @@ def populate_more_bopomofo_index():
             hsu_bopomofo_index.append((wrong, newflags, correct))
 
         # populate eten26 bopomofo index
-        eten26_bopomofo_index.append((bopomofo, flags, correct))
         matches = itertools.chain(handle_rules(bopomofo, eten26_correct),
                                   handle_special_rules(bopomofo, eten26_correct_special))
         for wrong in matches:
             newflags = '|'.join((flags, 'ETEN26_CORRECT'))
             eten26_bopomofo_index.append((wrong, newflags, correct))
 
+    for (bopomofo, flags) in bopomofo_index:
+        correct = bopomofo
+        # remove duplicate items
+        if bopomofo not in [x[0] for x in hsu_bopomofo_index]:
+            hsu_bopomofo_index.append((bopomofo, flags, correct))
+
+        if bopomofo not in [x[0] for x in eten26_bopomofo_index]:
+            eten26_bopomofo_index.append((bopomofo, flags, correct))
 
 def sort_all():
     global content_table, hanyu_pinyin_index, luoma_pinyin_index
