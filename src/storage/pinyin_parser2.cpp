@@ -567,25 +567,6 @@ int ChewingSimpleParser2::parse(pinyin_option_t options,
 
 bool ChewingSimpleParser2::set_scheme(ChewingScheme scheme) {
     switch(scheme) {
-    case CHEWING_STANDARD:
-        m_symbol_table = chewing_standard_symbols;
-        m_tone_table   = chewing_standard_tones;
-        return true;
-    case CHEWING_IBM:
-        m_symbol_table = chewing_ibm_symbols;
-        m_tone_table   = chewing_ibm_tones;
-        return true;
-    case CHEWING_GINYIEH:
-        m_symbol_table = chewing_ginyieh_symbols;
-        m_tone_table   = chewing_ginyieh_tones;
-        return true;
-    case CHEWING_ETEN:
-        m_symbol_table = chewing_eten_symbols;
-        m_tone_table   = chewing_eten_tones;
-        return true;
-    case CHEWING_STANDARD_DVORAK:
-        m_symbol_table = chewing_standard_dvorak_symbols;
-        m_tone_table   = chewing_standard_dvorak_tones;
     default:
         assert(FALSE);
     }
@@ -740,17 +721,32 @@ bool ChewingDiscreteParser2::set_scheme(ChewingScheme scheme) {
     }
 
     switch(scheme) {
+    case CHEWING_STANDARD:
+        INIT_PARSER(bopomofo_index, standard);
+        break;
     case CHEWING_HSU:
         m_options = HSU_CORRECT;
         INIT_PARSER(hsu_bopomofo_index, hsu);
         break;
-    case CHEWING_HSU_DVORAK:
-        m_options = HSU_CORRECT;
-        INIT_PARSER(hsu_bopomofo_index, hsu_dvorak);
+    case CHEWING_IBM:
+        INIT_PARSER(bopomofo_index, ibm);
+        break;
+    case CHEWING_GINYIEH:
+        INIT_PARSER(bopomofo_index, ginyieh);
+        break;
+    case CHEWING_ETEN:
+        INIT_PARSER(bopomofo_index, eten);
         break;
     case CHEWING_ETEN26:
         m_options = ETEN26_CORRECT;
-        INIT_PARSER(eten26_bopomofo_index, eten26)
+        INIT_PARSER(eten26_bopomofo_index, eten26);
+        break;
+    case CHEWING_STANDARD_DVORAK:
+        INIT_PARSER(bopomofo_index, standard_dvorak);
+        break;
+    case CHEWING_HSU_DVORAK:
+        m_options = HSU_CORRECT;
+        INIT_PARSER(hsu_bopomofo_index, hsu_dvorak);
         break;
     default:
         assert(FALSE);
@@ -758,7 +754,7 @@ bool ChewingDiscreteParser2::set_scheme(ChewingScheme scheme) {
 
 #undef INIT_PARSER
 
-    return false;
+    return true;
 }
 
 bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
