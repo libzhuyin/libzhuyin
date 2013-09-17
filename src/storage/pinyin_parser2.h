@@ -145,46 +145,6 @@ public:
     bool set_scheme(PinyinScheme scheme);
 };
 
-/**
- * ChewingSimpleParser2:
- *
- * Parse the chewing string into an array of struct ChewingKeys.
- *
- * Several keyboard scheme are supported:
- * * Chewing_STANDARD  Standard ZhuYin keyboard, which maps 1 to Bo(ㄅ), q to Po(ㄆ) etc.
- * * Chewing_IBM       IBM ZhuYin keyboard, which maps 1 to Bo(ㄅ), 2 to Po(ㄆ) etc.
- * * Chewing_GINYIEH   Gin-Yieh ZhuYin keyboard.
- * * Chewing_ETEN      Eten (倚天) ZhuYin keyboard.
- *
- */
-
-/* Note: maybe yunmus shuffle will be supported later.
- *         currently this feature is postponed.
- */
-class ChewingSimpleParser2 : public PhoneticParser2
-{
-    /* Note: some internal pointers to chewing scheme table. */
-protected:
-    const chewing_symbol_item_t * m_symbol_table;
-    const chewing_tone_item_t   * m_tone_table;
-
-public:
-    ChewingSimpleParser2() {
-        m_symbol_table = NULL; m_tone_table = NULL;
-        set_scheme(CHEWING_DEFAULT);
-    }
-
-    virtual ~ChewingSimpleParser2() {}
-
-    virtual bool parse_one_key(pinyin_option_t options, ChewingKey & key, const char *str, int len) const;
-
-    virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
-
-public:
-    bool set_scheme(ChewingScheme scheme);
-    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
-};
-
 
 /**
  * ChewingDiscreteParser2:
@@ -193,8 +153,12 @@ public:
  *
  * Initially will support HSU, HSU Dvorak and ETEN26.
  *
- * Plan to replace ChewingSimpleParser2 in future,
- *   as this class is more powerful.
+ * Several keyboard scheme are supported:
+ * * Chewing_STANDARD  Standard ZhuYin keyboard.
+ * * Chewing_IBM       IBM ZhuYin keyboard.
+ * * Chewing_GINYIEH   Gin-Yieh ZhuYin keyboard.
+ * * Chewing_ETEN      Eten (倚天) ZhuYin keyboard.
+ * * ...
  */
 
 class ChewingDiscreteParser2 : public PhoneticParser2

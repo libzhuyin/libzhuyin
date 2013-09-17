@@ -37,7 +37,7 @@ struct _pinyin_context_t{
     pinyin_option_t m_options;
 
     FullPinyinParser2 * m_full_pinyin_parser;
-    ChewingSimpleParser2 * m_chewing_parser;
+    ChewingDiscreteParser2 * m_chewing_parser;
 
     FacadeChewingTable * m_pinyin_table;
     FacadePhraseTable2 * m_phrase_table;
@@ -178,7 +178,7 @@ pinyin_context_t * pinyin_init(const char * systemdir, const char * userdir){
     check_format(context);
 
     context->m_full_pinyin_parser = new FullPinyinParser2;
-    context->m_chewing_parser = new ChewingSimpleParser2;
+    context->m_chewing_parser = new ChewingDiscreteParser2;
 
     /* load chewing table. */
     context->m_pinyin_table = new FacadeChewingTable;
