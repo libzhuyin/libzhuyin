@@ -3,32 +3,64 @@
 
 namespace pinyin{
 
-const chewing_symbol_item_t chewing_standard_symbols[] = {
-@STANDARD_SYMBOLS@
+const chewing_symbol_item_t chewing_standard_initials[] = {
+@STANDARD_INITIALS@
+};
+
+const chewing_symbol_item_t chewing_standard_middles[] = {
+@STANDARD_MIDDLES@
+};
+
+const chewing_symbol_item_t chewing_standard_finals[] = {
+@STANDARD_FINALS@
 };
 
 const chewing_tone_item_t chewing_standard_tones[] = {
 @STANDARD_TONES@
 };
 
-const chewing_symbol_item_t chewing_ginyieh_symbols[] = {
-@GINYIEH_SYMBOLS@
+const chewing_symbol_item_t chewing_ginyieh_initials[] = {
+@GINYIEH_INITIALS@
+};
+
+const chewing_symbol_item_t chewing_ginyieh_middles[] = {
+@GINYIEH_MIDDLES@
+};
+
+const chewing_symbol_item_t chewing_ginyieh_finals[] = {
+@GINYIEH_FINALS@
 };
 
 const chewing_tone_item_t chewing_ginyieh_tones[] = {
 @GINYIEH_TONES@
 };
 
-const chewing_symbol_item_t chewing_eten_symbols[] = {
-@ETEN_SYMBOLS@
+const chewing_symbol_item_t chewing_eten_initials[] = {
+@ETEN_INITIALS@
+};
+
+const chewing_symbol_item_t chewing_eten_middles[] = {
+@ETEN_MIDDLES@
+};
+
+const chewing_symbol_item_t chewing_eten_finals[] = {
+@ETEN_FINALS@
 };
 
 const chewing_tone_item_t chewing_eten_tones[] = {
 @ETEN_TONES@
 };
 
-const chewing_symbol_item_t chewing_ibm_symbols[] = {
-@IBM_SYMBOLS@
+const chewing_symbol_item_t chewing_ibm_initials[] = {
+@IBM_INITIALS@
+};
+
+const chewing_symbol_item_t chewing_ibm_middles[] = {
+@IBM_MIDDLES@
+};
+
+const chewing_symbol_item_t chewing_ibm_finals[] = {
+@IBM_FINALS@
 };
 
 const chewing_tone_item_t chewing_ibm_tones[] = {
@@ -67,8 +99,16 @@ const chewing_tone_item_t chewing_eten26_tones[] = {
 @ETEN26_TONES@
 };
 
-const chewing_symbol_item_t chewing_standard_dvorak_symbols[] = {
-@Dvorak-STANDARD_SYMBOLS@
+const chewing_symbol_item_t chewing_standard_dvorak_initials[] = {
+@Dvorak-STANDARD_INITIALS@
+};
+
+const chewing_symbol_item_t chewing_standard_dvorak_middles[] = {
+@Dvorak-STANDARD_MIDDLES@
+};
+
+const chewing_symbol_item_t chewing_standard_dvorak_finals[] = {
+@Dvorak-STANDARD_FINALS@
 };
 
 const chewing_tone_item_t chewing_standard_dvorak_tones[] = {
