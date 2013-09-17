@@ -75,7 +75,7 @@ int main(int argc, char * argv[]) {
     if (strcmp("fullpinyin", parsername) == 0) {
         parser = new FullPinyinParser2();
     } else if (strcmp("chewing", parsername) == 0) {
-        parser = new ChewingSimpleParser2();
+        parser = new ChewingDiscreteParser2();
     }
 
     if (!parser)
