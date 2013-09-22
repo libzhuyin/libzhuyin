@@ -714,3 +714,32 @@ bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
 
     return false;
 }
+
+static int search_chewing_symbols2(const chewing_symbol_item_t * symbol_table,
+                                   const char key,
+                                   const char ** first,
+                                   const char ** second) {
+    int num = 0;
+    *first = NULL; *second = NULL;
+
+    /* just iterate the table, as we only have < 50 items. */
+    while (symbol_table->m_input != '\0') {
+        if (symbol_table->m_input == key) {
+            ++num;
+            if (NULL == *first) {
+                *first = symbol_table->m_chewing;
+            } else {
+                *second = symbol_table->m_chewing;
+            }
+        }
+
+        /* search done */
+        if (symbol_table->m_input > key)
+            break;
+
+        symbol_table++;
+    }
+
+    assert(0 <= num && num <= 2);
+    return num;
+}
