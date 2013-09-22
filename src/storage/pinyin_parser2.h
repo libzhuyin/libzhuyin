@@ -195,6 +195,29 @@ public:
     bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
 };
 
+class ChewingDaChenCP26Parser2 : public PhoneticParser2
+{
+    /* some internal pointers to chewing scheme table. */
+    const chewing_index_item_t * m_chewing_index;
+    size_t m_chewing_index_len;
+    const chewing_symbol_item_t * m_initial_table;
+    const chewing_symbol_item_t * m_middle_table;
+    const chewing_symbol_item_t * m_final_table;
+    const chewing_tone_item_t   * m_tone_table;
+
+public:
+    ChewingDaChenCP26Parser2();
+
+    virtual ~ChewingDaChenCP26Parser2() {}
+
+    virtual bool parse_one_key(pinyin_option_t options, ChewingKey & key, const char *str, int len) const;
+
+    virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
+
+public:
+    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
+};
+
 /* compare pinyins with chewing internal representations. */
 inline int pinyin_compare_initial2(pinyin_option_t options,
                                    ChewingInitial lhs,

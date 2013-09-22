@@ -743,3 +743,49 @@ static int search_chewing_symbols2(const chewing_symbol_item_t * symbol_table,
     assert(0 <= num && num <= 2);
     return num;
 }
+
+ChewingDaChenCP26Parser2::ChewingDaChenCP26Parser2() {
+    m_chewing_index = bopomofo_index;
+    m_chewing_index_len = G_N_ELEMENTS(bopomofo_index);
+
+    m_initial_table = chewing_dachen_cp26_initials;
+    m_middle_table  = chewing_dachen_cp26_middles;
+    m_final_table   = chewing_dachen_cp26_finals;
+    m_tone_table    = chewing_dachen_cp26_tones;
+}
+
+bool ChewingDaChenCP26Parser2::in_chewing_scheme(pinyin_option_t options,
+                                                 const char key,
+                                                 const char ** symbol) const {
+    const gchar * chewing = NULL;
+    unsigned char tone = CHEWING_ZERO_TONE;
+
+    if (search_chewing_symbols(m_initial_table, key, &chewing)) {
+        if (symbol)
+            *symbol = chewing;
+        return true;
+    }
+
+    if (search_chewing_symbols(m_middle_table, key, &chewing)) {
+        if (symbol)
+            *symbol = chewing;
+        return true;
+    }
+
+    if (search_chewing_symbols(m_final_table, key, &chewing)) {
+        if (symbol)
+            *symbol = chewing;
+        return true;
+    }
+
+    if (!(options & USE_TONE))
+        return false;
+
+    if (search_chewing_tones(m_tone_table, key, &tone)) {
+        if (symbol)
+            *symbol = chewing_tone_table[tone];
+        return true;
+    }
+
+    return false;
+}
