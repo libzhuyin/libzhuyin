@@ -159,6 +159,8 @@ const guint16 max_double_pinyin_length = 3;  /* include tone. */
 
 const guint16 max_chewing_length       = 4;  /* include tone. */
 
+const guint16 max_chewing_dachen26_length = 12; /* include tone. */
+
 static bool compare_pinyin_less_than(const pinyin_index_item_t & lhs,
                                      const pinyin_index_item_t & rhs){
     return 0 > strcmp(lhs.m_pinyin_input, rhs.m_pinyin_input);
@@ -936,6 +938,49 @@ probe:
     g_free(chewing);
     g_free(input);
     return false;
+}
+
+int ChewingDaChenCP26Parser2::parse(pinyin_option_t options,
+                                    ChewingKeyVector & keys,
+                                    ChewingKeyRestVector & key_rests,
+                                    const char *str, int len) const {
+    g_array_set_size(keys, 0);
+    g_array_set_size(key_rests, 0);
+
+    int maximum_len = 0; int i;
+    /* probe the longest possible chewing string. */
+    for (i = 0; i < len; ++i) {
+        if (!in_chewing_scheme(options, str[i], NULL))
+            break;
+    }
+    maximum_len = i;
+
+    /* maximum forward match for chewing. */
+    int parsed_len = 0;
+    while (parsed_len < maximum_len) {
+        const char * cur_str = str + parsed_len;
+        i = std_lite::min(maximum_len - parsed_len,
+                          (int)max_chewing_dachen26_length);
+
+        ChewingKey key; ChewingKeyRest key_rest;
+        for (; i > 0; --i) {
+            bool success = parse_one_key(options, key, cur_str, i);
+            if (success)
+                break;
+        }
+
+        if (0 == i)        /* no more possible chewings. */
+            break;
+
+        key_rest.m_raw_begin = parsed_len; key_rest.m_raw_end = parsed_len + i;
+        parsed_len += i;
+
+        /* save the pinyin. */
+        g_array_append_val(keys, key);
+        g_array_append_val(key_rests, key_rest);
+    }
+
+    return parsed_len;
 }
 
 
