@@ -1088,7 +1088,7 @@ bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
         return false;
 
     const gchar * last_char = NULL;
-    for (const char * p = str; p < str + end; ++p) {
+    for (const char * p = str; p < str + len; p = g_utf8_next_char(p)) {
         last_char = p;
     }
 
@@ -1099,7 +1099,8 @@ bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
         g_utf8_strncpy(buffer, last_char, 1);
 
         /* for loop chewing_tone_table. */
-        for (int i = 1; i < G_N_ELEMENTS(chewing_tone_table); ++i) {
+        int i = 1;
+        for (; i < (int) G_N_ELEMENTS(chewing_tone_table); ++i) {
             const char * symbol = chewing_tone_table[i];
             if (0 == strcmp(symbol, buffer)) {
                 tone = i;
@@ -1109,7 +1110,7 @@ bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
         }
     }
 
-    const char * chewing = g_strndup(str, len);
+    gchar * chewing = g_strndup(str, len);
     /* search the chewing in the chewing index table. */
     if (len && search_chewing_index(options, m_chewing_index,
                                     m_chewing_index_len, chewing, key)) {
@@ -1123,3 +1124,44 @@ bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
     return false;
 }
 
+int ChewingDirectParser2::parse(pinyin_option_t options,
+                                ChewingKeyVector & keys,
+                                ChewingKeyRestVector & key_rests,
+                                const char *str, int len) const {
+    g_array_set_size(keys, 0);
+    g_array_set_size(key_rests, 0);
+
+    ChewingKey key; ChewingKeyRest key_rest;
+
+    int parsed_len = 0;
+    int i = 0, cur = 0, next = 0;
+    while (cur < len) {
+        /* probe next position */
+        for (i = cur; i < len; ++i) {
+            if (' ' == str[i] || '\'' == str[i])
+                break;
+        }
+        next = i;
+
+        if (parse_one_key(options, key, str + cur, next - cur)) {
+            key_rest.m_raw_begin = cur; key_rest.m_raw_end = next;
+
+            /* save the pinyin. */
+            g_array_append_val(keys, key);
+            g_array_append_val(key_rests, key_rest);
+        } else {
+            return parsed_len;
+        }
+
+        /* skip consecutive spaces */
+        for (i = cur; i < len; ++i) {
+            if (' ' != str[i] && '\'' != str[i])
+                break;
+        }
+
+        next = cur;
+        parsed_len = next;
+    }
+
+    return parsed_len;
+}
