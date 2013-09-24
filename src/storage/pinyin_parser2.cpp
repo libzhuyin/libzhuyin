@@ -957,12 +957,14 @@ int ChewingDaChenCP26Parser2::parse(pinyin_option_t options,
 
     /* maximum forward match for chewing. */
     int parsed_len = 0;
+    const char * cur_str = NULL;
+    ChewingKey key; ChewingKeyRest key_rest;
+
     while (parsed_len < maximum_len) {
-        const char * cur_str = str + parsed_len;
+        cur_str = str + parsed_len;
         i = std_lite::min(maximum_len - parsed_len,
                           (int)max_chewing_dachen26_length);
 
-        ChewingKey key; ChewingKeyRest key_rest;
         for (; i > 0; --i) {
             bool success = parse_one_key(options, key, cur_str, i);
             if (success)
@@ -972,6 +974,27 @@ int ChewingDaChenCP26Parser2::parse(pinyin_option_t options,
         if (0 == i)        /* no more possible chewings. */
             break;
 
+        key_rest.m_raw_begin = parsed_len; key_rest.m_raw_end = parsed_len + i;
+        parsed_len += i;
+
+        /* save the pinyin. */
+        g_array_append_val(keys, key);
+        g_array_append_val(key_rests, key_rest);
+    }
+
+    /* for the last partial input */
+    options |= CHEWING_INCOMPLETE;
+
+    cur_str = str + parsed_len;
+    i = std_lite::min(maximum_len - parsed_len,
+                      (int) max_chewing_dachen26_length);
+    for (; i > 0; --i) {
+        bool success = parse_one_key(options, key, cur_str, i);
+        if (success)
+            break;
+    }
+
+    if (i > 0) { /* found one */
         key_rest.m_raw_begin = parsed_len; key_rest.m_raw_end = parsed_len + i;
         parsed_len += i;
 
