@@ -143,6 +143,7 @@ public:
 
 public:
     bool set_scheme(PinyinScheme scheme);
+    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
 };
 
 
@@ -194,6 +195,7 @@ public:
     bool set_scheme(ChewingScheme scheme);
     bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
 };
+
 
 class ChewingDaChenCP26Parser2 : public PhoneticParser2
 {

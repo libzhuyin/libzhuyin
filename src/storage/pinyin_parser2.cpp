@@ -443,6 +443,34 @@ bool FullPinyinParser2::set_scheme(PinyinScheme scheme){
 }
 
 
+static const char * pinyin_symbols[27] = {
+    "a", "b", "c", "d", "e", "f", "g",
+    "h", "i", "j", "k", "l", "m", "n",
+    "o", "p", "q", "r", "s", "t",
+    "u", "v", "w", "x", "y", "z",
+    "'"
+};
+
+bool FullPinyinParser2::in_chewing_scheme(pinyin_option_t options,
+                                          const char key,
+                                          const char ** symbol) const {
+    int id;
+    if ('a' <= key && key <= 'z') {
+        id = key - 'a';
+        *symbol = pinyin_symbols[id];
+        return true;
+    }
+
+    if ('\'' == key) {
+        id = 26;
+        *symbol = pinyin_symbols[id];
+        return true;
+    }
+
+    return false;
+}
+
+
 /* the chewing string must be freed with g_free. */
 static bool search_chewing_symbols(const chewing_symbol_item_t * symbol_table,
                                    const char key, const char ** chewing) {
