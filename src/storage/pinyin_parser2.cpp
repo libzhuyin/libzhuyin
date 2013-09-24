@@ -161,6 +161,8 @@ const guint16 max_chewing_length       = 4;  /* include tone. */
 
 const guint16 max_chewing_dachen26_length = 12; /* include tone. */
 
+const guint16 max_utf8_length = 6;
+
 static bool compare_pinyin_less_than(const pinyin_index_item_t & lhs,
                                      const pinyin_index_item_t & rhs){
     return 0 > strcmp(lhs.m_pinyin_input, rhs.m_pinyin_input);
@@ -1070,3 +1072,54 @@ bool ChewingDaChenCP26Parser2::in_chewing_scheme(pinyin_option_t options,
 
     return false;
 }
+
+ChewingDirectParser2::ChewingDirectParser2 (){
+    m_chewing_index = bopomofo_index;
+    m_chewing_index_len = G_N_ELEMENTS(bopomofo_index);
+}
+
+bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
+                                         ChewingKey & key,
+                                         const char *str, int len) const {
+    options &= ~PINYIN_AMB_ALL;
+    unsigned char tone = CHEWING_ZERO_TONE;
+
+    if (0 == len)
+        return false;
+
+    const gchar * last_char = NULL;
+    for (const char * p = str; p < str + end; ++p) {
+        last_char = p;
+    }
+
+    /* probe tone first. */
+    if (options & USE_TONE) {
+        gchar buffer[max_utf8_length + 1];
+        memset(buffer, 0, sizeof(buffer));
+        g_utf8_strncpy(buffer, last_char, 1);
+
+        /* for loop chewing_tone_table. */
+        for (int i = 1; i < G_N_ELEMENTS(chewing_tone_table); ++i) {
+            const char * symbol = chewing_tone_table[i];
+            if (0 == strcmp(symbol, buffer)) {
+                tone = i;
+                len -= strlen(buffer);
+                break;
+            }
+        }
+    }
+
+    const char * chewing = g_strndup(str, len);
+    /* search the chewing in the chewing index table. */
+    if (len && search_chewing_index(options, m_chewing_index,
+                                    m_chewing_index_len, chewing, key)) {
+        /* save back tone if available. */
+        key.m_tone = tone;
+        g_free(chewing);
+        return true;
+    }
+
+    g_free(chewing);
+    return false;
+}
+
