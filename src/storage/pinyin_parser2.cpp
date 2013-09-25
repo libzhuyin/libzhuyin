@@ -1154,13 +1154,13 @@ int ChewingDirectParser2::parse(pinyin_option_t options,
         }
 
         /* skip consecutive spaces */
-        for (i = cur; i < len; ++i) {
+        for (i = next; i < len; ++i) {
             if (' ' != str[i] && '\'' != str[i])
                 break;
         }
 
-        next = cur;
-        parsed_len = next;
+        cur = i;
+        parsed_len = i;
     }
 
     return parsed_len;

@@ -31,11 +31,13 @@
 
 static const gchar * parsername = "";
 static gboolean incomplete = FALSE;
+static const gchar * schemename = "";
 
 static GOptionEntry entries[] =
 {
-    {"parser", 'p', 0, G_OPTION_ARG_STRING, &parsername, "parser", "fullpinyin chewing"},
+    {"parser", 'p', 0, G_OPTION_ARG_STRING, &parsername, "parser", "fullpinyin chewing direct"},
     {"incomplete", 'i', 0, G_OPTION_ARG_NONE, &incomplete, "incomplete pinyin", NULL},
+    {"scheme", 's', 0, G_OPTION_ARG_STRING, &schemename, "scheme", "standard hsu dachen26"},
     {NULL}
 };
 
@@ -75,11 +77,20 @@ int main(int argc, char * argv[]) {
     if (strcmp("fullpinyin", parsername) == 0) {
         parser = new FullPinyinParser2();
     } else if (strcmp("chewing", parsername) == 0) {
-        parser = new ChewingDiscreteParser2();
+        if (strcmp("standard", schemename) == 0) {
+            parser = new ChewingDiscreteParser2();
+        } else if (strcmp("hsu", schemename) == 0) {
+            parser = new ChewingDiscreteParser2();
+            ((ChewingDiscreteParser2 *)parser)->set_scheme(CHEWING_HSU);
+        } else if (strcmp("dachen26", schemename) == 0) {
+            parser = new ChewingDaChenCP26Parser2();
+        }
+    } else if (strcmp("direct", parsername) == 0) {
+        parser = new ChewingDirectParser2();
     }
 
     if (!parser)
-        parser = new FullPinyinParser2();
+        parser = new ChewingDiscreteParser2();
 
     char* linebuf = NULL; size_t size = 0; ssize_t read;
     while( (read = getline(&linebuf, &size, stdin)) != -1 ){
