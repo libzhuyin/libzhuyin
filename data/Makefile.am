@@ -17,11 +17,7 @@
 
 
 tablefiles		= gb_char.table gbk_char.table \
-				merged.table \
-				art.table culture.table economy.table \
-				geology.table history.table life.table \
-				nature.table scitech.table \
-				society.table sport.table
+				merged.table
 
 binfiles		= ${tablefiles:.table=.bin}
 
@@ -48,7 +44,7 @@ libzhuyin_dbdir		= $(libdir)/libzhuyin/data
 CLEANFILES		= $(binary_model_data)
 
 interpolation2.text:
-	wget http://downloads.sourceforge.net/libpinyin/models/model6.text.tar.gz
+	wget http://downloads.sourceforge.net/libzhuyin/models/model6.text.tar.gz
 	tar xvf model6.text.tar.gz -C $(top_srcdir)/data
 
 
