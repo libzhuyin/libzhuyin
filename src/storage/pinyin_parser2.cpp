@@ -100,13 +100,13 @@ gchar * _ChewingKey::get_pinyin_string(FullPinyinScheme scheme) {
     const char * pinyin_str = NULL;
 
     switch(scheme) {
-    case PINYIN_HANYU:
+    case FULL_PINYIN_HANYU:
         pinyin_str = item.m_hanyu_pinyin;
         break;
-    case PINYIN_LUOMA:
+    case FULL_PINYIN_LUOMA:
         pinyin_str = item.m_luoma_pinyin;
         break;
-    case PINYIN_SECONDARY_BOPOMOFO:
+    case FULL_PINYIN_SECONDARY_BOPOMOFO:
         pinyin_str = item.m_secondary_bopomofo;
         break;
     default:
@@ -241,7 +241,7 @@ FullPinyinParser2::FullPinyinParser2 (){
     m_pinyin_index = NULL; m_pinyin_index_len = 0;
     m_parse_steps = g_array_new(TRUE, FALSE, sizeof(parse_value_t));
 
-    set_scheme(PINYIN_DEFAULT);
+    set_scheme(FULL_PINYIN_DEFAULT);
 }
 
 bool FullPinyinParser2::parse_one_key (pinyin_option_t options,
@@ -426,15 +426,15 @@ int FullPinyinParser2::final_step(size_t step_len, ChewingKeyVector & keys,
 
 bool FullPinyinParser2::set_scheme(FullPinyinScheme scheme){
     switch(scheme){
-    case PINYIN_HANYU:
+    case FULL_PINYIN_HANYU:
         m_pinyin_index = hanyu_pinyin_index;
         m_pinyin_index_len = G_N_ELEMENTS(hanyu_pinyin_index);
         break;
-    case PINYIN_LUOMA:
+    case FULL_PINYIN_LUOMA:
         m_pinyin_index = luoma_pinyin_index;
         m_pinyin_index_len = G_N_ELEMENTS(luoma_pinyin_index);
         break;
-    case PINYIN_SECONDARY_BOPOMOFO:
+    case FULL_PINYIN_SECONDARY_BOPOMOFO:
         m_pinyin_index = secondary_bopomofo_index;
         m_pinyin_index_len = G_N_ELEMENTS(secondary_bopomofo_index);
         break;
