@@ -95,7 +95,7 @@ public:
 
     /**
      * PhoneticParser2::parse:
-     * @options: the pinyin options from pinyin_custom2.h.
+     * @options: the pinyin options.
      * @keys: the parsed result of struct ChewingKeys.
      * @str: the input of the ascii string.
      * @len: the length of the str.
@@ -145,6 +145,30 @@ public:
     bool set_scheme(FullPinyinScheme scheme);
 };
 
+/**
+ * ChewingParser2:
+ *
+ * Parse the chewing input string into an array of struct ChewingKeys.
+ *
+ */
+class ChewingParser2 : public PhoneticParser2
+{
+public:
+    virtual ~ChewingParser2() {}
+
+public:
+    /**
+     * ChewingParser2::in_chewing_scheme:
+     * @options: the pinyin options.
+     * @key: the user input ascii character.
+     * @symbol: the corresponding chewing symbol.
+     * @returns: whether the character is in the chewing scheme.
+     *
+     * Check whether the input character is in the chewing keyboard mapping.
+     *
+     */
+    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const = 0;
+};
 
 /**
  * ChewingDiscreteParser2:
@@ -161,7 +185,7 @@ public:
  * * ...
  */
 
-class ChewingDiscreteParser2 : public PhoneticParser2
+class ChewingDiscreteParser2 : public ChewingParser2
 {
 protected:
     /* internal options for chewing parsing. */
@@ -192,11 +216,11 @@ public:
 
 public:
     bool set_scheme(ChewingScheme scheme);
-    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
+    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
 };
 
 
-class ChewingDaChenCP26Parser2 : public PhoneticParser2
+class ChewingDaChenCP26Parser2 : public ChewingParser2
 {
     /* some internal pointers to chewing scheme table. */
     const chewing_index_item_t * m_chewing_index;
@@ -216,7 +240,7 @@ public:
     virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
 
 public:
-    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
+    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
 };
 
 
