@@ -65,7 +65,7 @@ enum PinyinAmbiguity2{
  * @brief enums of Pinyin Schemes.
  */
 
-enum PinyinScheme
+enum FullPinyinScheme
 {
     PINYIN_HANYU = 1,
     PINYIN_LUOMA = 2,

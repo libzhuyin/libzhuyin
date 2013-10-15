@@ -66,7 +66,7 @@ public:
     gint get_table_index();
 
     /* Note: the return value should be freed by g_free. */
-    gchar * get_pinyin_string(PinyinScheme scheme = PINYIN_DEFAULT);
+    gchar * get_pinyin_string(FullPinyinScheme scheme = PINYIN_DEFAULT);
     gchar * get_bopomofo_string();
 };
 
