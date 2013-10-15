@@ -36,8 +36,9 @@ typedef GArray * CandidateVector; /* GArray of lookup_candidate_t */
 struct _pinyin_context_t{
     pinyin_option_t m_options;
 
+    FullPinyinScheme m_full_pinyin_scheme;
     FullPinyinParser2 * m_full_pinyin_parser;
-    ChewingDiscreteParser2 * m_chewing_parser;
+    ChewingParser2 * m_chewing_parser;
 
     FacadeChewingTable * m_pinyin_table;
     FacadePhraseTable2 * m_phrase_table;
@@ -177,6 +178,7 @@ pinyin_context_t * pinyin_init(const char * systemdir, const char * userdir){
 
     check_format(context);
 
+    context->m_full_pinyin_scheme = FULL_PINYIN_DEFAULT;
     context->m_full_pinyin_parser = new FullPinyinParser2;
     context->m_chewing_parser = new ChewingDiscreteParser2;
 
@@ -637,7 +639,34 @@ bool pinyin_save(pinyin_context_t * context){
 
 bool pinyin_set_chewing_scheme(pinyin_context_t * context,
                                ChewingScheme scheme){
-    context->m_chewing_parser->set_scheme(scheme);
+    delete context->m_chewing_parser;
+    context->m_chewing_parser = NULL;
+
+    switch(scheme) {
+    case CHEWING_STANDARD:
+    case CHEWING_HSU:
+    case CHEWING_IBM:
+    case CHEWING_GINYIEH:
+    case CHEWING_ETEN:
+    case CHEWING_ETEN26:
+    case CHEWING_STANDARD_DVORAK:
+    case CHEWING_HSU_DVORAK: {
+        ChewingDiscreteParser2 * parser = new ChewingDiscreteParser2();
+        parser->set_scheme(scheme);
+        context->m_chewing_parser = parser;
+        break;
+    }
+    case CHEWING_DACHEN_CP26:
+        context->m_chewing_parser = new ChewingDaChenCP26Parser2();
+        break;
+    }
+    return true;
+}
+
+bool pinyin_set_full_pinyin_scheme(pinyin_context_t * context,
+                                   FullPinyinScheme scheme){
+    context->m_full_pinyin_scheme = scheme;
+    context->m_full_pinyin_parser->set_scheme(scheme);
     return true;
 }
 
@@ -1433,11 +1462,13 @@ bool pinyin_get_bopomofo_string(pinyin_instance_t * instance,
 bool pinyin_get_pinyin_string(pinyin_instance_t * instance,
                               ChewingKey * key,
                               gchar ** utf8_str) {
+    pinyin_context_t * context = instance->m_context;
+
     *utf8_str = NULL;
     if (0 == key->get_table_index())
         return false;
 
-    *utf8_str = key->get_pinyin_string();
+    *utf8_str = key->get_pinyin_string(context->m_full_pinyin_scheme);
     return true;
 }
 

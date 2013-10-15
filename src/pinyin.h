@@ -140,6 +140,18 @@ bool pinyin_set_chewing_scheme(pinyin_context_t * context,
                                ChewingScheme scheme);
 
 /**
+ * pinyin_set_full_pinyin_scheme:
+ * @context: the pinyin context.
+ * @scheme: the full pinyin scheme.
+ * @returns: whether the set full pinyin scheme succeeded.
+ *
+ * Change the full pinyin scheme of the pinyin context.
+ *
+ */
+bool pinyin_set_full_pinyin_scheme(pinyin_context_t * context,
+                                   FullPinyinScheme scheme);
+
+/**
  * pinyin_fini:
  * @context: the pinyin context.
  *
