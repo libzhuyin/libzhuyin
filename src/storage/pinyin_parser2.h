@@ -143,7 +143,6 @@ public:
 
 public:
     bool set_scheme(PinyinScheme scheme);
-    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
 };
 
 

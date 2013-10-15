@@ -444,6 +444,7 @@ bool FullPinyinParser2::set_scheme(PinyinScheme scheme){
     return true;
 }
 
+#if 0
 
 static const char * pinyin_symbols[27] = {
     "a", "b", "c", "d", "e", "f", "g",
@@ -472,6 +473,7 @@ bool FullPinyinParser2::in_chewing_scheme(pinyin_option_t options,
     return false;
 }
 
+#endif
 
 /* the chewing string must be freed with g_free. */
 static bool search_chewing_symbols(const chewing_symbol_item_t * symbol_table,
