@@ -25,7 +25,7 @@
 #include <glib.h>
 #include "novel_types.h"
 #include "chewing_key.h"
-#include "pinyin_custom2.h"
+#include "zhuyin_custom2.h"
 
 namespace zhuyin{
 
@@ -82,7 +82,7 @@ public:
 public:
     /**
      * PhoneticParser2::parse_one_key:
-     * @options: the pinyin options from pinyin_custom2.h.
+     * @options: the pinyin options.
      * @key: the parsed result of struct ChewingKey.
      * @str: the input of the ascii string.
      * @len: the length of the str.

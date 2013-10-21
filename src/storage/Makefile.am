@@ -21,7 +21,7 @@ INCLUDES                = -I$(top_srcdir)/src/include \
 
 libzhuyinincludedir	= $(includedir)/libzhuyin-@VERSION@
 
-libzhuyininclude_HEADERS= pinyin_custom2.h
+libzhuyininclude_HEADERS= zhuyin_custom2.h
 
 
 noinst_HEADERS		= chewing_enum.h \

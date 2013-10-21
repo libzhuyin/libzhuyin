@@ -24,7 +24,7 @@
 
 #include <glib.h>
 #include "chewing_enum.h"
-#include "pinyin_custom2.h"
+#include "zhuyin_custom2.h"
 
 using namespace zhuyin;
 

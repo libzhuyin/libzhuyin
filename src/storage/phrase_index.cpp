@@ -20,7 +20,7 @@
  */
 
 #include "phrase_index.h"
-#include "pinyin_custom2.h"
+#include "zhuyin_custom2.h"
 
 using namespace zhuyin;
 

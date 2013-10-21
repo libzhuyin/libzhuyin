@@ -25,7 +25,7 @@
 
 
 #include "novel_types.h"
-#include "pinyin_custom2.h"
+#include "zhuyin_custom2.h"
 
 
 G_BEGIN_DECLS

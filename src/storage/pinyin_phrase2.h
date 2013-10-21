@@ -24,7 +24,7 @@
 
 #include "novel_types.h"
 #include "chewing_key.h"
-#include "pinyin_custom2.h"
+#include "zhuyin_custom2.h"
 #include "pinyin_parser2.h"
 
 namespace zhuyin{

@@ -19,8 +19,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef PINYIN_CUSTOM2_H
-#define PINYIN_CUSTOM2_H
+#ifndef ZHUYIN_CUSTOM2_H
+#define ZHUYIN_CUSTOM2_H
 
 #include <glib.h>
 
