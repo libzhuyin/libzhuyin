@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 #include <locale.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "utils_helper.h"
 #include "k_mixture_model.h"
 

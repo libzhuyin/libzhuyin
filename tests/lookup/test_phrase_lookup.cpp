@@ -22,7 +22,7 @@
 
 #include <stdio.h>
 #include <locale.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "tests_helper.h"
 
 

@@ -1,7 +1,7 @@
 #include "timer.h"
 #include <stdio.h>
 #include <errno.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "tests_helper.h"
 
 size_t bench_times = 100000;

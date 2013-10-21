@@ -20,7 +20,7 @@
  */
 
 #include <locale.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "k_mixture_model.h"
 
 static const gchar * bigram_filename = "k_mixture_model_ngram.db";

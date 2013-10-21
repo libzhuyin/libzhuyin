@@ -19,7 +19,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 
 
 /* TODO: check whether gb_char.bin and gb_char2.bin should be the same. */

@@ -1,4 +1,4 @@
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 
 
 /* Place holder for pinyin internal library. */

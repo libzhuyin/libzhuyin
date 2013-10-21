@@ -19,7 +19,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "utils_helper.h"
 
 enum LINE_TYPE{

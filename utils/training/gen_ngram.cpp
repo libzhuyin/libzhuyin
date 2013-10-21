@@ -24,7 +24,7 @@
 #include <string.h>
 #include <locale.h>
 #include <glib.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "utils_helper.h"
 
 static gboolean train_pi_gram = TRUE;

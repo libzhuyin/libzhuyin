@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <glib/gstdio.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 
 
 using namespace zhuyin;

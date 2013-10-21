@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 
 
 int main(int argc, char * argv[]){

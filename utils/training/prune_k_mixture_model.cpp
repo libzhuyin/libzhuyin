@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <locale.h>
 #include <limits.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "k_mixture_model.h"
 
 

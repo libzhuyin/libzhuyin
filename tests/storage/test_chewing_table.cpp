@@ -21,7 +21,7 @@
 
 #include "timer.h"
 #include <string.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 #include "tests_helper.h"
 
 size_t bench_times = 1000;

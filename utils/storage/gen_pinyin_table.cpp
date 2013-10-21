@@ -22,7 +22,7 @@
 
 #include <stdio.h>
 #include <glib.h>
-#include "pinyin_internal.h"
+#include "zhuyin_internal.h"
 
 
 void print_help(){
