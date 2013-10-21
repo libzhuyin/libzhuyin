@@ -45,7 +45,7 @@ static GOptionEntry entries[] =
 };
 
 
-using namespace pinyin;
+using namespace zhuyin;
 
 /* map from phrase_item to GArray of chewing_and_freq_item */
 GTree  * g_chewing_tree;

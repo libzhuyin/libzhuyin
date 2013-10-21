@@ -24,7 +24,7 @@
 #include "pinyin_lookup2.h"
 #include "stl_lite.h"
 
-using namespace pinyin;
+using namespace zhuyin;
 
 /*
 const gfloat PinyinLookup2::bigram_lambda = lambda;

@@ -50,7 +50,7 @@ static GOptionEntry entries[] =
 
 size_t bench_times = 1000;
 
-using namespace pinyin;
+using namespace zhuyin;
 
 
 int main(int argc, char * argv[]) {

@@ -102,7 +102,7 @@ public:
 };
 
 
-using namespace pinyin;
+using namespace zhuyin;
 
 /* class implementation */
 

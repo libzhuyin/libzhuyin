@@ -33,7 +33,7 @@
 #include "chewing_table.h"
 
 
-using namespace pinyin;
+using namespace zhuyin;
 
 static bool check_pinyin_options(pinyin_option_t options, const pinyin_index_item_t * item) {
     guint32 flags = item->m_flags;

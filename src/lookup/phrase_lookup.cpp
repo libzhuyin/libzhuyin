@@ -27,7 +27,7 @@
 #include "ngram.h"
 #include "phrase_lookup.h"
 
-using namespace pinyin;
+using namespace zhuyin;
 
 
 /*

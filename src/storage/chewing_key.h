@@ -26,7 +26,7 @@
 #include "chewing_enum.h"
 #include "pinyin_custom2.h"
 
-using namespace pinyin;
+using namespace zhuyin;
 
 G_BEGIN_DECLS
 

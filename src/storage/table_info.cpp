@@ -25,7 +25,7 @@
 #include <string.h>
 #include <locale.h>
 
-using namespace pinyin;
+using namespace zhuyin;
 
 
 static const pinyin_table_info_t reserved_tables[] = {

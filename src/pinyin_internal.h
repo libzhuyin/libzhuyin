@@ -60,7 +60,7 @@
 #define USER_PHRASE_INDEX "user_phrase_index.bin"
 
 
-using namespace pinyin;
+using namespace zhuyin;
 
 
 /* the following fixes build on Debian GNU/kFreeBSD */

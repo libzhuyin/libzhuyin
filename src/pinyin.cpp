@@ -27,7 +27,7 @@
 #include "pinyin_internal.h"
 
 
-using namespace pinyin;
+using namespace zhuyin;
 
 /* a glue layer for input method integration. */
 
