@@ -20,8 +20,8 @@
  */
 
 
-#ifndef PINYIN_H
-#define PINYIN_H
+#ifndef ZHUYIN_H
+#define ZHUYIN_H
 
 
 #include "novel_types.h"

@@ -18,7 +18,7 @@
 AUTOMAKE_OPTIONS 	= gnu
 SUBDIRS 		= include storage lookup
 
-EXTRA_DIST		= libpinyin.ver
+EXTRA_DIST		= libzhuyin.ver
 
 MAINTAINERCLEANFILES 	= Makefile.in 
 
@@ -34,7 +34,7 @@ INCLUDES                = -I$(top_srcdir)/src \
 
 libzhuyinincludedir	= $(includedir)/libzhuyin-@VERSION@
 
-libzhuyininclude_HEADERS= pinyin.h
+libzhuyininclude_HEADERS= zhuyin.h
 
 noinst_HEADERS		= pinyin_internal.h
 
@@ -42,11 +42,11 @@ lib_LTLIBRARIES		= libzhuyin.la
 
 noinst_LTLIBRARIES	= libzhuyin_internal.la
 
-libzhuyin_la_SOURCES	= pinyin.cpp
+libzhuyin_la_SOURCES	= zhuyin.cpp
 
 libzhuyin_la_LIBADD	= storage/libstorage.la lookup/liblookup.la @GLIB2_LIBS@
 
-libzhuyin_la_LDFLAGS	= -Wl,--version-script=$(srcdir)/libpinyin.ver \
+libzhuyin_la_LDFLAGS	= -Wl,--version-script=$(srcdir)/libzhuyin.ver \
 			  -version-info @LT_VERSION_INFO@
 
 libzhuyin_internal_la_SOURCES	= pinyin_internal.cpp

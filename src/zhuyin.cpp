@@ -20,7 +20,7 @@
  */
 
 
-#include "pinyin.h"
+#include "zhuyin.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <glib/gstdio.h>
