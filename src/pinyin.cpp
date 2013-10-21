@@ -901,7 +901,7 @@ bool pinyin_get_sentence(pinyin_instance_t * instance,
                          char ** sentence){
     pinyin_context_t * & context = instance->m_context;
 
-    bool retval = pinyin::convert_to_utf8
+    bool retval = zhuyin::convert_to_utf8
         (context->m_phrase_index, instance->m_match_results,
          NULL, false, *sentence);
 

@@ -194,7 +194,7 @@ public:
     bool convert_to_utf8(MatchResults results,
                          /* out */ char * & result_string)
     {
-        return pinyin::convert_to_utf8(m_phrase_index, results,
+        return zhuyin::convert_to_utf8(m_phrase_index, results,
                                        NULL, false, result_string);
     }
 
