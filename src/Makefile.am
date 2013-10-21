@@ -36,7 +36,7 @@ libzhuyinincludedir	= $(includedir)/libzhuyin-@VERSION@
 
 libzhuyininclude_HEADERS= zhuyin.h
 
-noinst_HEADERS		= pinyin_internal.h
+noinst_HEADERS		= zhuyin_internal.h
 
 lib_LTLIBRARIES		= libzhuyin.la
 
@@ -49,7 +49,7 @@ libzhuyin_la_LIBADD	= storage/libstorage.la lookup/liblookup.la @GLIB2_LIBS@
 libzhuyin_la_LDFLAGS	= -Wl,--version-script=$(srcdir)/libzhuyin.ver \
 			  -version-info @LT_VERSION_INFO@
 
-libzhuyin_internal_la_SOURCES	= pinyin_internal.cpp
+libzhuyin_internal_la_SOURCES	= zhuyin_internal.cpp
 
 libzhuyin_internal_la_LIBADD	= storage/libstorage.la lookup/liblookup.la
 
