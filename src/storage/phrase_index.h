@@ -46,7 +46,7 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
 
-namespace pinyin{
+namespace zhuyin{
 
 /* Store delta info by phrase index logger in user home directory.
  */

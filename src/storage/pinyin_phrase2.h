@@ -27,7 +27,7 @@
 #include "pinyin_custom2.h"
 #include "pinyin_parser2.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 inline int pinyin_exact_compare2(const ChewingKey * key_lhs,
                                  const ChewingKey * key_rhs,

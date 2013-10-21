@@ -521,7 +521,7 @@ bool Bigram::mask_out(phrase_token_t mask, phrase_token_t value){
 }
 
 
-namespace pinyin{
+namespace zhuyin{
 
 /* merge origin system info and delta user info */
 bool merge_single_gram(SingleGram * merged, const SingleGram * system,

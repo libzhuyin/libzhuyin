@@ -30,7 +30,7 @@
 #include "novel_types.h"
 #include <limits.h>
 
-namespace pinyin{
+namespace zhuyin{
 
 typedef phrase_token_t lookup_key_t;
 

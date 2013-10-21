@@ -4,7 +4,7 @@
 #ifndef PINYIN_PARSER_TABLE_H
 #define PINYIN_PARSER_TABLE_H
 
-namespace pinyin{
+namespace zhuyin{
 
 const pinyin_index_item_t hanyu_pinyin_index[] = {
 {"a", IS_BOPOMOFO|IS_PINYIN, 1},

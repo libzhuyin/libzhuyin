@@ -24,7 +24,7 @@
 
 #include "phrase_large_table2.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 /**
  * FacadePhraseTable2:

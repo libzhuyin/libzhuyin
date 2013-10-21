@@ -26,7 +26,7 @@
 
 /* class definition */
 
-namespace pinyin{
+namespace zhuyin{
 
 class PhraseLengthIndexLevel2{
 protected:

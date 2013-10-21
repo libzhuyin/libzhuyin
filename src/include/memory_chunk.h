@@ -34,7 +34,7 @@
 #endif
 #include "stl_lite.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 /*  for unmanaged mode
  *  m_free_func == free, when memory is allocated by malloc

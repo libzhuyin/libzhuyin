@@ -28,7 +28,7 @@
 #include "memory_chunk.h"
 #include "chewing_key.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 class ChewingLengthIndexLevel;
 

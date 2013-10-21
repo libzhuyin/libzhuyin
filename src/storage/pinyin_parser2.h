@@ -27,7 +27,7 @@
 #include "chewing_key.h"
 #include "pinyin_custom2.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 typedef struct {
     const char * m_hanyu_pinyin;

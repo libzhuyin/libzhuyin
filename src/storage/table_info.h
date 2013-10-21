@@ -25,7 +25,7 @@
 #include "novel_types.h"
 
 
-namespace pinyin{
+namespace zhuyin{
 
 typedef enum {
     NOT_USED,                /* not used. */

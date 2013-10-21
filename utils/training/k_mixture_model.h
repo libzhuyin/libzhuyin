@@ -27,7 +27,7 @@
 #include "novel_types.h"
 #include "flexible_ngram.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 typedef guint32 corpus_count_t;
 

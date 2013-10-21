@@ -25,7 +25,7 @@
 #include "novel_types.h"
 #include "chewing_large_table.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 /**
  * FacadeChewingTable:

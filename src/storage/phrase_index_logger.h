@@ -39,7 +39,7 @@
  *
  */
 
-namespace pinyin{
+namespace zhuyin{
 
 enum LOG_TYPE{
     LOG_ADD_RECORD = 1,

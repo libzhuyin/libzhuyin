@@ -4,7 +4,7 @@
 #ifndef CHEWING_ENUM_H
 #define CHEWING_ENUM_H
 
-namespace pinyin{
+namespace zhuyin{
 
 /**
  * @brief enums of chewing initial element.

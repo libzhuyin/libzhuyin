@@ -24,7 +24,7 @@
 
 #include <db.h>
 
-namespace pinyin{
+namespace zhuyin{
 
 class Bigram;
 

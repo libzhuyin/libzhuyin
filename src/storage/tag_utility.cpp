@@ -7,7 +7,7 @@
 #include "phrase_large_table2.h"
 #include "tag_utility.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 /* internal taglib structure */
 struct tag_entry{

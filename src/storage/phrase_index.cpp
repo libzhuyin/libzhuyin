@@ -706,7 +706,7 @@ bool FacadePhraseIndex::mask_out(guint8 phrase_index,
     return retval;
 }
 
-namespace pinyin{
+namespace zhuyin{
 
 
 static bool _peek_header(PhraseIndexLogger * logger,

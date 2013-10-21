@@ -33,7 +33,7 @@
 #include "lookup.h"
 
 
-namespace pinyin{
+namespace zhuyin{
 
 /**
  * pinyin_lookup2.h

@@ -23,7 +23,7 @@
 #include "lookup.h"
 #include "phrase_index.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 bool convert_to_utf8(FacadePhraseIndex * phrase_index,
                      MatchResults match_results,

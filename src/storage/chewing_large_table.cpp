@@ -27,7 +27,7 @@
 
 /* internal class definition */
 
-namespace pinyin{
+namespace zhuyin{
 class ChewingLengthIndexLevel{
 
 protected:

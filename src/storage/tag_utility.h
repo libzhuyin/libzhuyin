@@ -28,7 +28,7 @@
  * Maybe the optional tag will be added back later.
  */
 
-namespace pinyin{
+namespace zhuyin{
 
 /**
  * taglib_init:

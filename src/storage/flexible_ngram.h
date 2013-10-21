@@ -31,7 +31,7 @@
  * struct MagicHeader, ArrayHeader, ArrayItem.
  */
 
-namespace pinyin{
+namespace zhuyin{
 
 typedef GArray * FlexibleBigramPhraseArray;
 

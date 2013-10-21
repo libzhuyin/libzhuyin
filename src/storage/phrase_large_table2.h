@@ -26,7 +26,7 @@
 #include "novel_types.h"
 #include "memory_chunk.h"
 
-namespace pinyin{
+namespace zhuyin{
 
 const size_t PHRASE_NUMBER_OF_BITMAP_INDEX = 1<<(sizeof(ucs4_t) / 4 * 8);
 

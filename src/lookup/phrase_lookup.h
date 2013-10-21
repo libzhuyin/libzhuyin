@@ -33,7 +33,7 @@
  *
  */
 
-namespace pinyin{
+namespace zhuyin{
 
 /**
  * PhraseLookup:
