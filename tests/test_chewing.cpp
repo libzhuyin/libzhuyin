@@ -26,10 +26,10 @@
 #include <string.h>
 
 int main(int argc, char * argv[]){
-    pinyin_context_t * context =
-        pinyin_init("../data", "../data");
+    zhuyin_context_t * context =
+        zhuyin_init("../data", "../data");
 
-    pinyin_instance_t * instance = pinyin_alloc_instance(context);
+    zhuyin_instance_t * instance = zhuyin_alloc_instance(context);
 
     char* linebuf = NULL;
     size_t size = 0;
@@ -42,26 +42,26 @@ int main(int argc, char * argv[]){
 	if ( strcmp ( linebuf, "quit" ) == 0)
             break;
 
-        pinyin_parse_more_chewings
+        zhuyin_parse_more_chewings
             (instance, linebuf);
-        pinyin_guess_sentence(instance);
+        zhuyin_guess_sentence(instance);
 
         char * sentence = NULL;
-        pinyin_get_sentence (instance, &sentence);
+        zhuyin_get_sentence (instance, &sentence);
         if (sentence)
             printf("%s\n", sentence);
         g_free(sentence);
 
-        pinyin_train(instance);
-        pinyin_reset(instance);
-        pinyin_save(context);
+        zhuyin_train(instance);
+        zhuyin_reset(instance);
+        zhuyin_save(context);
     }
 
-    pinyin_free_instance(instance);
+    zhuyin_free_instance(instance);
 
-    pinyin_mask_out(context, 0x0, 0x0);
-    pinyin_save(context);
-    pinyin_fini(context);
+    zhuyin_mask_out(context, 0x0, 0x0);
+    zhuyin_save(context);
+    zhuyin_fini(context);
 
     free(linebuf);
     return 0;

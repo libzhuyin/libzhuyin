@@ -26,10 +26,10 @@
 #include <string.h>
 
 int main(int argc, char * argv[]){
-    pinyin_context_t * context =
-        pinyin_init("../data", "../data");
+    zhuyin_context_t * context =
+        zhuyin_init("../data", "../data");
 
-    pinyin_instance_t * instance = pinyin_alloc_instance(context);
+    zhuyin_instance_t * instance = zhuyin_alloc_instance(context);
 
     char* linebuf = NULL;
     size_t size = 0;
@@ -42,32 +42,32 @@ int main(int argc, char * argv[]){
 	if ( strcmp ( linebuf, "quit" ) == 0)
             break;
 
-        pinyin_phrase_segment(instance, linebuf);
+        zhuyin_phrase_segment(instance, linebuf);
         guint len = 0;
-        pinyin_get_n_phrase(instance, &len);
+        zhuyin_get_n_phrase(instance, &len);
 
         for ( size_t i = 0; i < len; ++i ){
             phrase_token_t token = null_token;
-            pinyin_get_phrase_token(instance, i, &token);
+            zhuyin_get_phrase_token(instance, i, &token);
 
             if ( null_token == token )
                 continue;
 
             char * word = NULL;
-            pinyin_token_get_phrase(instance, token, NULL, &word);
+            zhuyin_token_get_phrase(instance, token, NULL, &word);
             printf("%s\t", word);
             g_free(word);
         }
         printf("\n");
 
-        pinyin_save(context);
+        zhuyin_save(context);
     }
 
-    pinyin_free_instance(instance);
+    zhuyin_free_instance(instance);
 
-    pinyin_mask_out(context, 0x0, 0x0);
-    pinyin_save(context);
-    pinyin_fini(context);
+    zhuyin_mask_out(context, 0x0, 0x0);
+    zhuyin_save(context);
+    zhuyin_fini(context);
 
     free(linebuf);
     return 0;

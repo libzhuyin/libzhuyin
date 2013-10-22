@@ -26,13 +26,13 @@
 #include <string.h>
 
 int main(int argc, char * argv[]){
-    pinyin_context_t * context =
-        pinyin_init("../data", "../data");
+    zhuyin_context_t * context =
+        zhuyin_init("../data", "../data");
 
     pinyin_option_t options = DYNAMIC_ADJUST;
-    pinyin_set_options(context, options);
+    zhuyin_set_options(context, options);
 
-    pinyin_instance_t * instance = pinyin_alloc_instance(context);
+    zhuyin_instance_t * instance = zhuyin_alloc_instance(context);
 
     char * prefixbuf = NULL; size_t prefixsize = 0;
     char * linebuf = NULL; size_t linesize = 0;
@@ -62,33 +62,33 @@ int main(int argc, char * argv[]){
         if ( strcmp ( linebuf, "quit" ) == 0)
             break;
 
-        pinyin_parse_more_full_pinyins(instance, linebuf);
-        pinyin_guess_sentence_with_prefix(instance, prefixbuf);
-        pinyin_guess_candidates(instance, 0);
+        zhuyin_parse_more_full_pinyins(instance, linebuf);
+        zhuyin_guess_sentence_with_prefix(instance, prefixbuf);
+        zhuyin_guess_candidates(instance, 0);
 
         guint len = 0;
-        pinyin_get_n_candidate(instance, &len);
+        zhuyin_get_n_candidate(instance, &len);
         for (size_t i = 0; i < len; ++i) {
             lookup_candidate_t * candidate = NULL;
-            pinyin_get_candidate(instance, i, &candidate);
+            zhuyin_get_candidate(instance, i, &candidate);
 
             const char * word = NULL;
-            pinyin_get_candidate_string(instance, candidate, &word);
+            zhuyin_get_candidate_string(instance, candidate, &word);
 
             printf("%s\t", word);
         }
         printf("\n");
 
-        pinyin_train(instance);
-        pinyin_reset(instance);
-        pinyin_save(context);
+        zhuyin_train(instance);
+        zhuyin_reset(instance);
+        zhuyin_save(context);
     }
 
-    pinyin_free_instance(instance);
+    zhuyin_free_instance(instance);
 
-    pinyin_mask_out(context, 0x0, 0x0);
-    pinyin_save(context);
-    pinyin_fini(context);
+    zhuyin_mask_out(context, 0x0, 0x0);
+    zhuyin_save(context);
+    zhuyin_fini(context);
 
     free(prefixbuf); free(linebuf);
     return 0;
