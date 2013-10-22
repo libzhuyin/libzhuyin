@@ -33,7 +33,7 @@ using namespace zhuyin;
 
 typedef GArray * CandidateVector; /* GArray of lookup_candidate_t */
 
-struct _pinyin_context_t{
+struct _zhuyin_context_t{
     pinyin_option_t m_options;
 
     FullPinyinScheme m_full_pinyin_scheme;
@@ -56,8 +56,8 @@ struct _pinyin_context_t{
     SystemTableInfo m_system_table_info;
 };
 
-struct _pinyin_instance_t{
-    pinyin_context_t * m_context;
+struct _zhuyin_instance_t{
+    zhuyin_context_t * m_context;
     gchar * m_raw_full_pinyin;
     TokenVector m_prefixes;
     ChewingKeyVector m_pinyin_keys;
@@ -85,12 +85,12 @@ public:
 };
 
 struct _import_iterator_t{
-    pinyin_context_t * m_context;
+    zhuyin_context_t * m_context;
     guint8 m_phrase_index;
 };
 
 
-static bool check_format(pinyin_context_t * context){
+static bool check_format(zhuyin_context_t * context){
     const char * userdir = context->m_user_dir;
 
     UserTableInfo user_table_info;
@@ -144,7 +144,7 @@ static bool check_format(pinyin_context_t * context){
     return exists;
 }
 
-static bool mark_version(pinyin_context_t * context){
+static bool mark_version(zhuyin_context_t * context){
     const char * userdir = context->m_user_dir;
 
     UserTableInfo user_table_info;
@@ -158,8 +158,8 @@ static bool mark_version(pinyin_context_t * context){
     return retval;
 }
 
-pinyin_context_t * pinyin_init(const char * systemdir, const char * userdir){
-    pinyin_context_t * context = new pinyin_context_t;
+zhuyin_context_t * zhuyin_init(const char * systemdir, const char * userdir){
+    zhuyin_context_t * context = new zhuyin_context_t;
 
     context->m_options = USE_TONE;
 
@@ -237,8 +237,8 @@ pinyin_context_t * pinyin_init(const char * systemdir, const char * userdir){
     context->m_phrase_index = new FacadePhraseIndex;
 
     /* hack here: directly call load phrase library. */
-    pinyin_load_phrase_library(context, GB_DICTIONARY);
-    pinyin_load_phrase_library(context, MERGED_DICTIONARY);
+    zhuyin_load_phrase_library(context, GB_DICTIONARY);
+    zhuyin_load_phrase_library(context, MERGED_DICTIONARY);
 
     context->m_system_bigram = new Bigram;
     filename = g_build_filename(context->m_system_dir, SYSTEM_BIGRAM, NULL);
@@ -265,7 +265,7 @@ pinyin_context_t * pinyin_init(const char * systemdir, const char * userdir){
     return context;
 }
 
-bool pinyin_load_phrase_library(pinyin_context_t * context,
+bool zhuyin_load_phrase_library(zhuyin_context_t * context,
                                 guint8 index){
     if (!(index < PHRASE_INDEX_LIBRARY_COUNT))
         return false;
@@ -332,7 +332,7 @@ bool pinyin_load_phrase_library(pinyin_context_t * context,
     return false;
 }
 
-bool pinyin_unload_phrase_library(pinyin_context_t * context,
+bool zhuyin_unload_phrase_library(zhuyin_context_t * context,
                                   guint8 index){
     /* gb_char.bin and merged.bin can't be unloaded. */
     if (GB_DICTIONARY == index || MERGED_DICTIONARY == index)
@@ -344,7 +344,7 @@ bool pinyin_unload_phrase_library(pinyin_context_t * context,
     return true;
 }
 
-import_iterator_t * pinyin_begin_add_phrases(pinyin_context_t * context,
+import_iterator_t * zhuyin_begin_add_phrases(zhuyin_context_t * context,
                                              guint8 index){
     import_iterator_t * iter = new import_iterator_t;
     iter->m_context = context;
@@ -352,7 +352,7 @@ import_iterator_t * pinyin_begin_add_phrases(pinyin_context_t * context,
     return iter;
 }
 
-bool pinyin_iterator_add_phrase(import_iterator_t * iter,
+bool zhuyin_iterator_add_phrase(import_iterator_t * iter,
                                 const char * phrase,
                                 const char * pinyin,
                                 gint count){
@@ -362,7 +362,7 @@ bool pinyin_iterator_add_phrase(import_iterator_t * iter,
     if (-1 == count)
         count = default_count;
 
-    pinyin_context_t * & context = iter->m_context;
+    zhuyin_context_t * & context = iter->m_context;
     FacadePhraseTable2 * & phrase_table = context->m_phrase_table;
     FacadeChewingTable * & pinyin_table = context->m_pinyin_table;
     FacadePhraseIndex * & phrase_index = context->m_phrase_index;
@@ -477,14 +477,14 @@ bool pinyin_iterator_add_phrase(import_iterator_t * iter,
     return result;
 }
 
-void pinyin_end_add_phrases(import_iterator_t * iter){
+void zhuyin_end_add_phrases(import_iterator_t * iter){
     /* compact the content memory chunk of phrase index. */
     iter->m_context->m_phrase_index->compact();
     iter->m_context->m_modified = true;
     delete iter;
 }
 
-bool pinyin_save(pinyin_context_t * context){
+bool zhuyin_save(zhuyin_context_t * context){
     if (!context->m_user_dir)
         return false;
 
@@ -637,7 +637,7 @@ bool pinyin_save(pinyin_context_t * context){
     return true;
 }
 
-bool pinyin_set_chewing_scheme(pinyin_context_t * context,
+bool zhuyin_set_chewing_scheme(zhuyin_context_t * context,
                                ChewingScheme scheme){
     delete context->m_chewing_parser;
     context->m_chewing_parser = NULL;
@@ -663,14 +663,14 @@ bool pinyin_set_chewing_scheme(pinyin_context_t * context,
     return true;
 }
 
-bool pinyin_set_full_pinyin_scheme(pinyin_context_t * context,
+bool zhuyin_set_full_pinyin_scheme(zhuyin_context_t * context,
                                    FullPinyinScheme scheme){
     context->m_full_pinyin_scheme = scheme;
     context->m_full_pinyin_parser->set_scheme(scheme);
     return true;
 }
 
-void pinyin_fini(pinyin_context_t * context){
+void zhuyin_fini(zhuyin_context_t * context){
     delete context->m_full_pinyin_parser;
     delete context->m_chewing_parser;
     delete context->m_pinyin_table;
@@ -688,7 +688,7 @@ void pinyin_fini(pinyin_context_t * context){
     delete context;
 }
 
-bool pinyin_mask_out(pinyin_context_t * context,
+bool zhuyin_mask_out(zhuyin_context_t * context,
                      phrase_token_t mask,
                      phrase_token_t value) {
 
@@ -755,7 +755,7 @@ bool pinyin_mask_out(pinyin_context_t * context,
 }
 
 /* copy from options to context->m_options. */
-bool pinyin_set_options(pinyin_context_t * context,
+bool zhuyin_set_options(zhuyin_context_t * context,
                         pinyin_option_t options){
     context->m_options = options;
     context->m_pinyin_table->set_options(context->m_options);
@@ -764,8 +764,8 @@ bool pinyin_set_options(pinyin_context_t * context,
 }
 
 
-pinyin_instance_t * pinyin_alloc_instance(pinyin_context_t * context){
-    pinyin_instance_t * instance = new pinyin_instance_t;
+zhuyin_instance_t * zhuyin_alloc_instance(zhuyin_context_t * context){
+    zhuyin_instance_t * instance = new zhuyin_instance_t;
     instance->m_context = context;
 
     instance->m_raw_full_pinyin = NULL;
@@ -784,7 +784,7 @@ pinyin_instance_t * pinyin_alloc_instance(pinyin_context_t * context){
     return instance;
 }
 
-void pinyin_free_instance(pinyin_instance_t * instance){
+void zhuyin_free_instance(zhuyin_instance_t * instance){
     g_free(instance->m_raw_full_pinyin);
     g_array_free(instance->m_prefixes, TRUE);
     g_array_free(instance->m_pinyin_keys, TRUE);
@@ -797,8 +797,8 @@ void pinyin_free_instance(pinyin_instance_t * instance){
 }
 
 
-static bool pinyin_update_constraints(pinyin_instance_t * instance){
-    pinyin_context_t * & context = instance->m_context;
+static bool pinyin_update_constraints(zhuyin_instance_t * instance){
+    zhuyin_context_t * & context = instance->m_context;
     ChewingKeyVector & pinyin_keys = instance->m_pinyin_keys;
     CandidateConstraints & constraints = instance->m_constraints;
 
@@ -817,8 +817,8 @@ static bool pinyin_update_constraints(pinyin_instance_t * instance){
 }
 
 
-bool pinyin_guess_sentence(pinyin_instance_t * instance){
-    pinyin_context_t * & context = instance->m_context;
+bool zhuyin_guess_sentence(zhuyin_instance_t * instance){
+    zhuyin_context_t * & context = instance->m_context;
 
     g_array_set_size(instance->m_prefixes, 0);
     g_array_append_val(instance->m_prefixes, sentence_start);
@@ -833,9 +833,9 @@ bool pinyin_guess_sentence(pinyin_instance_t * instance){
     return retval;
 }
 
-bool pinyin_guess_sentence_with_prefix(pinyin_instance_t * instance,
+bool zhuyin_guess_sentence_with_prefix(zhuyin_instance_t * instance,
                                        const char * prefix){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     FacadePhraseIndex * & phrase_index = context->m_phrase_index;
 
@@ -879,9 +879,9 @@ bool pinyin_guess_sentence_with_prefix(pinyin_instance_t * instance,
     return retval;
 }
 
-bool pinyin_phrase_segment(pinyin_instance_t * instance,
+bool zhuyin_phrase_segment(zhuyin_instance_t * instance,
                            const char * sentence){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     const glong num_of_chars = g_utf8_strlen(sentence, -1);
     glong ucs4_len = 0;
@@ -897,9 +897,9 @@ bool pinyin_phrase_segment(pinyin_instance_t * instance,
 }
 
 /* the returned sentence should be freed by g_free(). */
-bool pinyin_get_sentence(pinyin_instance_t * instance,
+bool zhuyin_get_sentence(zhuyin_instance_t * instance,
                          char ** sentence){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     bool retval = zhuyin::convert_to_utf8
         (context->m_phrase_index, instance->m_match_results,
@@ -908,10 +908,10 @@ bool pinyin_get_sentence(pinyin_instance_t * instance,
     return retval;
 }
 
-bool pinyin_parse_full_pinyin(pinyin_instance_t * instance,
+bool zhuyin_parse_full_pinyin(zhuyin_instance_t * instance,
                               const char * onepinyin,
                               ChewingKey * onekey){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     int pinyin_len = strlen(onepinyin);
     bool retval = context->m_full_pinyin_parser->parse_one_key
@@ -919,9 +919,9 @@ bool pinyin_parse_full_pinyin(pinyin_instance_t * instance,
     return retval;
 }
 
-size_t pinyin_parse_more_full_pinyins(pinyin_instance_t * instance,
+size_t zhuyin_parse_more_full_pinyins(zhuyin_instance_t * instance,
                                       const char * pinyins){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     g_free(instance->m_raw_full_pinyin);
     instance->m_raw_full_pinyin = g_strdup(pinyins);
@@ -934,10 +934,10 @@ size_t pinyin_parse_more_full_pinyins(pinyin_instance_t * instance,
     return parse_len;
 }
 
-bool pinyin_parse_chewing(pinyin_instance_t * instance,
+bool zhuyin_parse_chewing(zhuyin_instance_t * instance,
                           const char * onechewing,
                           ChewingKey * onekey){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     int chewing_len = strlen(onechewing);
     bool retval = context->m_chewing_parser->parse_one_key
@@ -945,9 +945,9 @@ bool pinyin_parse_chewing(pinyin_instance_t * instance,
     return retval;
 }
 
-size_t pinyin_parse_more_chewings(pinyin_instance_t * instance,
+size_t zhuyin_parse_more_chewings(zhuyin_instance_t * instance,
                                   const char * chewings){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     int chewing_len = strlen(chewings);
 
     int parse_len = context->m_chewing_parser->parse
@@ -957,9 +957,9 @@ size_t pinyin_parse_more_chewings(pinyin_instance_t * instance,
     return parse_len;
 }
 
-bool pinyin_in_chewing_keyboard(pinyin_instance_t * instance,
+bool zhuyin_in_chewing_keyboard(zhuyin_instance_t * instance,
                                 const char key, const char ** symbol) {
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     return context->m_chewing_parser->in_chewing_scheme
         (context->m_options, key, symbol);
 }
@@ -988,7 +988,7 @@ static gint compare_item_with_frequency(gconstpointer lhs,
     return -(freq_lhs - freq_rhs); /* in descendant order */
 }
 
-static phrase_token_t _get_previous_token(pinyin_instance_t * instance,
+static phrase_token_t _get_previous_token(zhuyin_instance_t * instance,
                                           size_t offset) {
     phrase_token_t prev_token = null_token;
     ssize_t i;
@@ -998,7 +998,7 @@ static phrase_token_t _get_previous_token(pinyin_instance_t * instance,
         prev_token = sentence_start;
         size_t prev_token_len = 0;
 
-        pinyin_context_t * context = instance->m_context;
+        zhuyin_context_t * context = instance->m_context;
         TokenVector prefixes = instance->m_prefixes;
         PhraseItem item;
 
@@ -1038,7 +1038,7 @@ static phrase_token_t _get_previous_token(pinyin_instance_t * instance,
     return prev_token;
 }
 
-static void _append_items(pinyin_context_t * context,
+static void _append_items(zhuyin_context_t * context,
                           PhraseIndexRanges ranges,
                           lookup_candidate_t * template_item,
                           CandidateVector items) {
@@ -1082,7 +1082,7 @@ static void _remove_duplicated_items(CandidateVector items) {
 }
 #endif
 
-static void _compute_frequency_of_items(pinyin_context_t * context,
+static void _compute_frequency_of_items(zhuyin_context_t * context,
                                         phrase_token_t prev_token,
                                         SingleGram * merged_gram,
                                         CandidateVector items) {
@@ -1124,11 +1124,11 @@ static void _compute_frequency_of_items(pinyin_context_t * context,
     }
 }
 
-static bool _prepend_sentence_candidate(pinyin_instance_t * instance,
+static bool _prepend_sentence_candidate(zhuyin_instance_t * instance,
                                         CandidateVector candidates) {
     /* check whether the best match candidate exists. */
     gchar * sentence = NULL;
-    pinyin_get_sentence(instance, &sentence);
+    zhuyin_get_sentence(instance, &sentence);
     if (NULL == sentence)
         return false;
     g_free(sentence);
@@ -1141,7 +1141,7 @@ static bool _prepend_sentence_candidate(pinyin_instance_t * instance,
     return true;
 }
 
-static bool _compute_phrase_strings_of_items(pinyin_instance_t * instance,
+static bool _compute_phrase_strings_of_items(zhuyin_instance_t * instance,
                                              size_t offset,
                                              CandidateVector candidates) {
     /* populate m_phrase_string in lookup_candidate_t. */
@@ -1153,14 +1153,14 @@ static bool _compute_phrase_strings_of_items(pinyin_instance_t * instance,
         switch(candidate->m_candidate_type) {
         case BEST_MATCH_CANDIDATE: {
             gchar * sentence = NULL;
-            pinyin_get_sentence(instance, &sentence);
+            zhuyin_get_sentence(instance, &sentence);
             candidate->m_phrase_string = g_strdup
                 (g_utf8_offset_to_pointer(sentence, offset));
             g_free(sentence);
             break;
         }
         case NORMAL_CANDIDATE:
-            pinyin_token_get_phrase
+            zhuyin_token_get_phrase
                 (instance, candidate->m_token, NULL,
                  &(candidate->m_phrase_string));
             break;
@@ -1190,7 +1190,7 @@ static gint compare_indexed_item_with_phrase_string(gconstpointer lhs,
 
 
 static bool _remove_duplicated_items_by_phrase_string
-(pinyin_instance_t * instance,
+(zhuyin_instance_t * instance,
  CandidateVector candidates) {
     size_t i;
     /* create the GArray of indexed item */
@@ -1278,10 +1278,10 @@ static bool _free_candidates(CandidateVector candidates) {
     return true;
 }
 
-bool pinyin_guess_candidates(pinyin_instance_t * instance,
+bool zhuyin_guess_candidates(zhuyin_instance_t * instance,
                              size_t offset) {
 
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     pinyin_option_t & options = context->m_options;
     ChewingKeyVector & pinyin_keys = instance->m_pinyin_keys;
 
@@ -1372,10 +1372,10 @@ bool pinyin_guess_candidates(pinyin_instance_t * instance,
     return true;
 }
 
-int pinyin_choose_candidate(pinyin_instance_t * instance,
+int zhuyin_choose_candidate(zhuyin_instance_t * instance,
                             size_t offset,
                             lookup_candidate_t * candidate){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     /* sync m_constraints to the length of m_pinyin_keys. */
     bool retval = context->m_pinyin_lookup->validate_constraint
@@ -1392,9 +1392,9 @@ int pinyin_choose_candidate(pinyin_instance_t * instance,
     return offset + len;
 }
 
-bool pinyin_clear_constraint(pinyin_instance_t * instance,
+bool zhuyin_clear_constraint(zhuyin_instance_t * instance,
                              size_t offset){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
 
     bool retval = context->m_pinyin_lookup->clear_constraint
         (instance->m_constraints, offset);
@@ -1402,9 +1402,9 @@ bool pinyin_clear_constraint(pinyin_instance_t * instance,
     return retval;
 }
 
-bool pinyin_lookup_tokens(pinyin_instance_t * instance,
+bool zhuyin_lookup_tokens(zhuyin_instance_t * instance,
                           const char * phrase, GArray * tokenarray){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     FacadePhraseIndex * & phrase_index = context->m_phrase_index;
 
     glong ucs4_len = 0;
@@ -1420,11 +1420,11 @@ bool pinyin_lookup_tokens(pinyin_instance_t * instance,
     return SEARCH_OK & retval;
 }
 
-bool pinyin_train(pinyin_instance_t * instance){
+bool zhuyin_train(zhuyin_instance_t * instance){
     if (!instance->m_context->m_user_dir)
         return false;
 
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     context->m_modified = true;
 
     bool retval = context->m_pinyin_lookup->train_result2
@@ -1434,7 +1434,7 @@ bool pinyin_train(pinyin_instance_t * instance){
     return retval;
 }
 
-bool pinyin_reset(pinyin_instance_t * instance){
+bool zhuyin_reset(zhuyin_instance_t * instance){
     g_free(instance->m_raw_full_pinyin);
     instance->m_raw_full_pinyin = NULL;
 
@@ -1448,7 +1448,7 @@ bool pinyin_reset(pinyin_instance_t * instance){
     return true;
 }
 
-bool pinyin_get_bopomofo_string(pinyin_instance_t * instance,
+bool zhuyin_get_bopomofo_string(zhuyin_instance_t * instance,
                                 ChewingKey * key,
                                 gchar ** utf8_str) {
     *utf8_str = NULL;
@@ -1459,10 +1459,10 @@ bool pinyin_get_bopomofo_string(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_get_pinyin_string(pinyin_instance_t * instance,
+bool zhuyin_get_pinyin_string(zhuyin_instance_t * instance,
                               ChewingKey * key,
                               gchar ** utf8_str) {
-    pinyin_context_t * context = instance->m_context;
+    zhuyin_context_t * context = instance->m_context;
 
     *utf8_str = NULL;
     if (0 == key->get_table_index())
@@ -1472,11 +1472,11 @@ bool pinyin_get_pinyin_string(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_token_get_phrase(pinyin_instance_t * instance,
+bool zhuyin_token_get_phrase(zhuyin_instance_t * instance,
                              phrase_token_t token,
                              guint * len,
                              gchar ** utf8_str) {
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     PhraseItem item;
     ucs4_t buffer[MAX_PHRASE_LENGTH];
 
@@ -1493,11 +1493,11 @@ bool pinyin_token_get_phrase(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_token_get_n_pronunciation(pinyin_instance_t * instance,
+bool zhuyin_token_get_n_pronunciation(zhuyin_instance_t * instance,
                                       phrase_token_t token,
                                       guint * num){
     *num = 0;
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     PhraseItem item;
 
     int retval = context->m_phrase_index->get_phrase_item(token, item);
@@ -1508,12 +1508,12 @@ bool pinyin_token_get_n_pronunciation(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_token_get_nth_pronunciation(pinyin_instance_t * instance,
+bool zhuyin_token_get_nth_pronunciation(zhuyin_instance_t * instance,
                                         phrase_token_t token,
                                         guint nth,
                                         ChewingKeyVector keys){
     g_array_set_size(keys, 0);
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     PhraseItem item;
     ChewingKey buffer[MAX_PHRASE_LENGTH];
     guint32 freq = 0;
@@ -1528,11 +1528,11 @@ bool pinyin_token_get_nth_pronunciation(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_token_get_unigram_frequency(pinyin_instance_t * instance,
+bool zhuyin_token_get_unigram_frequency(zhuyin_instance_t * instance,
                                         phrase_token_t token,
                                         guint * freq) {
     *freq = 0;
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     PhraseItem item;
 
     int retval = context->m_phrase_index->get_phrase_item(token, item);
@@ -1543,22 +1543,22 @@ bool pinyin_token_get_unigram_frequency(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_token_add_unigram_frequency(pinyin_instance_t * instance,
+bool zhuyin_token_add_unigram_frequency(zhuyin_instance_t * instance,
                                         phrase_token_t token,
                                         guint delta){
-    pinyin_context_t * & context = instance->m_context;
+    zhuyin_context_t * & context = instance->m_context;
     int retval = context->m_phrase_index->add_unigram_frequency
         (token, delta);
     return ERROR_OK == retval;
 }
 
-bool pinyin_get_n_candidate(pinyin_instance_t * instance,
+bool zhuyin_get_n_candidate(zhuyin_instance_t * instance,
                             guint * num) {
     *num = instance->m_candidates->len;
     return true;
 }
 
-bool pinyin_get_candidate(pinyin_instance_t * instance,
+bool zhuyin_get_candidate(zhuyin_instance_t * instance,
                           guint index,
                           lookup_candidate_t ** candidate) {
     CandidateVector & candidates = instance->m_candidates;
@@ -1573,21 +1573,21 @@ bool pinyin_get_candidate(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_get_candidate_type(pinyin_instance_t * instance,
+bool zhuyin_get_candidate_type(zhuyin_instance_t * instance,
                                lookup_candidate_t * candidate,
                                lookup_candidate_type_t * type) {
     *type = candidate->m_candidate_type;
     return true;
 }
 
-bool pinyin_get_candidate_string(pinyin_instance_t * instance,
+bool zhuyin_get_candidate_string(zhuyin_instance_t * instance,
                                  lookup_candidate_t * candidate,
                                  const gchar ** utf8_str) {
     *utf8_str = candidate->m_phrase_string;
     return true;
 }
 
-bool pinyin_get_n_pinyin(pinyin_instance_t * instance,
+bool zhuyin_get_n_pinyin(zhuyin_instance_t * instance,
                          guint * num) {
     *num = 0;
 
@@ -1599,7 +1599,7 @@ bool pinyin_get_n_pinyin(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_get_pinyin_key(pinyin_instance_t * instance,
+bool zhuyin_get_pinyin_key(zhuyin_instance_t * instance,
                            guint index,
                            ChewingKey ** key) {
     ChewingKeyVector & pinyin_keys = instance->m_pinyin_keys;
@@ -1614,7 +1614,7 @@ bool pinyin_get_pinyin_key(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_get_pinyin_key_rest(pinyin_instance_t * instance,
+bool zhuyin_get_pinyin_key_rest(zhuyin_instance_t * instance,
                                 guint index,
                                 ChewingKeyRest ** key_rest) {
     ChewingKeyRestVector & pinyin_key_rests = instance->m_pinyin_key_rests;
@@ -1629,7 +1629,7 @@ bool pinyin_get_pinyin_key_rest(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_get_pinyin_key_rest_positions(pinyin_instance_t * instance,
+bool zhuyin_get_pinyin_key_rest_positions(zhuyin_instance_t * instance,
                                           ChewingKeyRest * key_rest,
                                           guint16 * begin, guint16 * end) {
     if (begin)
@@ -1641,26 +1641,26 @@ bool pinyin_get_pinyin_key_rest_positions(pinyin_instance_t * instance,
     return true;
 }
 
-bool pinyin_get_pinyin_key_rest_length(pinyin_instance_t * instance,
+bool zhuyin_get_pinyin_key_rest_length(zhuyin_instance_t * instance,
                                        ChewingKeyRest * key_rest,
                                        guint16 * length) {
     *length = key_rest->length();
     return true;
 }
 
-bool pinyin_get_raw_full_pinyin(pinyin_instance_t * instance,
+bool zhuyin_get_raw_full_pinyin(zhuyin_instance_t * instance,
                                 const gchar ** utf8_str) {
     *utf8_str = instance->m_raw_full_pinyin;
     return true;
 }
 
-bool pinyin_get_n_phrase(pinyin_instance_t * instance,
+bool zhuyin_get_n_phrase(zhuyin_instance_t * instance,
                          guint * num) {
     *num = instance->m_match_results->len;
     return true;
 }
 
-bool pinyin_get_phrase_token(pinyin_instance_t * instance,
+bool zhuyin_get_phrase_token(zhuyin_instance_t * instance,
                              guint index,
                              phrase_token_t * token){
     MatchResults & match_results = instance->m_match_results;
