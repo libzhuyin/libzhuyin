@@ -132,8 +132,10 @@ int main(int argc, char * argv[]) {
                 &g_array_index(key_rests, ChewingKeyRest, i);
 
             gchar * pinyins = key->get_pinyin_string();
-            printf("%s %d %d\t", pinyins,
+            gchar * bopomofos = key->get_bopomofo_string();
+            printf("%s %s %d %d\t", pinyins, bopomofos,
                    key_rest->m_raw_begin, key_rest->m_raw_end);
+            g_free(bopomofos);
             g_free(pinyins);
         }
         printf("\n");
