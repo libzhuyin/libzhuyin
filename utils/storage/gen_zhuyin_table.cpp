@@ -133,21 +133,29 @@ int main(int argc, char * argv[]){
 }
 
 void feed_file ( const char * filename){
-    char phrase[1024], pinyin[1024];
-    guint32 freq;
-
     FILE * infile = fopen(filename, "r");
     if ( NULL == infile ){
         fprintf(stderr, "Can't open file %s.\n", filename);
         exit(ENOENT);
     }
 
-    while ( !feof(infile)){
-	int num = fscanf(infile, "%s %s %u",
-                         phrase, pinyin, &freq);
+    char * linebuf = NULL; size_t size = 0; ssize_t read;
+    while( (read = getline(&linebuf, &size, infile)) != -1 ){
+        if ( '\n' ==  linebuf[strlen(linebuf) - 1] ) {
+            linebuf[strlen(linebuf) - 1] = '\0';
+        }
 
-        if (3 != num)
+        /* assume tsi.src only use the single space to separate tokens. */
+        gchar ** strs = g_strsplit_set(linebuf, " ", 3);
+
+        const char * phrase = strs[0];
+        guint32 freq = atoi(strs[1]);
+        const char * pinyin = strs[2];
+
+        if (3 != g_strv_length(strs)) {
+            fprintf(stderr, "wrong line format:%s\n", linebuf);
             continue;
+        }
 
 	if (feof(infile))
             break;
@@ -155,6 +163,7 @@ void feed_file ( const char * filename){
 	feed_line(phrase, pinyin, freq);
     }
 
+    free(linebuf);
     fclose(infile);
 }
 
@@ -174,7 +183,7 @@ void feed_line(const char * phrase, const char * pinyin, const guint32 freq) {
 
     item->uniphrase = g_utf8_to_ucs4(phrase, -1, NULL, NULL, NULL);
 
-    FullPinyinParser2 parser;
+    ChewingDirectParser2 parser;
     ChewingKeyVector keys = g_array_new(FALSE, FALSE, sizeof(ChewingKey));
     ChewingKeyRestVector key_rests = g_array_new
         (FALSE, FALSE, sizeof(ChewingKeyRest));
@@ -300,7 +309,7 @@ void gen_phrase_file(const char * outputfile, int phrase_index){
                         (key_rests, ChewingKeyRest, k);
 
                     //assert (CHEWING_ZERO_TONE != key.m_tone);
-                    pinyin = key.get_pinyin_string();
+                    pinyin = key.get_bopomofo_string();
                     g_array_append_val(pinyins, pinyin);
                 }
                 gchar * pinyin_str = g_strjoinv("'", (gchar **)pinyins->data);
