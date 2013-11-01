@@ -28,7 +28,7 @@ bin_PROGRAMS		= gen_binary_files \
 			  import_interpolation
 
 noinst_PROGRAMS		= export_interpolation \
-			  gen_pinyin_table
+			  gen_zhuyin_table
 
 gen_binary_files_SOURCES    = gen_binary_files.cpp
 
@@ -36,4 +36,4 @@ import_interpolation_SOURCES = import_interpolation.cpp
 
 export_interpolation_SOURCES = export_interpolation.cpp
 
-gen_pinyin_table_SOURCES    = gen_pinyin_table.cpp
+gen_zhuyin_table_SOURCES    = gen_zhuyin_table.cpp
