@@ -16,8 +16,7 @@
 ## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
-tablefiles		= gb_char.table gbk_char.table \
-				merged.table
+tablefiles		= tsi.table
 
 binfiles		= ${tablefiles:.table=.bin}
 
@@ -44,8 +43,8 @@ libzhuyin_dbdir		= $(libdir)/libzhuyin/data
 CLEANFILES		= $(binary_model_data)
 
 interpolation2.text:
-	wget http://downloads.sourceforge.net/libzhuyin/models/model6.text.tar.gz
-	tar xvf model6.text.tar.gz -C $(top_srcdir)/data
+	wget http://downloads.sourceforge.net/libzhuyin/models/model7.text.tar.gz
+	tar xvf model7.text.tar.gz -C $(top_srcdir)/data
 
 
 $(tablefiles): interpolation2.text
