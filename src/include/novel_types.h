@@ -144,9 +144,7 @@ typedef guint32 pinyin_option_t;
 
 typedef enum {
     RESERVED = 0,
-    GB_DICTIONARY = 1,
-    GBK_DICTIONARY = 2,
-    MERGED_DICTIONARY = 3,
+    TSI_DICTIONARY = 1,
     USER_DICTIONARY = 15
 } PHRASE_INDEX_LIBRARIES;
 

@@ -30,11 +30,7 @@ using namespace zhuyin;
 
 static const pinyin_table_info_t reserved_tables[] = {
     {RESERVED, NULL, NULL, NULL, NOT_USED},
-    {GB_DICTIONARY, "gb_char.table", "gb_char.bin", "gb_char.dbin", SYSTEM_FILE},
-    {GBK_DICTIONARY, "gbk_char.table", "gbk_char.bin", "gbk_char.dbin", SYSTEM_FILE},
-
-    {MERGED_DICTIONARY, "merged.table", "merged.bin", "merged.dbin", SYSTEM_FILE},
-
+    {TSI_DICTIONARY, "tsi.table", "tsi.bin", "tsi.dbin", SYSTEM_FILE},
     {USER_DICTIONARY, NULL, NULL, "user.bin", USER_FILE}
 };
 

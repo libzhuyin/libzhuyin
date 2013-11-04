@@ -237,8 +237,7 @@ zhuyin_context_t * zhuyin_init(const char * systemdir, const char * userdir){
     context->m_phrase_index = new FacadePhraseIndex;
 
     /* hack here: directly call load phrase library. */
-    zhuyin_load_phrase_library(context, GB_DICTIONARY);
-    zhuyin_load_phrase_library(context, MERGED_DICTIONARY);
+    zhuyin_load_phrase_library(context, TSI_DICTIONARY);
 
     context->m_system_bigram = new Bigram;
     filename = g_build_filename(context->m_system_dir, SYSTEM_BIGRAM, NULL);
@@ -334,8 +333,8 @@ bool zhuyin_load_phrase_library(zhuyin_context_t * context,
 
 bool zhuyin_unload_phrase_library(zhuyin_context_t * context,
                                   guint8 index){
-    /* gb_char.bin and merged.bin can't be unloaded. */
-    if (GB_DICTIONARY == index || MERGED_DICTIONARY == index)
+    /* tsi.bin can't be unloaded. */
+    if (TSI_DICTIONARY == index)
         return false;
 
     assert(index < PHRASE_INDEX_LIBRARY_COUNT);
@@ -378,7 +377,7 @@ bool zhuyin_iterator_add_phrase(import_iterator_t * iter,
 
     /* pinyin_option_t options = PINYIN_CORRECT_ALL | USE_TONE; */
     pinyin_option_t options = USE_TONE;
-    FullPinyinParser2 parser;
+    ChewingDirectParser2 parser;
     ChewingKeyVector keys =
         g_array_new(FALSE, FALSE, sizeof(ChewingKey));
     ChewingKeyRestVector key_rests =
