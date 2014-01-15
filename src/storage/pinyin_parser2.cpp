@@ -1014,6 +1014,7 @@ int ChewingDaChenCP26Parser2::parse(pinyin_option_t options,
         g_array_append_val(key_rests, key_rest);
     }
 
+#if 0
     /* for the last partial input */
     options |= CHEWING_INCOMPLETE;
 
@@ -1034,6 +1035,7 @@ int ChewingDaChenCP26Parser2::parse(pinyin_option_t options,
         g_array_append_val(keys, key);
         g_array_append_val(key_rests, key_rest);
     }
+#endif
 
     return parsed_len;
 }
