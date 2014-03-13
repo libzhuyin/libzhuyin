@@ -671,8 +671,12 @@ int ChewingDiscreteParser2::parse(pinyin_option_t options,
     int maximum_len = 0; int i;
     /* probe the longest possible chewing string. */
     for (i = 0; i < len; ++i) {
-        if (!in_chewing_scheme(options, str[i], NULL))
+        gchar ** symbols = NULL;
+        if (!in_chewing_scheme(options, str[i], symbols)) {
+            g_strfreev(symbols);
             break;
+        }
+        g_strfreev(symbols);
     }
     maximum_len = i;
 
@@ -1008,8 +1012,12 @@ int ChewingDaChenCP26Parser2::parse(pinyin_option_t options,
     int maximum_len = 0; int i;
     /* probe the longest possible chewing string. */
     for (i = 0; i < len; ++i) {
-        if (!in_chewing_scheme(options, str[i], NULL))
+        gchar ** symbols = NULL;
+        if (!in_chewing_scheme(options, str[i], symbols)) {
+            g_strfreev(symbols);
             break;
+        }
+        g_strfreev(symbols);
     }
     maximum_len = i;
 

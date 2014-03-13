@@ -957,10 +957,10 @@ size_t zhuyin_parse_more_chewings(zhuyin_instance_t * instance,
 }
 
 bool zhuyin_in_chewing_keyboard(zhuyin_instance_t * instance,
-                                const char key, const char ** symbol) {
+                                const char key, gchar *** symbols) {
     zhuyin_context_t * & context = instance->m_context;
     return context->m_chewing_parser->in_chewing_scheme
-        (context->m_options, key, symbol);
+        (context->m_options, key, *symbols);
 }
 
 #if 0

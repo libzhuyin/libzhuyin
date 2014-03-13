@@ -312,14 +312,14 @@ size_t zhuyin_parse_more_chewings(zhuyin_instance_t * instance,
  * zhuyin_in_chewing_keyboard:
  * @instance: the zhuyin instance.
  * @key: the input key.
- * @symbol: the chewing symbol.
+ * @symbols: the chewing symbols must be freed by g_strfreev.
  * @returns: whether the key is in current chewing scheme.
  *
  * Check whether the input key is in current chewing scheme.
  *
  */
 bool zhuyin_in_chewing_keyboard(zhuyin_instance_t * instance,
-                                const char key, const char ** symbol);
+                                const char key, gchar *** symbols);
 /**
  * zhuyin_guess_candidates:
  * @instance: the zhuyin instance.
