@@ -515,6 +515,35 @@ static bool search_chewing_tones(const chewing_tone_item_t * tone_table,
     return false;
 }
 
+static int search_chewing_symbols2(const chewing_symbol_item_t * symbol_table,
+                                   const char key,
+                                   const char ** first,
+                                   const char ** second) {
+    int num = 0;
+    *first = NULL; *second = NULL;
+
+    /* just iterate the table, as we only have < 50 items. */
+    while (symbol_table->m_input != '\0') {
+        if (symbol_table->m_input == key) {
+            ++num;
+            if (NULL == *first) {
+                *first = symbol_table->m_chewing;
+            } else {
+                *second = symbol_table->m_chewing;
+            }
+        }
+
+        /* search done */
+        if (symbol_table->m_input > key)
+            break;
+
+        symbol_table++;
+    }
+
+    assert(0 <= num && num <= 2);
+    return num;
+}
+
 #if 0
 bool ChewingSimpleParser2::parse_one_key(pinyin_option_t options,
                                          ChewingKey & key,
@@ -726,67 +755,53 @@ bool ChewingDiscreteParser2::set_scheme(ChewingScheme scheme) {
 
 bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
                                                const char key,
-                                               const char ** symbol) const {
-    const gchar * chewing = NULL;
+                                               gchar ** & symbols) const {
+    symbols = NULL;
+    GPtrArray * array = g_ptr_array_new();
+
+    const gchar * first = NULL, * second = NULL;
     unsigned char tone = CHEWING_ZERO_TONE;
 
-    if (search_chewing_symbols(m_initial_table, key, &chewing)) {
-        if (symbol)
-            *symbol = chewing;
-        return true;
+    if (search_chewing_symbols2(m_initial_table, key, &first, &second)) {
+        if (first)
+            g_ptr_array_add(array, g_strdup(first));
+        if (second)
+            g_ptr_array_add(array, g_strdup(second));
     }
 
-    if (search_chewing_symbols(m_middle_table, key, &chewing)) {
-        if (symbol)
-            *symbol = chewing;
-        return true;
+    if (search_chewing_symbols2(m_middle_table, key, &first, &second)) {
+        if (first)
+            g_ptr_array_add(array, g_strdup(first));
+        if (second)
+            g_ptr_array_add(array, g_strdup(second));
     }
 
-    if (search_chewing_symbols(m_final_table, key, &chewing)) {
-        if (symbol)
-            *symbol = chewing;
-        return true;
+    if (search_chewing_symbols2(m_final_table, key,  &first, &second)) {
+        if (first)
+            g_ptr_array_add(array, g_strdup(first));
+        if (second)
+            g_ptr_array_add(array, g_strdup(second));
     }
 
     if (!(options & USE_TONE))
-        return false;
+        goto end;
 
     if (search_chewing_tones(m_tone_table, key, &tone)) {
-        if (symbol)
-            *symbol = chewing_tone_table[tone];
+        g_ptr_array_add(array, g_strdup(chewing_tone_table[tone]));
+    }
+
+end:
+    assert(array->len <= 2);
+
+    if (array->len) {
+        g_ptr_array_add(array, NULL);
+        /* must be freed by g_strfreev. */
+        symbols = (gchar **) g_ptr_array_free(array, FALSE);
         return true;
     }
 
+    g_ptr_array_free(array, TRUE);
     return false;
-}
-
-static int search_chewing_symbols2(const chewing_symbol_item_t * symbol_table,
-                                   const char key,
-                                   const char ** first,
-                                   const char ** second) {
-    int num = 0;
-    *first = NULL; *second = NULL;
-
-    /* just iterate the table, as we only have < 50 items. */
-    while (symbol_table->m_input != '\0') {
-        if (symbol_table->m_input == key) {
-            ++num;
-            if (NULL == *first) {
-                *first = symbol_table->m_chewing;
-            } else {
-                *second = symbol_table->m_chewing;
-            }
-        }
-
-        /* search done */
-        if (symbol_table->m_input > key)
-            break;
-
-        symbol_table++;
-    }
-
-    assert(0 <= num && num <= 2);
-    return num;
 }
 
 ChewingDaChenCP26Parser2::ChewingDaChenCP26Parser2() {
@@ -1054,37 +1069,57 @@ int ChewingDaChenCP26Parser2::parse(pinyin_option_t options,
 
 bool ChewingDaChenCP26Parser2::in_chewing_scheme(pinyin_option_t options,
                                                  const char key,
-                                                 const char ** symbol) const {
-    const gchar * chewing = NULL;
+                                                 gchar ** & symbols) const {
+    symbols = NULL;
+    GPtrArray * array = g_ptr_array_new();
+
+    const gchar * first = NULL, * second = NULL;
     unsigned char tone = CHEWING_ZERO_TONE;
 
-    if (search_chewing_symbols(m_initial_table, key, &chewing)) {
-        if (symbol)
-            *symbol = chewing;
-        return true;
+    if (search_chewing_symbols2(m_initial_table, key, &first, &second)) {
+        if (first)
+            g_ptr_array_add(array, g_strdup(first));
+        if (second)
+            g_ptr_array_add(array, g_strdup(second));
     }
 
-    if (search_chewing_symbols(m_middle_table, key, &chewing)) {
-        if (symbol)
-            *symbol = chewing;
-        return true;
+    if (search_chewing_symbols2(m_middle_table, key, &first, &second)) {
+        if (first)
+            g_ptr_array_add(array, g_strdup(first));
+        if (second)
+            g_ptr_array_add(array, g_strdup(second));
     }
 
-    if (search_chewing_symbols(m_final_table, key, &chewing)) {
-        if (symbol)
-            *symbol = chewing;
-        return true;
+    if (search_chewing_symbols2(m_final_table, key,  &first, &second)) {
+        if (first)
+            g_ptr_array_add(array, g_strdup(first));
+        if (second)
+            g_ptr_array_add(array, g_strdup(second));
+    }
+
+    /* handles for "i" */
+    if ('i' == key) {
+        g_ptr_array_add(array, g_strdup("ㄧㄚ"));
     }
 
     if (!(options & USE_TONE))
-        return false;
+        goto end;
 
     if (search_chewing_tones(m_tone_table, key, &tone)) {
-        if (symbol)
-            *symbol = chewing_tone_table[tone];
+        g_ptr_array_add(array, g_strdup(chewing_tone_table[tone]));
+    }
+
+end:
+    assert(array->len <= 3);
+
+    if (array->len) {
+        g_ptr_array_add(array, NULL);
+        /* must be freed by g_strfreev. */
+        symbols = (gchar **) g_ptr_array_free(array, FALSE);
         return true;
     }
 
+    g_ptr_array_free(array, TRUE);
     return false;
 }
 

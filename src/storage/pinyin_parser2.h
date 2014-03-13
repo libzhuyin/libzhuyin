@@ -167,7 +167,7 @@ public:
      * Check whether the input character is in the chewing keyboard mapping.
      *
      */
-    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const = 0;
+    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, gchar ** & symbols) const = 0;
 };
 
 /**
@@ -216,7 +216,7 @@ public:
 
 public:
     bool set_scheme(ChewingScheme scheme);
-    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
+    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, gchar ** & symbols) const;
 };
 
 
@@ -240,7 +240,7 @@ public:
     virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
 
 public:
-    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
+    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, gchar ** & symbols) const;
 };
 
 
