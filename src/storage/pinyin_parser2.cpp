@@ -35,6 +35,10 @@
 
 using namespace zhuyin;
 
+
+#define PINYIN_SUPPORT_QUOTATION 0
+
+
 static bool check_pinyin_options(pinyin_option_t options, const pinyin_index_item_t * item) {
     guint32 flags = item->m_flags;
     assert (flags & IS_PINYIN);
@@ -311,6 +315,8 @@ int FullPinyinParser2::parse (pinyin_option_t options, ChewingKeyVector & keys,
     parse_value_t * curstep = NULL, * nextstep = NULL;
 
     for (i = 0; i < len; ++i) {
+
+#if PINYIN_SUPPORT_QUOTATION
         if (input[i] == '\'') {
             curstep = &g_array_index(m_parse_steps, parse_value_t, i);
             nextstep = &g_array_index(m_parse_steps, parse_value_t, i + 1);
@@ -324,6 +330,11 @@ int FullPinyinParser2::parse (pinyin_option_t options, ChewingKeyVector & keys,
             next_sep = 0;
             continue;
         }
+#else
+        if (input[i] == '\'') {
+            break;
+        }
+#endif
 
         /* forward to next "'" */
         if ( 0 == next_sep ) {
