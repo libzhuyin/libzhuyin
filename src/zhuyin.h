@@ -656,6 +656,7 @@ bool zhuyin_get_phrase_token(zhuyin_instance_t * instance,
 /* hack here. */
 typedef ChewingKey PinyinKey;
 typedef ChewingKeyRest PinyinKeyPos;
+typedef pinyin_option_t zhuyin_option_t;
 
 
 G_END_DECLS

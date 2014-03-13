@@ -267,6 +267,12 @@ bool FullPinyinParser2::parse_one_key (pinyin_option_t options,
             parsed_len --;
             tone_pos = parsed_len;
         }
+
+        /* check the force tone option. */
+        if (options & FORCE_TONE && CHEWING_ZERO_TONE == tone) {
+            g_free(input);
+            return false;
+        }
     }
 
     /* parse pinyin core staff here. */
@@ -558,6 +564,10 @@ bool ChewingSimpleParser2::parse_one_key(pinyin_option_t options,
         /* remove tone from input */
         if (search_chewing_tones(m_tone_table, ch, &tone))
             symbols_len --;
+
+        /* check the force tone option */
+        if (options & FORCE_TONE && CHEWING_ZERO_TONE == tone)
+            return false;
     }
 
     int i;
@@ -630,13 +640,22 @@ bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
         index++;
     }
 
-    if (index == len)
+    if (index == len) {
+        /* check the force tone option. */
+        if (options & USE_TONE && options & FORCE_TONE)
+            return false;
         goto probe;
+    }
 
     /* probe tone */
     if (options & USE_TONE) {
         if (search_chewing_tones(m_tone_table, str[index], &tone)) {
             index ++;
+        }
+
+        /* check the force tone option. */
+        if (options & FORCE_TONE && CHEWING_ZERO_TONE == tone) {
+            return false;
         }
     }
 
@@ -844,6 +863,12 @@ bool ChewingDaChenCP26Parser2::parse_one_key(pinyin_option_t options,
         /* remove tone from input */
         if (search_chewing_tones(m_tone_table, ch, &tone))
             len --;
+
+        /* check the force tone option. */
+        if (options & FORCE_TONE && CHEWING_ZERO_TONE == tone) {
+            g_free(input);
+            return false;
+        }
     }
 
     if (0 == len)
