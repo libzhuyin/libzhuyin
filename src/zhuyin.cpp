@@ -1376,6 +1376,9 @@ int zhuyin_choose_candidate(zhuyin_instance_t * instance,
                             lookup_candidate_t * candidate){
     zhuyin_context_t * & context = instance->m_context;
 
+    if (BEST_MATCH_CANDIDATE == candidate->m_candidate_type)
+        return instance->m_pinyin_keys->len;
+
     /* sync m_constraints to the length of m_pinyin_keys. */
     bool retval = context->m_pinyin_lookup->validate_constraint
         (instance->m_constraints, instance->m_pinyin_keys);
