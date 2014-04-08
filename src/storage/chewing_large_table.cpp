@@ -156,29 +156,29 @@ int ChewingBitmapIndexLevel::initial_level_search (int phrase_length,
     const ChewingKey & first_key = keys[0];
 
     switch(first_key.m_initial) {
-        MATCH(PINYIN_AMB_C_CH, CHEWING_C, CHEWING_CH);
-        MATCH(PINYIN_AMB_C_CH, CHEWING_CH, CHEWING_C);
-        MATCH(PINYIN_AMB_Z_ZH, CHEWING_Z, CHEWING_ZH);
-        MATCH(PINYIN_AMB_Z_ZH, CHEWING_ZH, CHEWING_Z);
-        MATCH(PINYIN_AMB_S_SH, CHEWING_S, CHEWING_SH);
-        MATCH(PINYIN_AMB_S_SH, CHEWING_SH, CHEWING_S);
-        MATCH(PINYIN_AMB_L_R, CHEWING_R, CHEWING_L);
-        MATCH(PINYIN_AMB_L_N, CHEWING_N, CHEWING_L);
-        MATCH(PINYIN_AMB_F_H, CHEWING_F, CHEWING_H);
-        MATCH(PINYIN_AMB_F_H, CHEWING_H, CHEWING_F);
-        MATCH(PINYIN_AMB_G_K, CHEWING_G, CHEWING_K);
-        MATCH(PINYIN_AMB_G_K, CHEWING_K, CHEWING_G);
+        MATCH(ZHUYIN_AMB_C_CH, CHEWING_C, CHEWING_CH);
+        MATCH(ZHUYIN_AMB_C_CH, CHEWING_CH, CHEWING_C);
+        MATCH(ZHUYIN_AMB_Z_ZH, CHEWING_Z, CHEWING_ZH);
+        MATCH(ZHUYIN_AMB_Z_ZH, CHEWING_ZH, CHEWING_Z);
+        MATCH(ZHUYIN_AMB_S_SH, CHEWING_S, CHEWING_SH);
+        MATCH(ZHUYIN_AMB_S_SH, CHEWING_SH, CHEWING_S);
+        MATCH(ZHUYIN_AMB_L_R, CHEWING_R, CHEWING_L);
+        MATCH(ZHUYIN_AMB_L_N, CHEWING_N, CHEWING_L);
+        MATCH(ZHUYIN_AMB_F_H, CHEWING_F, CHEWING_H);
+        MATCH(ZHUYIN_AMB_F_H, CHEWING_H, CHEWING_F);
+        MATCH(ZHUYIN_AMB_G_K, CHEWING_G, CHEWING_K);
+        MATCH(ZHUYIN_AMB_G_K, CHEWING_K, CHEWING_G);
 
     case CHEWING_L:
         {
             result |= middle_and_final_level_search
                 (CHEWING_L, phrase_length, keys, ranges);
 
-            if (m_options & PINYIN_AMB_L_N)
+            if (m_options & ZHUYIN_AMB_L_N)
                 result |= middle_and_final_level_search
                     (CHEWING_N, phrase_length, keys,ranges);
 
-            if (m_options & PINYIN_AMB_L_R)
+            if (m_options & ZHUYIN_AMB_L_R)
                 result |= middle_and_final_level_search
                     (CHEWING_R, phrase_length, keys, ranges);
             return result;
@@ -246,12 +246,12 @@ int ChewingBitmapIndexLevel::middle_and_final_level_search
             }
         }
 
-        MATCH(PINYIN_AMB_AN_ANG, CHEWING_AN, CHEWING_ANG);
-	MATCH(PINYIN_AMB_AN_ANG, CHEWING_ANG, CHEWING_AN);
-	MATCH(PINYIN_AMB_EN_ENG, CHEWING_EN, CHEWING_ENG);
-	MATCH(PINYIN_AMB_EN_ENG, CHEWING_ENG, CHEWING_EN);
-	MATCH(PINYIN_AMB_IN_ING, PINYIN_IN, PINYIN_ING);
-	MATCH(PINYIN_AMB_IN_ING, PINYIN_ING, PINYIN_IN);
+	MATCH(ZHUYIN_AMB_AN_ANG, CHEWING_AN, CHEWING_ANG);
+	MATCH(ZHUYIN_AMB_AN_ANG, CHEWING_ANG, CHEWING_AN);
+	MATCH(ZHUYIN_AMB_EN_ENG, CHEWING_EN, CHEWING_ENG);
+	MATCH(ZHUYIN_AMB_EN_ENG, CHEWING_ENG, CHEWING_EN);
+	MATCH(ZHUYIN_AMB_IN_ING, PINYIN_IN, PINYIN_ING);
+	MATCH(ZHUYIN_AMB_IN_ING, PINYIN_ING, PINYIN_IN);
 
     default:
         {

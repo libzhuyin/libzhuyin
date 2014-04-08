@@ -554,7 +554,7 @@ static int search_chewing_symbols2(const chewing_symbol_item_t * symbol_table,
 bool ChewingSimpleParser2::parse_one_key(pinyin_option_t options,
                                          ChewingKey & key,
                                          const char * str, int len) const {
-    options &= ~PINYIN_AMB_ALL;
+    options &= ~ZHUYIN_AMB_ALL;
     unsigned char tone = CHEWING_ZERO_TONE;
 
     int symbols_len = len;
@@ -611,7 +611,7 @@ bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
     if (0 == len)
         return false;
 
-    options &= ~PINYIN_AMB_ALL;
+    options &= ~ZHUYIN_AMB_ALL;
 
     int index = 0;
     const char * initial = "";
@@ -843,7 +843,7 @@ bool ChewingDaChenCP26Parser2::parse_one_key(pinyin_option_t options,
     if (0 == len)
         return false;
 
-    options &= ~PINYIN_AMB_ALL;
+    options &= ~ZHUYIN_AMB_ALL;
 
     const char * initial = "";
     const char * middle  = "";
@@ -1164,7 +1164,7 @@ ChewingDirectParser2::ChewingDirectParser2 (){
 bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
                                          ChewingKey & key,
                                          const char *str, int len) const {
-    options &= ~PINYIN_AMB_ALL;
+    options &= ~ZHUYIN_AMB_ALL;
     unsigned char tone = CHEWING_ZERO_TONE;
 
     if (0 == len)

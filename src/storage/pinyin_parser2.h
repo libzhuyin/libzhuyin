@@ -267,37 +267,37 @@ inline int pinyin_compare_initial2(pinyin_option_t options,
     if (lhs == rhs)
         return 0;
 
-    if ((options & PINYIN_AMB_C_CH) &&
+    if ((options & ZHUYIN_AMB_C_CH) &&
         ((lhs == CHEWING_C && rhs == CHEWING_CH) ||
          (lhs == CHEWING_CH && rhs == CHEWING_C)))
         return 0;
 
-    if ((options & PINYIN_AMB_S_SH) &&
+    if ((options & ZHUYIN_AMB_S_SH) &&
         ((lhs == CHEWING_S && rhs == CHEWING_SH) ||
          (lhs == CHEWING_SH && rhs == CHEWING_S)))
         return 0;
 
-    if ((options & PINYIN_AMB_Z_ZH) &&
+    if ((options & ZHUYIN_AMB_Z_ZH) &&
         ((lhs == CHEWING_Z && rhs == CHEWING_ZH) ||
          (lhs == CHEWING_ZH && rhs == CHEWING_Z)))
         return 0;
 
-    if ((options & PINYIN_AMB_F_H) &&
+    if ((options & ZHUYIN_AMB_F_H) &&
         ((lhs == CHEWING_F && rhs == CHEWING_H) ||
          (lhs == CHEWING_H && rhs == CHEWING_F)))
         return 0;
 
-    if ((options & PINYIN_AMB_L_N) &&
+    if ((options & ZHUYIN_AMB_L_N) &&
         ((lhs == CHEWING_L && rhs == CHEWING_N) ||
          (lhs == CHEWING_N && rhs == CHEWING_L)))
         return 0;
 
-    if ((options & PINYIN_AMB_L_R) &&
+    if ((options & ZHUYIN_AMB_L_R) &&
         ((lhs == CHEWING_L && rhs == CHEWING_R) ||
          (lhs == CHEWING_R && rhs == CHEWING_L)))
         return 0;
 
-    if ((options & PINYIN_AMB_G_K) &&
+    if ((options & ZHUYIN_AMB_G_K) &&
         ((lhs == CHEWING_G && rhs == CHEWING_K) ||
          (lhs == CHEWING_K && rhs == CHEWING_G)))
         return 0;
@@ -329,17 +329,17 @@ inline int pinyin_compare_middle_and_final2(pinyin_option_t options,
     if (middle_diff)
         return middle_diff;
 
-    if ((options & PINYIN_AMB_AN_ANG) &&
+    if ((options & ZHUYIN_AMB_AN_ANG) &&
         ((final_lhs == CHEWING_AN && final_rhs == CHEWING_ANG) ||
          (final_lhs == CHEWING_ANG && final_rhs == CHEWING_AN)))
         return 0;
 
-    if ((options & PINYIN_AMB_EN_ENG) &&
+    if ((options & ZHUYIN_AMB_EN_ENG) &&
         ((final_lhs == CHEWING_EN && final_rhs == CHEWING_ENG) ||
          (final_lhs == CHEWING_ENG && final_rhs == CHEWING_EN)))
         return 0;
 
-    if ((options & PINYIN_AMB_IN_ING) &&
+    if ((options & ZHUYIN_AMB_IN_ING) &&
         ((final_lhs == PINYIN_IN && final_rhs == PINYIN_ING) ||
          (final_lhs == PINYIN_ING && final_rhs == PINYIN_IN)))
         return 0;

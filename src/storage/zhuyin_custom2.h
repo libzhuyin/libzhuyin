@@ -27,9 +27,9 @@
 G_BEGIN_DECLS
 
 /**
- * PinyinTableFlag:
+ * ZhuyinTableFlag:
  */
-enum PinyinTableFlag{
+enum ZhuyinTableFlag{
     IS_BOPOMOFO = 1U << 1,
     IS_PINYIN = 1U << 2,
     PINYIN_INCOMPLETE = 1U << 3,
@@ -43,23 +43,23 @@ enum PinyinTableFlag{
 };
 
 /**
- * PinyinAmbiguity2:
+ * ZhuyinAmbiguity2:
  *
- * The enums of pinyin ambiguities.
+ * The enums of zhuyin ambiguities.
  *
  */
-enum PinyinAmbiguity2{
-    PINYIN_AMB_C_CH = 1U << 12,
-    PINYIN_AMB_S_SH = 1U << 13,
-    PINYIN_AMB_Z_ZH = 1U << 14,
-    PINYIN_AMB_F_H = 1U << 15,
-    PINYIN_AMB_G_K = 1U << 16,
-    PINYIN_AMB_L_N = 1U << 17,
-    PINYIN_AMB_L_R = 1U << 18,
-    PINYIN_AMB_AN_ANG = 1U << 19,
-    PINYIN_AMB_EN_ENG = 1U << 20,
-    PINYIN_AMB_IN_ING = 1U << 21,
-    PINYIN_AMB_ALL = 0x3FFU << 12
+enum ZhuyinAmbiguity2{
+    ZHUYIN_AMB_C_CH = 1U << 12,
+    ZHUYIN_AMB_S_SH = 1U << 13,
+    ZHUYIN_AMB_Z_ZH = 1U << 14,
+    ZHUYIN_AMB_F_H = 1U << 15,
+    ZHUYIN_AMB_G_K = 1U << 16,
+    ZHUYIN_AMB_L_N = 1U << 17,
+    ZHUYIN_AMB_L_R = 1U << 18,
+    ZHUYIN_AMB_AN_ANG = 1U << 19,
+    ZHUYIN_AMB_EN_ENG = 1U << 20,
+    ZHUYIN_AMB_IN_ING = 1U << 21,
+    ZHUYIN_AMB_ALL = 0x3FFU << 12
 };
 
 /**
