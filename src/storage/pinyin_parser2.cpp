@@ -74,8 +74,8 @@ static bool check_chewing_options(pinyin_option_t options, const chewing_index_i
     }
 
     /* handle correct chewing, currently only one flag per item. */
-    flags &= CHEWING_CORRECT_ALL;
-    options &= CHEWING_CORRECT_ALL;
+    flags &= ZHUYIN_CORRECT_ALL;
+    options &= ZHUYIN_CORRECT_ALL;
 
     if (flags) {
         if ((flags & options) != flags)
