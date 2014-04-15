@@ -1,11 +1,11 @@
 set(
     LIBPINYIN_HEADERS
-    pinyin.h
+    zhuyin.h
 )
 
 set(
     LIBPINYIN_SOURCES
-    pinyin.cpp
+    zhuyin.cpp
 )
 
 add_library(
