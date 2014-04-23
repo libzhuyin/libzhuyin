@@ -1,4 +1,4 @@
-LIBPINYIN {
+LIBZHUYIN {
     global:
         zhuyin_init;
         zhuyin_save;
