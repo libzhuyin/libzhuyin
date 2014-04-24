@@ -5,7 +5,7 @@
 m4_define([libzhuyin_major_version], [0])
 m4_define([libzhuyin_minor_version], [9])
 m4_define([libzhuyin_micro_version], [94])
-m4_define([libzhuyin_abi_current], [4])
+m4_define([libzhuyin_abi_current], [5])
 m4_define([libzhuyin_abi_revision], [0])
 
 m4_define([libzhuyin_version],
