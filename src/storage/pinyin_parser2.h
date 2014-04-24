@@ -142,7 +142,7 @@ public:
     virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
 
 public:
-    bool set_scheme(FullPinyinScheme scheme);
+    bool set_scheme(ZhuyinScheme scheme);
 };
 
 /**
@@ -215,7 +215,7 @@ public:
     virtual int parse(pinyin_option_t options, ChewingKeyVector & keys, ChewingKeyRestVector & key_rests, const char *str, int len) const;
 
 public:
-    bool set_scheme(ChewingScheme scheme);
+    bool set_scheme(ZhuyinScheme scheme);
     virtual bool in_chewing_scheme(pinyin_option_t options, const char key, gchar ** & symbols) const;
 };
 

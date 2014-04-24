@@ -36,7 +36,7 @@ typedef GArray * CandidateVector; /* GArray of lookup_candidate_t */
 struct _zhuyin_context_t{
     pinyin_option_t m_options;
 
-    FullPinyinScheme m_full_pinyin_scheme;
+    ZhuyinScheme m_full_pinyin_scheme;
     FullPinyinParser2 * m_full_pinyin_parser;
     ChewingParser2 * m_chewing_parser;
 
@@ -637,7 +637,7 @@ bool zhuyin_save(zhuyin_context_t * context){
 }
 
 bool zhuyin_set_chewing_scheme(zhuyin_context_t * context,
-                               ChewingScheme scheme){
+                               ZhuyinScheme scheme){
     delete context->m_chewing_parser;
     context->m_chewing_parser = NULL;
 
@@ -663,7 +663,7 @@ bool zhuyin_set_chewing_scheme(zhuyin_context_t * context,
 }
 
 bool zhuyin_set_full_pinyin_scheme(zhuyin_context_t * context,
-                                   FullPinyinScheme scheme){
+                                   ZhuyinScheme scheme){
     context->m_full_pinyin_scheme = scheme;
     context->m_full_pinyin_parser->set_scheme(scheme);
     return true;

@@ -63,21 +63,9 @@ enum ZhuyinAmbiguity2{
 };
 
 /**
- * @brief enums of Pinyin Schemes.
+ * @brief enums of Zhuyin Schemes.
  */
-
-enum FullPinyinScheme
-{
-    FULL_PINYIN_HANYU = 1,
-    FULL_PINYIN_LUOMA = 2,
-    FULL_PINYIN_SECONDARY_BOPOMOFO = 3,
-    FULL_PINYIN_DEFAULT = FULL_PINYIN_HANYU
-};
-
-/**
- * @brief enums of Chewing Schemes.
- */
-enum ChewingScheme
+enum ZhuyinScheme
 {
     CHEWING_STANDARD = 1,
     CHEWING_HSU      = 2,
@@ -88,7 +76,11 @@ enum ChewingScheme
     CHEWING_STANDARD_DVORAK = 7,
     CHEWING_HSU_DVORAK = 8,
     CHEWING_DACHEN_CP26 = 9,
-    CHEWING_DEFAULT  = CHEWING_STANDARD
+    FULL_PINYIN_HANYU = 10,
+    FULL_PINYIN_LUOMA = 11,
+    FULL_PINYIN_SECONDARY_BOPOMOFO = 12,
+    CHEWING_DEFAULT  = CHEWING_STANDARD,
+    FULL_PINYIN_DEFAULT = FULL_PINYIN_HANYU
 };
 
 G_END_DECLS

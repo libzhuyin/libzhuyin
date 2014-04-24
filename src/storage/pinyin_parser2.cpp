@@ -95,7 +95,7 @@ gint _ChewingKey::get_table_index() {
     return index == -1 ? 0 : index;
 }
 
-gchar * _ChewingKey::get_pinyin_string(FullPinyinScheme scheme) {
+gchar * _ChewingKey::get_pinyin_string(ZhuyinScheme scheme) {
     assert(m_tone < CHEWING_NUMBER_OF_TONES);
     gint index = get_table_index();
     assert(index < (int) G_N_ELEMENTS(content_table));
@@ -441,7 +441,7 @@ int FullPinyinParser2::final_step(size_t step_len, ChewingKeyVector & keys,
     return parsed_len;
 }
 
-bool FullPinyinParser2::set_scheme(FullPinyinScheme scheme){
+bool FullPinyinParser2::set_scheme(ZhuyinScheme scheme){
     switch(scheme){
     case FULL_PINYIN_HANYU:
         m_pinyin_index = hanyu_pinyin_index;
@@ -727,7 +727,7 @@ int ChewingDiscreteParser2::parse(pinyin_option_t options,
     return parsed_len;
 }
 
-bool ChewingDiscreteParser2::set_scheme(ChewingScheme scheme) {
+bool ChewingDiscreteParser2::set_scheme(ZhuyinScheme scheme) {
     m_options = 0;
 
 #define INIT_PARSER(index, table) {                     \

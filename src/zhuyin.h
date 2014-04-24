@@ -137,7 +137,7 @@ bool zhuyin_save(zhuyin_context_t * context);
  *
  */
 bool zhuyin_set_chewing_scheme(zhuyin_context_t * context,
-                               ChewingScheme scheme);
+                               ZhuyinScheme scheme);
 
 /**
  * zhuyin_set_full_pinyin_scheme:
@@ -149,7 +149,7 @@ bool zhuyin_set_chewing_scheme(zhuyin_context_t * context,
  *
  */
 bool zhuyin_set_full_pinyin_scheme(zhuyin_context_t * context,
-                                   FullPinyinScheme scheme);
+                                   ZhuyinScheme scheme);
 
 /**
  * zhuyin_fini:
