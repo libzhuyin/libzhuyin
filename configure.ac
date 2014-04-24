@@ -2,14 +2,20 @@
 # Process this file with autoconf to produce a configure script.
 
 
+# if not 1, append datestamp to the version number.
+m4_define([libzhuyin_released], [0])
 m4_define([libzhuyin_major_version], [0])
 m4_define([libzhuyin_minor_version], [9])
-m4_define([libzhuyin_micro_version], [94])
+m4_define([libzhuyin_micro_version], [99])
+m4_define(libzhuyin_maybe_datestamp,
+    m4_esyscmd([if test x]libzhuyin_released[ != x1; then date +.%Y%m%d | tr -d '\n\r'; fi]))
+
 m4_define([libzhuyin_abi_current], [5])
 m4_define([libzhuyin_abi_revision], [0])
 
 m4_define([libzhuyin_version],
-          [libzhuyin_major_version.libzhuyin_minor_version.libzhuyin_micro_version])
+          libzhuyin_major_version.libzhuyin_minor_version.libzhuyin_micro_version[]libzhuyin_maybe_datestamp)
+
 m4_define([libzhuyin_binary_version],
           [libzhuyin_abi_current.libzhuyin_abi_revision])
 
