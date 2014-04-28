@@ -62,6 +62,7 @@ struct _zhuyin_instance_t{
     TokenVector m_prefixes;
     ChewingKeyVector m_pinyin_keys;
     ChewingKeyRestVector m_pinyin_key_rests;
+    size_t m_parsed_len;
     CandidateConstraints m_constraints;
     MatchResults m_match_results;
     CandidateVector m_candidates;
@@ -773,6 +774,9 @@ zhuyin_instance_t * zhuyin_alloc_instance(zhuyin_context_t * context){
     instance->m_pinyin_keys = g_array_new(FALSE, FALSE, sizeof(ChewingKey));
     instance->m_pinyin_key_rests =
         g_array_new(FALSE, FALSE, sizeof(ChewingKeyRest));
+
+    instance->m_parsed_len = 0;
+
     instance->m_constraints = g_array_new
         (TRUE, FALSE, sizeof(lookup_constraint_t));
     instance->m_match_results =
@@ -926,11 +930,12 @@ size_t zhuyin_parse_more_full_pinyins(zhuyin_instance_t * instance,
     instance->m_raw_full_pinyin = g_strdup(pinyins);
     int pinyin_len = strlen(pinyins);
 
-    int parse_len = context->m_full_pinyin_parser->parse
+    int parsed_len = context->m_full_pinyin_parser->parse
         ( context->m_options, instance->m_pinyin_keys,
           instance->m_pinyin_key_rests, pinyins, pinyin_len);
 
-    return parse_len;
+    instance->m_parsed_len = parsed_len;
+    return parsed_len;
 }
 
 bool zhuyin_parse_chewing(zhuyin_instance_t * instance,
@@ -949,11 +954,16 @@ size_t zhuyin_parse_more_chewings(zhuyin_instance_t * instance,
     zhuyin_context_t * & context = instance->m_context;
     int chewing_len = strlen(chewings);
 
-    int parse_len = context->m_chewing_parser->parse
+    int parsed_len = context->m_chewing_parser->parse
         ( context->m_options, instance->m_pinyin_keys,
           instance->m_pinyin_key_rests, chewings, chewing_len);
 
-    return parse_len;
+    instance->m_parsed_len = parsed_len;
+    return parsed_len;
+}
+
+size_t zhuyin_get_parsed_input_length(zhuyin_instance_t * instance) {
+    return instance->m_parsed_len;
 }
 
 bool zhuyin_in_chewing_keyboard(zhuyin_instance_t * instance,

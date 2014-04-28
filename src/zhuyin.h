@@ -309,6 +309,17 @@ size_t zhuyin_parse_more_chewings(zhuyin_instance_t * instance,
                                   const char * chewings);
 
 /**
+ * zhuyin_get_parsed_input_length:
+ * @instance: the zhuyin instance.
+ * @returns: the parsed_length of the input.
+ *
+ * Get the parsed length of the input.
+ *
+ */
+size_t zhuyin_get_parsed_input_length(zhuyin_instance_t * instance);
+
+
+/**
  * zhuyin_in_chewing_keyboard:
  * @instance: the zhuyin instance.
  * @key: the input key.
