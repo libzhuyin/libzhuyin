@@ -558,7 +558,7 @@ bool zhuyin_get_candidate_string(zhuyin_instance_t * instance,
                                  const gchar ** utf8_str);
 
 /**
- * zhuyin_get_n_pinyin:
+ * zhuyin_get_n_zhuyin:
  * @instance: the zhuyin instance.
  * @num: the number of the pinyins.
  * @returns: whether the get operation is successful.
@@ -566,11 +566,11 @@ bool zhuyin_get_candidate_string(zhuyin_instance_t * instance,
  * Get the number of the pinyins.
  *
  */
-bool zhuyin_get_n_pinyin(zhuyin_instance_t * instance,
+bool zhuyin_get_n_zhuyin(zhuyin_instance_t * instance,
                          guint * num);
 
 /**
- * zhuyin_get_pinyin_key:
+ * zhuyin_get_zhuyin_key:
  * @instance: the zhuyin instance.
  * @index: the index of the pinyin key.
  * @key: the retrieved pinyin key.
@@ -579,12 +579,12 @@ bool zhuyin_get_n_pinyin(zhuyin_instance_t * instance,
  * Get the pinyin key of the index from the pinyin keys.
  *
  */
-bool zhuyin_get_pinyin_key(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key(zhuyin_instance_t * instance,
                            guint index,
                            ChewingKey ** key);
 
 /**
- * zhuyin_get_pinyin_key_rest:
+ * zhuyin_get_zhuyin_key_rest:
  * @instance: the pinyin index.
  * @index: the index of the pinyin key rest.
  * @key_rest: the retrieved pinyin key rest.
@@ -593,12 +593,12 @@ bool zhuyin_get_pinyin_key(zhuyin_instance_t * instance,
  * Get the pinyin key rest of the index from the pinyin key rests.
  *
  */
-bool zhuyin_get_pinyin_key_rest(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key_rest(zhuyin_instance_t * instance,
                                 guint index,
                                 ChewingKeyRest ** key_rest);
 
 /**
- * zhuyin_get_pinyin_key_rest_positions:
+ * zhuyin_get_zhuyin_key_rest_positions:
  * @instance: the zhuyin instance.
  * @key_rest: the pinyin key rest.
  * @begin: the begin position of the corresponding pinyin key.
@@ -608,12 +608,12 @@ bool zhuyin_get_pinyin_key_rest(zhuyin_instance_t * instance,
  * Get the positions of the pinyin key rest.
  *
  */
-bool zhuyin_get_pinyin_key_rest_positions(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key_rest_positions(zhuyin_instance_t * instance,
                                           ChewingKeyRest * key_rest,
                                           guint16 * begin, guint16 * end);
 
 /**
- * zhuyin_get_pinyin_key_rest_length:
+ * zhuyin_get_zhuyin_key_rest_length:
  * @instance: the zhuyin instance.
  * @key_rest: the pinyin key rest.
  * @length: the length of the corresponding pinyin key.
@@ -622,7 +622,7 @@ bool zhuyin_get_pinyin_key_rest_positions(zhuyin_instance_t * instance,
  * Get the length of the corresponding pinyin key.
  *
  */
-bool zhuyin_get_pinyin_key_rest_length(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key_rest_length(zhuyin_instance_t * instance,
                                        ChewingKeyRest * key_rest,
                                        guint16 * length);
 

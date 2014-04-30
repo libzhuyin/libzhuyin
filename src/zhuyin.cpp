@@ -1599,7 +1599,7 @@ bool zhuyin_get_candidate_string(zhuyin_instance_t * instance,
     return true;
 }
 
-bool zhuyin_get_n_pinyin(zhuyin_instance_t * instance,
+bool zhuyin_get_n_zhuyin(zhuyin_instance_t * instance,
                          guint * num) {
     *num = 0;
 
@@ -1611,7 +1611,7 @@ bool zhuyin_get_n_pinyin(zhuyin_instance_t * instance,
     return true;
 }
 
-bool zhuyin_get_pinyin_key(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key(zhuyin_instance_t * instance,
                            guint index,
                            ChewingKey ** key) {
     ChewingKeyVector & pinyin_keys = instance->m_pinyin_keys;
@@ -1626,7 +1626,7 @@ bool zhuyin_get_pinyin_key(zhuyin_instance_t * instance,
     return true;
 }
 
-bool zhuyin_get_pinyin_key_rest(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key_rest(zhuyin_instance_t * instance,
                                 guint index,
                                 ChewingKeyRest ** key_rest) {
     ChewingKeyRestVector & pinyin_key_rests = instance->m_pinyin_key_rests;
@@ -1641,7 +1641,7 @@ bool zhuyin_get_pinyin_key_rest(zhuyin_instance_t * instance,
     return true;
 }
 
-bool zhuyin_get_pinyin_key_rest_positions(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key_rest_positions(zhuyin_instance_t * instance,
                                           ChewingKeyRest * key_rest,
                                           guint16 * begin, guint16 * end) {
     if (begin)
@@ -1653,7 +1653,7 @@ bool zhuyin_get_pinyin_key_rest_positions(zhuyin_instance_t * instance,
     return true;
 }
 
-bool zhuyin_get_pinyin_key_rest_length(zhuyin_instance_t * instance,
+bool zhuyin_get_zhuyin_key_rest_length(zhuyin_instance_t * instance,
                                        ChewingKeyRest * key_rest,
                                        guint16 * length) {
     *length = key_rest->length();
