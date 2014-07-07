@@ -1449,6 +1449,7 @@ bool zhuyin_train(zhuyin_instance_t * instance){
 bool zhuyin_reset(zhuyin_instance_t * instance){
     g_free(instance->m_raw_full_pinyin);
     instance->m_raw_full_pinyin = NULL;
+    instance->m_parsed_len = 0;
 
     g_array_set_size(instance->m_prefixes, 0);
     g_array_set_size(instance->m_pinyin_keys, 0);
