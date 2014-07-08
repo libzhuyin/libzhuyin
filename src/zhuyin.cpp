@@ -1630,7 +1630,8 @@ bool zhuyin_get_zhuyin_key(zhuyin_instance_t * instance,
 bool zhuyin_get_zhuyin_key_rest(zhuyin_instance_t * instance,
                                 guint index,
                                 ChewingKeyRest ** key_rest) {
-    ChewingKeyRestVector & pinyin_key_rests = instance->m_pinyin_key_rests;
+    ChewingKeyRestVector & pinyin_key_rests =
+        instance->m_pinyin_key_rests;
 
     *key_rest = NULL;
 
@@ -1658,6 +1659,41 @@ bool zhuyin_get_zhuyin_key_rest_length(zhuyin_instance_t * instance,
                                        ChewingKeyRest * key_rest,
                                        guint16 * length) {
     *length = key_rest->length();
+    return true;
+}
+
+bool zhuyin_get_zhuyin_key_rest_offset(zhuyin_instance_t * instance,
+                                       guint16 cursor,
+                                       guint16 * offset) {
+    assert (cursor <= instance->m_parsed_len);
+
+    *offset = 0;
+
+    guint len = 0;
+    assert (instance->m_pinyin_keys->len ==
+            instance->m_pinyin_key_rests->len);
+    len = instance->m_pinyin_key_rests->len;
+
+    ChewingKeyRestVector & pinyin_key_rests =
+        instance->m_pinyin_key_rests;
+
+    guint inner_cursor = len;
+
+    guint16 prev_end = 0, cur_end;
+    for (size_t i = 0; i < len; ++i) {
+        ChewingKeyRest *pos = NULL;
+        pos = &g_array_index(pinyin_key_rests, ChewingKeyRest, i);
+        cur_end = pos->m_raw_end;
+
+        if (prev_end <= cursor && cursor < cur_end)
+            inner_cursor = i;
+
+        prev_end = cur_end;
+    }
+
+    assert (inner_cursor >= 0);
+    *offset = inner_cursor;
+
     return true;
 }
 

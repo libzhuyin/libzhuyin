@@ -46,6 +46,7 @@ LIBZHUYIN {
         zhuyin_get_zhuyin_key_rest;
         zhuyin_get_zhuyin_key_rest_positions;
         zhuyin_get_zhuyin_key_rest_length;
+        zhuyin_get_zhuyin_key_rest_offset;
         zhuyin_get_raw_full_pinyin;
         zhuyin_get_n_phrase;
         zhuyin_get_phrase_token;

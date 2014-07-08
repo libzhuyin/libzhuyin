@@ -619,12 +619,26 @@ bool zhuyin_get_zhuyin_key_rest_positions(zhuyin_instance_t * instance,
  * @length: the length of the corresponding pinyin key.
  * @returns: whether the get operation is successful.
  *
- * Get the length of the corresponding pinyin key.
+ * Get the length of the corresponding zhuyin key.
  *
  */
 bool zhuyin_get_zhuyin_key_rest_length(zhuyin_instance_t * instance,
                                        ChewingKeyRest * key_rest,
                                        guint16 * length);
+
+/**
+ * zhuyin_get_zhuyin_key_rest_offset:
+ * @instance: the zhuyin instance.
+ * @cursor: the cursor.
+ * @offset: the offset in the zhuyin array.
+ * @returns: whether the get operation is successful.
+ *
+ * Get the offset in the zhuyin key array.
+ *
+ */
+bool zhuyin_get_zhuyin_key_rest_offset(zhuyin_instance_t * instance,
+                                       guint16 cursor,
+                                       guint16 * offset);
 
 /**
  * zhuyin_get_raw_full_pinyin:
