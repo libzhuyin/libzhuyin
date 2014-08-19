@@ -43,11 +43,11 @@ libzhuyin_dbdir		= $(libdir)/libzhuyin/data
 CLEANFILES		= $(binary_model_data)
 
 interpolation2.text:
-	wget http://downloads.sourceforge.net/libzhuyin/models/model8.text.tar.gz
-	tar xvf model8.text.tar.gz -C $(top_srcdir)/data
+	wget http://downloads.sourceforge.net/libzhuyin/models/model9.text.tar.gz
+	tar xvf model9.text.tar.gz -C $(top_srcdir)/data
 
 
-$(tablefiles): interpolation2.text
+$(tablefiles) table.conf: interpolation2.text
 
 bigram.db: $(textual_model_data)
 	$(RM) $(binary_model_data)
