@@ -741,6 +741,7 @@ bool ChewingDiscreteParser2::set_scheme(ZhuyinScheme scheme) {
 
     switch(scheme) {
     case CHEWING_STANDARD:
+        m_options = SHUFFLE_CORRECT;
         INIT_PARSER(bopomofo_index, standard);
         break;
     case CHEWING_HSU:
@@ -748,12 +749,15 @@ bool ChewingDiscreteParser2::set_scheme(ZhuyinScheme scheme) {
         INIT_PARSER(hsu_bopomofo_index, hsu);
         break;
     case CHEWING_IBM:
+        m_options = SHUFFLE_CORRECT;
         INIT_PARSER(bopomofo_index, ibm);
         break;
     case CHEWING_GINYIEH:
+        m_options = SHUFFLE_CORRECT;
         INIT_PARSER(bopomofo_index, ginyieh);
         break;
     case CHEWING_ETEN:
+        m_options = SHUFFLE_CORRECT;
         INIT_PARSER(bopomofo_index, eten);
         break;
     case CHEWING_ETEN26:
@@ -761,6 +765,7 @@ bool ChewingDiscreteParser2::set_scheme(ZhuyinScheme scheme) {
         INIT_PARSER(eten26_bopomofo_index, eten26);
         break;
     case CHEWING_STANDARD_DVORAK:
+        m_options = SHUFFLE_CORRECT;
         INIT_PARSER(bopomofo_index, standard_dvorak);
         break;
     case CHEWING_HSU_DVORAK:
