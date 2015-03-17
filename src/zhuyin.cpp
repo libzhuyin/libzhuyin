@@ -181,7 +181,7 @@ zhuyin_context_t * zhuyin_init(const char * systemdir, const char * userdir){
 
     context->m_full_pinyin_scheme = FULL_PINYIN_DEFAULT;
     context->m_full_pinyin_parser = new FullPinyinParser2;
-    context->m_chewing_parser = new ChewingDiscreteParser2;
+    context->m_chewing_parser = new ChewingSimpleParser2;
 
     /* load chewing table. */
     context->m_pinyin_table = new FacadeChewingTable;
@@ -644,12 +644,17 @@ bool zhuyin_set_chewing_scheme(zhuyin_context_t * context,
 
     switch(scheme) {
     case CHEWING_STANDARD:
-    case CHEWING_HSU:
     case CHEWING_IBM:
     case CHEWING_GINYIEH:
     case CHEWING_ETEN:
+    case CHEWING_STANDARD_DVORAK: {
+        ChewingSimpleParser2 * parser = new ChewingSimpleParser2();
+        parser->set_scheme(scheme);
+        context->m_chewing_parser = parser;
+        break;
+    }
+    case CHEWING_HSU:
     case CHEWING_ETEN26:
-    case CHEWING_STANDARD_DVORAK:
     case CHEWING_HSU_DVORAK: {
         ChewingDiscreteParser2 * parser = new ChewingDiscreteParser2();
         parser->set_scheme(scheme);
@@ -659,6 +664,8 @@ bool zhuyin_set_chewing_scheme(zhuyin_context_t * context,
     case CHEWING_DACHEN_CP26:
         context->m_chewing_parser = new ChewingDaChenCP26Parser2();
         break;
+    default:
+        assert(FALSE);
     }
     return true;
 }
