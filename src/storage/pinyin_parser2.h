@@ -185,7 +185,7 @@ public:
  *
  */
 
-class ChewingSimpleParser2 : public PhoneticParser2
+class ChewingSimpleParser2 : public ChewingParser2
 {
     /* internal options for chewing parsing. */
     pinyin_option_t m_options;
@@ -209,7 +209,7 @@ public:
 
 public:
     bool set_scheme(ZhuyinScheme scheme);
-    bool in_chewing_scheme(pinyin_option_t options, const char key, const char ** symbol) const;
+    virtual bool in_chewing_scheme(pinyin_option_t options, const char key, gchar ** & symbols) const;
 };
 
 

@@ -619,8 +619,12 @@ int ChewingSimpleParser2::parse(pinyin_option_t options,
     int maximum_len = 0; int i;
     /* probe the longest possible chewing string. */
     for (i = 0; i < len; ++i) {
-        if (!in_chewing_scheme(options, str[i], NULL))
+        gchar ** symbols = NULL;
+        if (!in_chewing_scheme(options, str[i], symbols)) {
+            g_strfreev(symbols);
             break;
+        }
+        g_strfreev(symbols);
     }
     maximum_len = i;
 
@@ -683,16 +687,20 @@ bool ChewingSimpleParser2::set_scheme(ZhuyinScheme scheme) {
     return false;
 }
 
-
 bool ChewingSimpleParser2::in_chewing_scheme(pinyin_option_t options,
                                              const char key,
-                                             const char ** symbol) const {
+                                             gchar ** & symbols) const {
+    symbols = NULL;
+    GPtrArray * array = g_ptr_array_new();
+
     const gchar * chewing = NULL;
     unsigned char tone = CHEWING_ZERO_TONE;
 
     if (search_chewing_symbols(m_symbol_table, key, &chewing)) {
-        if (symbol)
-            *symbol = chewing;
+        g_ptr_array_add(array, g_strdup(chewing));
+        g_ptr_array_add(array, NULL);
+        /* must be freed by g_strfreev. */
+        symbols = (gchar **) g_ptr_array_free(array, FALSE);
         return true;
     }
 
@@ -700,8 +708,10 @@ bool ChewingSimpleParser2::in_chewing_scheme(pinyin_option_t options,
         return false;
 
     if (search_chewing_tones(m_tone_table, key, &tone)) {
-        if (symbol)
-            *symbol = chewing_tone_table[tone];
+        g_ptr_array_add(array, g_strdup(chewing_tone_table[tone]));
+        g_ptr_array_add(array, NULL);
+        /* must be freed by g_strfreev. */
+        symbols = (gchar **) g_ptr_array_free(array, FALSE);
         return true;
     }
 
