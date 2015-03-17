@@ -78,10 +78,9 @@ int main(int argc, char * argv[]) {
         parser = new FullPinyinParser2();
     } else if (strcmp("chewing", parsername) == 0) {
         if (strcmp("standard", schemename) == 0) {
-            parser = new ChewingDiscreteParser2();
+            parser = new ChewingSimpleParser2();
         } else if (strcmp("hsu", schemename) == 0) {
             parser = new ChewingDiscreteParser2();
-            ((ChewingDiscreteParser2 *)parser)->set_scheme(CHEWING_HSU);
         } else if (strcmp("dachen26", schemename) == 0) {
             parser = new ChewingDaChenCP26Parser2();
         }
@@ -90,7 +89,7 @@ int main(int argc, char * argv[]) {
     }
 
     if (!parser)
-        parser = new ChewingDiscreteParser2();
+        parser = new ChewingSimpleParser2();
 
     char* linebuf = NULL; size_t size = 0; ssize_t read;
     while( (read = getline(&linebuf, &size, stdin)) != -1 ){
