@@ -36,7 +36,7 @@
 using namespace zhuyin;
 
 
-#define PINYIN_SUPPORT_QUOTATION 0
+#define FULL_PINYIN_SUPPORT_QUOTATION 0
 
 
 static bool check_pinyin_options(pinyin_option_t options, const pinyin_index_item_t * item) {
@@ -322,7 +322,7 @@ int FullPinyinParser2::parse (pinyin_option_t options, ChewingKeyVector & keys,
 
     for (i = 0; i < len; ++i) {
 
-#if PINYIN_SUPPORT_QUOTATION
+#if FULL_PINYIN_SUPPORT_QUOTATION
         if (input[i] == '\'') {
             curstep = &g_array_index(m_parse_steps, parse_value_t, i);
             nextstep = &g_array_index(m_parse_steps, parse_value_t, i + 1);
