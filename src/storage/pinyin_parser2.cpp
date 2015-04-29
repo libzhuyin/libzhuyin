@@ -1289,6 +1289,11 @@ bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
                 break;
             }
         }
+
+        /* check the force tone option. */
+        if (options & FORCE_TONE && CHEWING_ZERO_TONE == tone) {
+            return false;
+        }
     }
 
     gchar * chewing = g_strndup(str, len);
@@ -1334,7 +1339,7 @@ int ChewingDirectParser2::parse(pinyin_option_t options,
             return parsed_len;
         }
 
-        /* skip consecutive spaces */
+        /* skip consecutive spaces. */
         for (i = next; i < len; ++i) {
             if (' ' != str[i] && '\'' != str[i])
                 break;
