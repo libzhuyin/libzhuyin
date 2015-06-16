@@ -188,7 +188,7 @@ void feed_line(const char * phrase, const char * pinyin, const guint32 freq) {
     ChewingKeyRestVector key_rests = g_array_new
         (FALSE, FALSE, sizeof(ChewingKeyRest));
 
-    pinyin_option_t options = USE_TONE;
+    pinyin_option_t options = USE_TONE | FORCE_TONE;
     parser.parse(options, keys, key_rests, pinyin, strlen(pinyin));
     assert(keys->len == key_rests->len);
 
@@ -308,7 +308,7 @@ void gen_phrase_file(const char * outputfile, int phrase_index){
                     ChewingKeyRest key_rest = g_array_index
                         (key_rests, ChewingKeyRest, k);
 
-                    //assert (CHEWING_ZERO_TONE != key.m_tone);
+                    assert (CHEWING_ZERO_TONE != key.m_tone);
                     pinyin = key.get_bopomofo_string();
                     g_array_append_val(pinyins, pinyin);
                 }

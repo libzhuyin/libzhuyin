@@ -388,8 +388,12 @@ inline int pinyin_compare_middle_and_final2(pinyin_option_t options,
 inline int pinyin_compare_tone2(pinyin_option_t options,
                                 ChewingTone lhs,
                                 ChewingTone rhs) {
+#if 0
     if (lhs == rhs)
         return 0;
+#endif
+    if (options & FORCE_TONE)
+        return (lhs - rhs);
     if (lhs == CHEWING_ZERO_TONE)
         return 0;
     if (rhs == CHEWING_ZERO_TONE)

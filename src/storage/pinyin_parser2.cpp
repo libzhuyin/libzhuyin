@@ -132,6 +132,9 @@ gchar * _ChewingKey::get_bopomofo_string() {
 
     if (CHEWING_ZERO_TONE == m_tone) {
         return g_strdup(item.m_bopomofo);
+    } else if (CHEWING_1 == m_tone) {
+        /* for first tone, usually not display it. */
+        return g_strdup(item.m_bopomofo);
     } else {
         return g_strdup_printf("%s%s", item.m_bopomofo,
                                chewing_tone_table[m_tone]);
@@ -1263,7 +1266,8 @@ bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
                                          ChewingKey & key,
                                          const char *str, int len) const {
     options &= ~ZHUYIN_AMB_ALL;
-    unsigned char tone = CHEWING_ZERO_TONE;
+    /* by default, chewing will use the first tone. */
+    unsigned char tone = CHEWING_1;
 
     if (0 == len)
         return false;
