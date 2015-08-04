@@ -77,7 +77,7 @@ struct _lookup_candidate_t{
     guint32 m_freq; /* the amplifed gfloat numerical value. */
 public:
     _lookup_candidate_t() {
-        m_candidate_type = NORMAL_CANDIDATE;
+        m_candidate_type = NORMAL_CANDIDATE_AFTER_CURSOR;
         m_phrase_string = NULL;
         m_token = null_token;
         m_new_pinyins = NULL;
@@ -1175,7 +1175,7 @@ static bool _compute_phrase_strings_of_items(zhuyin_instance_t * instance,
             g_free(sentence);
             break;
         }
-        case NORMAL_CANDIDATE:
+        case NORMAL_CANDIDATE_AFTER_CURSOR:
             zhuyin_token_get_phrase
                 (instance, candidate->m_token, NULL,
                  &(candidate->m_phrase_string));
@@ -1294,8 +1294,8 @@ static bool _free_candidates(CandidateVector candidates) {
     return true;
 }
 
-bool zhuyin_guess_candidates(zhuyin_instance_t * instance,
-                             size_t offset) {
+bool zhuyin_guess_candidates_after_cursor(zhuyin_instance_t * instance,
+                                          size_t offset) {
 
     zhuyin_context_t * & context = instance->m_context;
     pinyin_option_t & options = context->m_options;

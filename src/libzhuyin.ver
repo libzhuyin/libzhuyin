@@ -24,7 +24,7 @@ LIBZHUYIN {
         zhuyin_parse_more_chewings;
         zhuyin_get_parsed_input_length;
         zhuyin_in_chewing_keyboard;
-        zhuyin_guess_candidates;
+        zhuyin_guess_candidates_after_cursor;
         zhuyin_choose_candidate;
         zhuyin_clear_constraint;
         zhuyin_lookup_tokens;

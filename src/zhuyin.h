@@ -41,7 +41,7 @@ typedef struct _import_iterator_t import_iterator_t;
 
 typedef enum _lookup_candidate_type_t{
     BEST_MATCH_CANDIDATE = 1,
-    NORMAL_CANDIDATE,
+    NORMAL_CANDIDATE_AFTER_CURSOR,
     ZOMBIE_CANDIDATE
 } lookup_candidate_type_t;
 
@@ -332,7 +332,7 @@ size_t zhuyin_get_parsed_input_length(zhuyin_instance_t * instance);
 bool zhuyin_in_chewing_keyboard(zhuyin_instance_t * instance,
                                 const char key, gchar *** symbols);
 /**
- * zhuyin_guess_candidates:
+ * zhuyin_guess_candidates_after_cursor:
  * @instance: the zhuyin instance.
  * @offset: the offset in the pinyin keys.
  * @returns: whether a list of tokens are gotten.
@@ -340,8 +340,8 @@ bool zhuyin_in_chewing_keyboard(zhuyin_instance_t * instance,
  * Guess the candidates at the offset.
  *
  */
-bool zhuyin_guess_candidates(zhuyin_instance_t * instance,
-                             size_t offset);
+bool zhuyin_guess_candidates_after_cursor(zhuyin_instance_t * instance,
+                                          size_t offset);
 
 /**
  * zhuyin_choose_candidate:
