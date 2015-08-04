@@ -64,7 +64,7 @@ int main(int argc, char * argv[]){
 
         zhuyin_parse_more_full_pinyins(instance, linebuf);
         zhuyin_guess_sentence_with_prefix(instance, prefixbuf);
-        zhuyin_guess_candidates(instance, 0);
+        zhuyin_guess_candidates_after_cursor(instance, 0);
 
         guint len = 0;
         zhuyin_get_n_candidate(instance, &len);

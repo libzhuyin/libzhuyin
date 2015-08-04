@@ -1159,6 +1159,7 @@ static bool _prepend_sentence_candidate(zhuyin_instance_t * instance,
 
 static bool _compute_phrase_strings_of_items(zhuyin_instance_t * instance,
                                              size_t offset,
+                                             bool is_after_cursor,
                                              CandidateVector candidates) {
     /* populate m_phrase_string in lookup_candidate_t. */
 
@@ -1170,8 +1171,13 @@ static bool _compute_phrase_strings_of_items(zhuyin_instance_t * instance,
         case BEST_MATCH_CANDIDATE: {
             gchar * sentence = NULL;
             zhuyin_get_sentence(instance, &sentence);
-            candidate->m_phrase_string = g_strdup
-                (g_utf8_offset_to_pointer(sentence, offset));
+            if (is_after_cursor) {
+                candidate->m_phrase_string = g_strdup
+                    (g_utf8_offset_to_pointer(sentence, offset));
+            } else {
+                candidate->m_phrase_string = g_utf8_substring
+                    (sentence, 0, offset);
+            }
             g_free(sentence);
             break;
         }
@@ -1382,7 +1388,8 @@ bool zhuyin_guess_candidates_after_cursor(zhuyin_instance_t * instance,
 
     _prepend_sentence_candidate(instance, instance->m_candidates);
 
-    _compute_phrase_strings_of_items(instance, offset, instance->m_candidates);
+    _compute_phrase_strings_of_items(instance, offset,
+                                     true, instance->m_candidates);
 
     _remove_duplicated_items_by_phrase_string(instance, instance->m_candidates);
 
@@ -1478,7 +1485,8 @@ bool zhuyin_guess_candidates_before_cursor(zhuyin_instance_t * instance,
 
     _prepend_sentence_candidate(instance, instance->m_candidates);
 
-    _compute_phrase_strings_of_items(instance, offset, instance->m_candidates);
+    _compute_phrase_strings_of_items(instance, offset,
+                                     false, instance->m_candidates);
 
     _remove_duplicated_items_by_phrase_string(instance, instance->m_candidates);
 
