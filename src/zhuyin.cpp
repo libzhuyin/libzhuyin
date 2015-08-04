@@ -1510,6 +1510,7 @@ int zhuyin_choose_candidate(zhuyin_instance_t * instance,
         phrase_token_t token = candidate->m_token;
         len = context->m_pinyin_lookup->add_constraint
             (instance->m_constraints, offset, token);
+        offset = offset + len;
     }
 
     if (NORMAL_CANDIDATE_BEFORE_CURSOR == candidate->m_candidate_type) {
@@ -1519,13 +1520,15 @@ int zhuyin_choose_candidate(zhuyin_instance_t * instance,
         guint8 phrase_len = item.get_phrase_length();
         len = context->m_pinyin_lookup->add_constraint
             (instance->m_constraints, offset - phrase_len, token);
+        if (offset < instance->m_pinyin_keys->len)
+            offset = offset + 1;
     }
 
     /* safe guard: validate the m_constraints again. */
     retval = context->m_pinyin_lookup->validate_constraint
         (instance->m_constraints, instance->m_pinyin_keys) && len;
 
-    return offset + len;
+    return offset;
 }
 
 bool zhuyin_clear_constraint(zhuyin_instance_t * instance,
