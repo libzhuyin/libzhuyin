@@ -1176,6 +1176,7 @@ static bool _compute_phrase_strings_of_items(zhuyin_instance_t * instance,
             break;
         }
         case NORMAL_CANDIDATE_AFTER_CURSOR:
+        case NORMAL_CANDIDATE_BEFORE_CURSOR:
             zhuyin_token_get_phrase
                 (instance, candidate->m_token, NULL,
                  &(candidate->m_phrase_string));
@@ -1388,6 +1389,102 @@ bool zhuyin_guess_candidates_after_cursor(zhuyin_instance_t * instance,
     return true;
 }
 
+bool zhuyin_guess_candidates_before_cursor(zhuyin_instance_t * instance,
+                                           size_t offset){
+
+    zhuyin_context_t * & context = instance->m_context;
+    pinyin_option_t & options = context->m_options;
+    ChewingKeyVector & pinyin_keys = instance->m_pinyin_keys;
+
+    _free_candidates(instance->m_candidates);
+
+    size_t pinyin_len = offset;
+    ssize_t i;
+
+    PhraseIndexRanges ranges;
+    memset(ranges, 0, sizeof(ranges));
+    context->m_phrase_index->prepare_ranges(ranges);
+
+    GArray * items = g_array_new(FALSE, FALSE, sizeof(lookup_candidate_t));
+
+    for (i = pinyin_len; i >= 1; --i) {
+        g_array_set_size(items, 0);
+
+        /* lookup the previous token here. */
+        phrase_token_t prev_token = null_token;
+
+        if (options & DYNAMIC_ADJUST) {
+            prev_token = _get_previous_token(instance, offset - i);
+        }
+
+        SingleGram merged_gram;
+        SingleGram * system_gram = NULL, * user_gram = NULL;
+
+        if (options & DYNAMIC_ADJUST) {
+            if (null_token != prev_token) {
+                context->m_system_bigram->load(prev_token, system_gram);
+                context->m_user_bigram->load(prev_token, user_gram);
+                merge_single_gram(&merged_gram, system_gram, user_gram);
+            }
+        }
+
+        ChewingKey * keys = &g_array_index
+            (pinyin_keys, ChewingKey, offset - i);
+
+        /* do pinyin search. */
+        int retval = context->m_pinyin_table->search
+            (i, keys, ranges);
+
+        if ( !(retval & SEARCH_OK) )
+            continue;
+
+        lookup_candidate_t template_item;
+        template_item.m_candidate_type = NORMAL_CANDIDATE_BEFORE_CURSOR;
+        _append_items(context, ranges, &template_item, items);
+
+#if 0
+        g_array_sort(items, compare_item_with_token);
+
+        _remove_duplicated_items(items);
+#endif
+
+        _compute_frequency_of_items(context, prev_token, &merged_gram, items);
+
+        /* sort the candidates of the same length by frequency. */
+        g_array_sort(items, compare_item_with_frequency);
+
+        /* transfer back items to tokens, and save it into candidates */
+        for (size_t k = 0; k < items->len; ++k) {
+            lookup_candidate_t * item = &g_array_index
+                (items, lookup_candidate_t, k);
+            g_array_append_val(instance->m_candidates, *item);
+        }
+
+#if 0
+        if (!(retval & SEARCH_CONTINUED))
+            break;
+#endif
+
+        if (system_gram)
+            delete system_gram;
+        if (user_gram)
+            delete user_gram;
+    }
+
+    g_array_free(items, TRUE);
+    context->m_phrase_index->destroy_ranges(ranges);
+
+    /* post process to remove duplicated candidates */
+
+    _prepend_sentence_candidate(instance, instance->m_candidates);
+
+    _compute_phrase_strings_of_items(instance, offset, instance->m_candidates);
+
+    _remove_duplicated_items_by_phrase_string(instance, instance->m_candidates);
+
+    return true;
+}
+
 int zhuyin_choose_candidate(zhuyin_instance_t * instance,
                             size_t offset,
                             lookup_candidate_t * candidate){
@@ -1400,9 +1497,21 @@ int zhuyin_choose_candidate(zhuyin_instance_t * instance,
     bool retval = context->m_pinyin_lookup->validate_constraint
         (instance->m_constraints, instance->m_pinyin_keys);
 
-    phrase_token_t token = candidate->m_token;
-    guint8 len = context->m_pinyin_lookup->add_constraint
-        (instance->m_constraints, offset, token);
+    guint8 len = 0;
+    if (NORMAL_CANDIDATE_AFTER_CURSOR == candidate->m_candidate_type) {
+        phrase_token_t token = candidate->m_token;
+        len = context->m_pinyin_lookup->add_constraint
+            (instance->m_constraints, offset, token);
+    }
+
+    if (NORMAL_CANDIDATE_BEFORE_CURSOR == candidate->m_candidate_type) {
+        phrase_token_t token = candidate->m_token;
+        PhraseItem item;
+        context->m_phrase_index->get_phrase_item(token, item);
+        guint8 phrase_len = item.get_phrase_length();
+        len = context->m_pinyin_lookup->add_constraint
+            (instance->m_constraints, offset - phrase_len, token);
+    }
 
     /* safe guard: validate the m_constraints again. */
     retval = context->m_pinyin_lookup->validate_constraint
