@@ -1307,6 +1307,8 @@ bool ChewingDirectParser2::parse_one_key(pinyin_option_t options,
         /* save back tone if available. */
         key.m_tone = tone;
         g_free(chewing);
+
+        assert(tone != CHEWING_ZERO_TONE);
         return true;
     }
 
