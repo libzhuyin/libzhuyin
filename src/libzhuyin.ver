@@ -22,6 +22,7 @@ LIBZHUYIN {
         zhuyin_parse_more_full_pinyins;
         zhuyin_parse_chewing;
         zhuyin_parse_more_chewings;
+        zhuyin_valid_zhuyin_keys;
         zhuyin_get_parsed_input_length;
         zhuyin_in_chewing_keyboard;
         zhuyin_guess_candidates_after_cursor;

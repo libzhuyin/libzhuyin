@@ -972,6 +972,57 @@ size_t zhuyin_parse_more_chewings(zhuyin_instance_t * instance,
     return parsed_len;
 }
 
+bool zhuyin_valid_zhuyin_keys(zhuyin_instance_t * instance){
+    zhuyin_context_t * & context = instance->m_context;
+
+    gchar * new_user_input = g_strdup("");
+    bool valid = TRUE;
+
+    ChewingKeyVector & pinyin_keys = instance->m_pinyin_keys;
+    ChewingKeyRestVector & pinyin_key_rests = instance->m_pinyin_key_rests;
+
+    PhraseIndexRanges ranges;
+    memset(ranges, 0, sizeof(ranges));
+    context->m_phrase_index->prepare_ranges(ranges);
+
+    GArray * removed = g_array_new(FALSE, FALSE, sizeof(ssize_t));
+    int retval; ssize_t i;
+
+    for (i = 0; i < pinyin_keys->len; ++i) {
+        ChewingKey key = g_array_index(pinyin_keys, ChewingKey, i);
+        retval = context->m_pinyin_table->search(1, &key, ranges);
+
+        if (retval & SEARCH_OK) {
+            ChewingKeyRest key_rest = g_array_index
+                (pinyin_key_rests, ChewingKeyRest, i);
+            gchar * str = g_strndup
+                (instance->m_raw_user_input + key_rest.m_raw_begin,
+                 key_rest.length());
+            gchar * user_input = new_user_input;
+            new_user_input = g_strconcat(user_input, str, NULL);
+            g_free(user_input);
+            g_free(str);
+        } else {
+            valid = FALSE;
+            g_array_append_val(removed, i);
+        }
+    }
+
+    /* remove the invalid zhuyin keys. */
+    for (i = removed->len - (ssize_t)1; i >= 0; --i) {
+        ssize_t index = g_array_index(removed, ssize_t, i);
+        g_array_remove_index(pinyin_keys, index);
+        g_array_remove_index(pinyin_key_rests, index);
+    }
+    g_array_free(removed, TRUE);
+
+    context->m_phrase_index->destroy_ranges(ranges);
+    g_free(instance->m_raw_user_input);
+    instance->m_raw_user_input = new_user_input;
+    instance->m_parsed_len = strlen(new_user_input);
+    return valid;
+}
+
 size_t zhuyin_get_parsed_input_length(zhuyin_instance_t * instance) {
     return instance->m_parsed_len;
 }
