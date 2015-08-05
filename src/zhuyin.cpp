@@ -58,7 +58,7 @@ struct _zhuyin_context_t{
 
 struct _zhuyin_instance_t{
     zhuyin_context_t * m_context;
-    gchar * m_raw_full_pinyin;
+    gchar * m_raw_user_input;
     TokenVector m_prefixes;
     ChewingKeyVector m_pinyin_keys;
     ChewingKeyRestVector m_pinyin_key_rests;
@@ -775,7 +775,7 @@ zhuyin_instance_t * zhuyin_alloc_instance(zhuyin_context_t * context){
     zhuyin_instance_t * instance = new zhuyin_instance_t;
     instance->m_context = context;
 
-    instance->m_raw_full_pinyin = NULL;
+    instance->m_raw_user_input = NULL;
 
     instance->m_prefixes = g_array_new(FALSE, FALSE, sizeof(phrase_token_t));
     instance->m_pinyin_keys = g_array_new(FALSE, FALSE, sizeof(ChewingKey));
@@ -795,7 +795,7 @@ zhuyin_instance_t * zhuyin_alloc_instance(zhuyin_context_t * context){
 }
 
 void zhuyin_free_instance(zhuyin_instance_t * instance){
-    g_free(instance->m_raw_full_pinyin);
+    g_free(instance->m_raw_user_input);
     g_array_free(instance->m_prefixes, TRUE);
     g_array_free(instance->m_pinyin_keys, TRUE);
     g_array_free(instance->m_pinyin_key_rests, TRUE);
@@ -933,8 +933,8 @@ size_t zhuyin_parse_more_full_pinyins(zhuyin_instance_t * instance,
                                       const char * pinyins){
     zhuyin_context_t * & context = instance->m_context;
 
-    g_free(instance->m_raw_full_pinyin);
-    instance->m_raw_full_pinyin = g_strdup(pinyins);
+    g_free(instance->m_raw_user_input);
+    instance->m_raw_user_input = g_strdup(pinyins);
     int pinyin_len = strlen(pinyins);
 
     int parsed_len = context->m_full_pinyin_parser->parse
@@ -959,6 +959,9 @@ bool zhuyin_parse_chewing(zhuyin_instance_t * instance,
 size_t zhuyin_parse_more_chewings(zhuyin_instance_t * instance,
                                   const char * chewings){
     zhuyin_context_t * & context = instance->m_context;
+
+    g_free(instance->m_raw_user_input);
+    instance->m_raw_user_input = g_strdup(chewings);
     int chewing_len = strlen(chewings);
 
     int parsed_len = context->m_chewing_parser->parse
@@ -1574,8 +1577,8 @@ bool zhuyin_train(zhuyin_instance_t * instance){
 }
 
 bool zhuyin_reset(zhuyin_instance_t * instance){
-    g_free(instance->m_raw_full_pinyin);
-    instance->m_raw_full_pinyin = NULL;
+    g_free(instance->m_raw_user_input);
+    instance->m_raw_user_input = NULL;
     instance->m_parsed_len = 0;
 
     g_array_set_size(instance->m_prefixes, 0);
@@ -1824,9 +1827,9 @@ bool zhuyin_get_zhuyin_key_rest_offset(zhuyin_instance_t * instance,
     return true;
 }
 
-bool zhuyin_get_raw_full_pinyin(zhuyin_instance_t * instance,
-                                const gchar ** utf8_str) {
-    *utf8_str = instance->m_raw_full_pinyin;
+bool zhuyin_get_raw_user_input(zhuyin_instance_t * instance,
+                               const gchar ** utf8_str) {
+    *utf8_str = instance->m_raw_user_input;
     return true;
 }
 

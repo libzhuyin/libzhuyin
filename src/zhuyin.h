@@ -654,7 +654,7 @@ bool zhuyin_get_zhuyin_key_rest_offset(zhuyin_instance_t * instance,
                                        guint16 * offset);
 
 /**
- * zhuyin_get_raw_full_pinyin:
+ * zhuyin_get_raw_user_input:
  * @instance: the zhuyin instance.
  * @utf8_str: the modified raw full pinyin after choose candidate.
  * @returns: whether the get operation is successful.
@@ -662,8 +662,8 @@ bool zhuyin_get_zhuyin_key_rest_offset(zhuyin_instance_t * instance,
  * Get the modified raw full pinyin after choose candidate.
  *
  */
-bool zhuyin_get_raw_full_pinyin(zhuyin_instance_t * instance,
-                                const gchar ** utf8_str);
+bool zhuyin_get_raw_user_input(zhuyin_instance_t * instance,
+                               const gchar ** utf8_str);
 
 /**
  * zhuyin_get_n_phrase:
