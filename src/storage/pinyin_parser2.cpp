@@ -915,7 +915,7 @@ bool ChewingDiscreteParser2::in_chewing_scheme(pinyin_option_t options,
     }
 
 end:
-    assert(array->len <= 2);
+    assert(array->len <= 3);
 
     if (array->len) {
         g_ptr_array_add(array, NULL);
