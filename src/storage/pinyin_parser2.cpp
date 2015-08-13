@@ -768,14 +768,14 @@ bool ChewingDiscreteParser2::parse_one_key(pinyin_option_t options,
         if (search_chewing_tones(m_tone_table, str[index], &tone)) {
             index ++;
         }
-
-        /* check the force tone option. */
-        if (options & FORCE_TONE && CHEWING_ZERO_TONE == tone) {
-            return false;
-        }
     }
 
 probe:
+    /* check the force tone option. */
+    if (options & FORCE_TONE && CHEWING_ZERO_TONE == tone) {
+        return false;
+    }
+
     gchar * chewing = g_strconcat(initial, middle, final, NULL);
 
     /* search the chewing in the chewing index table. */

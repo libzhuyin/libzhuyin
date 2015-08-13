@@ -64,7 +64,7 @@ int main(int argc, char * argv[]) {
         exit(EINVAL);
     }
 
-    pinyin_option_t options = USE_TONE;
+    pinyin_option_t options = USE_TONE|FORCE_TONE;
     if (incomplete)
         options |= PINYIN_INCOMPLETE | CHEWING_INCOMPLETE;
 
