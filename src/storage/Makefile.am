@@ -46,8 +46,6 @@ noinst_LTLIBRARIES      = libstorage.la
 
 libstorage_la_CXXFLAGS	= "-fPIC"
 
-libstorage_la_LDFLAGS	= -static
-
 libstorage_la_SOURCES    = phrase_index.cpp \
 			   phrase_large_table2.cpp \
 			   ngram.cpp \
