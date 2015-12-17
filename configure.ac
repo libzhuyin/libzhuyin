@@ -5,8 +5,8 @@
 # if not 1, append datestamp to the version number.
 m4_define([libzhuyin_released], [1])
 m4_define([libzhuyin_major_version], [1])
-m4_define([libzhuyin_minor_version], [0])
-m4_define([libzhuyin_micro_version], [91])
+m4_define([libzhuyin_minor_version], [1])
+m4_define([libzhuyin_micro_version], [0])
 m4_define(libzhuyin_maybe_datestamp,
     m4_esyscmd([if test x]libzhuyin_released[ != x1; then date +.%Y%m%d | tr -d '\n\r'; fi]))
 
