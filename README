@@ -1,4 +1,5 @@
 libzhuyin
 Library to deal with zhuyin.
 
-The libzhuyin project aims to provide the algorithms core for intelligent sentence-based Chinese zhuyin input methods.
+This project has been merged into libpinyin and ibus-libzhuyin.
+Please try libpinyin and ibus-libzhuyin instead, thanks!
