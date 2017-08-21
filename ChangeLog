@@ -1,8 +1,0 @@
-version 1.0.91
-* add zhuyin_guess_candidates_before/after_cursor methods.
-* add zhuyin_valid_zhuyin_keys method.
-
-version 1.0.0
-* the first release of 1.0.x series.
-* support shuffle input.
-
